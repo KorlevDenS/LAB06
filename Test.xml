@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Cat id="15000">
-    <name>Grusha</name>
-    <weight>10</weight>
-    <tail>
-        <length>23</length>
-    </tail>
-</Cat>
+<CATHOUSE>
+    <cathouse>
+        <kitten id="15000">
+            <name>Grusha</name>
+            <weight>10</weight>
+            <tail>
+                <length>23</length>
+            </tail>
+            <genre>BRIT_POP</genre>
+        </kitten>
+        <kitten id="16000">
+            <name>Gru</name>
+            <weight>9</weight>
+            <tail>
+                <length>40</length>
+            </tail>
+            <genre>BRIT_POP</genre>
+        </kitten>
+        <kitten id="13000">
+            <name>Grush</name>
+            <weight>3</weight>
+            <tail>
+                <length>14</length>
+            </tail>
+            <genre>BRIT_POP</genre>
+        </kitten>
+        <kitten id="11000">
+            <name>Gr</name>
+            <weight>12</weight>
+            <tail>
+                <length>22</length>
+            </tail>
+            <genre>BRIT_POP</genre>
+        </kitten>
+    </cathouse>
+</CATHOUSE>

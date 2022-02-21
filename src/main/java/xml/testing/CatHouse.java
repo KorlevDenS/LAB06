@@ -1,10 +1,22 @@
 package xml.testing;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
 
-@XmlRootElement(namespace = "CAT_HOUSE")
+@XmlRootElement(name = "CATHOUSE")
 public class CatHouse {
 
-    public HashSet<Cat> catSet;
+    @XmlElementWrapper(name = "cathouse")
+    @XmlElement(name = "kitten")
+    public HashSet<Cat> catSet = new HashSet<>();
+
+    //public void setCatSet(HashSet<Cat> catSet){
+    //    this.catSet = catSet;
+    //}
+
+    public HashSet<Cat> getCatSet(){
+        return this.catSet;
+    }
 }

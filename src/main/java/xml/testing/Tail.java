@@ -18,4 +18,9 @@ public class Tail {
     public void setLength(int length) {
         this.Length = length;
     }
+
+    public String toString(){
+        return getClass().getName()
+                + "[length=" + Length;
+    }
 }

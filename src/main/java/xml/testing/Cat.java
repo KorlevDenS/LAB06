@@ -1,12 +1,16 @@
 package xml.testing;
 
+import basic.objects.MusicGenre;
+import exceptions.ScanValidation;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "Cat")
 
-@XmlType(propOrder = {"id", "name", "weight" , "tail"})
+@XmlType(propOrder = {"id", "name", "weight" , "tail", "genre"})
 public class Cat {
 
+    private MusicGenre genre;
     private String name;
     private int weight;
     private int id;
@@ -15,11 +19,12 @@ public class Cat {
     public Cat() {
     }
 
-    public Cat(String name, int weight, int id, Tail tail){
+    public Cat(String name, int weight, int id, Tail tail, MusicGenre genre){
         this.name = name;
         this.weight= weight;
         this.id = id;
         this.tail = tail;
+        this.genre = genre;
     }
 
     @XmlAttribute
@@ -53,5 +58,24 @@ public class Cat {
 
     public void setTail(Tail tail) {
         this.tail = tail;
+    }
+
+    public void setGenre(MusicGenre genre) {
+        this.genre = genre;
+    }
+
+    public MusicGenre getGenre() {
+        return this.genre;
+    }
+
+    @Override
+
+    public String toString(){
+        return getClass().getName()
+                + "[id=" + id
+                + ";name=" + name
+                + ";weight=" + weight
+                + ";tail=" + tail
+                + ";genre=" + genre;
     }
 }
