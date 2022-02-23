@@ -16,13 +16,6 @@ import java.util.Scanner;
  */
 public abstract class DataLoader extends Command {
 
-    /**
-     * {@code ArrayList} keeping {@code String} values is used for checking
-     * for uniqueness of user's input of passportIds when creating
-     * new {@link Person} objects.
-     */
-    protected static final ArrayList<String> passports = new ArrayList<>();
-
     /** {@code Scanner} for getting users' input.*/
     protected final Scanner scanner1 = new Scanner(System.in);
 
@@ -134,14 +127,14 @@ public abstract class DataLoader extends Command {
         System.out.println("Если он неизвестен - пропустите.");
         String frontManPassportId = scanner1.nextLine();
         if (frontManPassportId.equals("")) return null;
-        while ((frontManPassportId.length() > 29) || (passports.contains(frontManPassportId))) {
+        while ((frontManPassportId.length() > 29) || (Accumulator.passports.contains(frontManPassportId))) {
             if (frontManPassportId.length() > 29)
                 System.out.println("Длинна строки не должна превышать 29 символов, введите ее правильно.");
-            if (passports.contains(frontManPassportId))
+            if (Accumulator.passports.contains(frontManPassportId))
                 System.out.println("Человек с таким ID уже существует, попробуйте ввести другой");
             frontManPassportId = scanner1.nextLine();
         }
-        passports.add(frontManPassportId);
+        Accumulator.passports.add(frontManPassportId);
         return frontManPassportId;
     }
 

@@ -1,7 +1,6 @@
 package exceptions;
 
-import basic.objects.MusicGenre;
-
+import basic.objects.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -94,6 +93,64 @@ public class ScanValidation {
         if (srt.equals("")) {
             System.out.println("Строка не может быть пустой. Введите её корректно.");
             return nextNonEmptyLine();
+        }
+        return srt;
+    }
+
+
+    public static int ReadNextInt() throws InvalidDataFromFileException {
+        int obj;
+        try {
+            String str = Accumulator.fileScanner.nextLine();
+            obj = Integer.parseInt(str);
+        } catch (NumberFormatException ex) {
+            System.out.println("При создании объекта вместо целого числа int введено что-то другое.");
+            throw new InvalidDataFromFileException();
+        }
+        return obj;
+    }
+
+    public static double ReadNextDouble() throws InvalidDataFromFileException {
+        double obj;
+        try {
+            String str = Accumulator.fileScanner.nextLine();
+            obj = Double.parseDouble(str);
+        } catch (NumberFormatException ex) {
+            System.out.println("При создании объекта вместо вещественного числа введено что-то другое.");
+            throw new InvalidDataFromFileException();
+        }
+        return obj;
+    }
+
+    public static long ReadNextLong() throws InvalidDataFromFileException {
+        long obj;
+        try {
+            String str = Accumulator.fileScanner.nextLine();
+            obj = Long.parseLong(str);
+        } catch (NumberFormatException ex) {
+            System.out.println("При создании объекта вместо целого числа введено что-то другое.");
+            throw new InvalidDataFromFileException();
+        }
+        return obj;
+    }
+
+    public static MusicGenre ReadNextGenre() throws InvalidDataFromFileException{
+        MusicGenre genre;
+        try {
+            String g = Accumulator.fileScanner.nextLine();
+            genre = MusicGenre.valueOf(g);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("На музыкальной площадке нет такого жанра, значение введено некорректно.");
+            throw new InvalidDataFromFileException();
+        }
+        return genre;
+    }
+
+    public static String ReadNextNonEmptyLine() throws InvalidDataFromFileException {
+        String srt = Accumulator.fileScanner.nextLine();
+        if (srt.equals("")) {
+            System.out.println("Введена пустая строка, где её не должно быть.");
+            throw new InvalidDataFromFileException();
         }
         return srt;
     }

@@ -26,7 +26,9 @@ public enum CommandObjects implements Described {
     REMOVE_GREATER(new RemoveGreater(AvailableCommands.REMOVE_GREATER)),
     REMOVE_BY_ID(new RemoveByID(AvailableCommands.REMOVE_BY_ID)),
     REMOVE_ALL_BY_FRONT_MAN(new RemoveAllByFrontMan(AvailableCommands.REMOVE_ALL_BY_FRONT_MAN)),
-    UPDATE(new Update(AvailableCommands.UPDATE));
+    UPDATE(new Update(AvailableCommands.UPDATE)),
+    SAVE(new Save(AvailableCommands.SAVE)),
+    EXECUTE_SCRIPT(new ExecuteScript(AvailableCommands.EXECUTE_SCRIPT));
 
     private final Command command;
 

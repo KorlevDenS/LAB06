@@ -1,6 +1,7 @@
 package interfaces;
 
 import commands.AvailableCommands;
+import exceptions.InvalidDataFromFileException;
 
 /**
  * Interface {@code CommandManagement} requires implementing classes
@@ -27,5 +28,5 @@ public interface CommandManagement {
      * Method also passes parameters to {@code Command}  objects.
      * @param command {@link AvailableCommands} object.
      */
-    void execution(AvailableCommands command);
+    void execution(AvailableCommands command) throws InvalidDataFromFileException;
 }

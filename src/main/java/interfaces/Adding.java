@@ -1,6 +1,7 @@
 package interfaces;
 
 import commands.DataLoader;
+import exceptions.InvalidDataFromFileException;
 
 /**
  * Interface {@code Adding} requires implementing classes
@@ -11,5 +12,5 @@ public interface Adding {
      * Loads new MusicBand object and adds it to the {@code HashSet}.
      * The method uses {@link DataLoader#loadObjectFromData()} to load the object.
      */
-    void addElement();
+    void addElement() throws InvalidDataFromFileException;
 }

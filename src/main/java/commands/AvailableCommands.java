@@ -22,7 +22,7 @@ public enum AvailableCommands implements Described, Title {
     REMOVE_BY_ID("remove_by_id [0-9]+$", "id :удалить элемент из коллекции по его id"),
     CLEAR("clear", "очистить коллекцию"),
     SAVE("save", "сохранить коллекцию в файл"),
-    EXECUTE_SCRIPT("execute_script", "file_name :считать и исполнить скрипт из указанного файла." +
+    EXECUTE_SCRIPT("execute_script .*\\.txt$", "file_name :считать и исполнить скрипт из указанного файла." +
             " В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме."),
     EXIT("exit", "завершить программу (без сохранения в файл)"),
     ADD_IF_MAX("add_if_max", "{element} : добавить новый элемент в коллекцию, если его значение" +

@@ -1,6 +1,7 @@
 package commands;
 
 import basic.objects.*;
+import exceptions.InvalidDataFromFileException;
 import interfaces.*;
 
 /**
@@ -17,14 +18,37 @@ public class Add extends DataLoader implements Adding {
         super(command);
     }
 
+    protected MusicBand newBand;
+
+    protected boolean isLoaded;
+
+    public void loadElement(){
+        if (Accumulator.readingTheScript) {
+            try {
+                ScriptDataLoader loader = new ScriptDataLoader();
+                newBand = loader.loadObjectFromData();
+            } catch (InvalidDataFromFileException ex) {
+                System.out.println("В скрипте обнаружена ошибка.");
+                isLoaded = false;
+                Accumulator.readingTheScript = false;
+                return;
+            }
+        } else newBand = loadObjectFromData();
+        isLoaded = true;
+    }
+
     public void addElement() {
-        MusicBand newBand = loadObjectFromData();
-        Accumulator.appleMusic.add(newBand);
+        if (isLoaded) {
+            Accumulator.appleMusic.add(newBand);
+            System.out.println("Новый элемент успешно добавлен в коллекцию.");
+        } else {
+            System.out.println("Элемент в коллекцию не добавлен");
+        }
     }
 
     public void execute() {
+        loadElement();
         addElement();
-        System.out.println("Новый элемент успешно добавлен в коллекцию.");
     }
 
     public String getDescription() {

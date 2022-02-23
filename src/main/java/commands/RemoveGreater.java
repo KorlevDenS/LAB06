@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * that removes all {@code MusicBand} objects from the {@code HashSet}
  * that are greater than inputted one.
  */
-public class RemoveGreater extends DataLoader implements RemovingIf {
+public class RemoveGreater extends Add implements RemovingIf {
 
     /** The {@code ArrayList} with bands to remove.*/
     private final ArrayList<MusicBand> bandsToRemove = new ArrayList<>();
@@ -29,7 +29,6 @@ public class RemoveGreater extends DataLoader implements RemovingIf {
     }
 
     public void analyseAndRemove() {
-        MusicBand newBand = loadObjectFromData();
         for (MusicBand band : Accumulator.appleMusic) {
             if (newBand.compareTo(band) < 0) {
                 bandsToRemove.add(band);
@@ -41,11 +40,14 @@ public class RemoveGreater extends DataLoader implements RemovingIf {
     }
 
     public void execute() {
-        analyseAndRemove();
-        if (!bandsToRemove.isEmpty())
-            System.out.println("Было успешно удалено " + bandsToRemove.size() + " элементов.");
-        else System.out.println("Ни один из элементов не превышает данный. Ничего не было удалено.");
-        bandsToRemove.clear();
+        loadElement();
+        if (isLoaded) {
+            analyseAndRemove();
+            if (!bandsToRemove.isEmpty())
+                System.out.println("Было успешно удалено " + bandsToRemove.size() + " элементов.");
+            else System.out.println("Ни один из элементов не превышает данный. Ничего не было удалено.");
+            bandsToRemove.clear();
+        } else System.out.println("Удаление элементов не удалось из-за ошибки в скрипте.");
     }
 
     public String getDescription() {

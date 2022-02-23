@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ACCUMULATOR>
+    <CollectionKeeper>
+        <MusicBand>
+            <id>10534</id>
+            <name>DDDDDDDDDD</name>
+            <numberOfParticipants>23</numberOfParticipants>
+            <frontMan>
+                <height>125</height>
+                <name>Solid</name>
+                <passportID>12345678</passportID>
+                <weight>90</weight>
+            </frontMan>
+            <genre>BRIT_POP</genre>
+            <coordinates>
+                <x>12</x>
+                <y>23.0</y>
+            </coordinates>
+            <creationDate>1973-12-10</creationDate>
+        </MusicBand>
+    </CollectionKeeper>
+</ACCUMULATOR>

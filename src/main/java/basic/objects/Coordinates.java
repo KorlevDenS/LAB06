@@ -7,9 +7,12 @@ package basic.objects;
 public class Coordinates {
 
     /** {@code Integer} field keeps coordinate X, cannot be more than 381.*/
-    private final Integer x; //Максимальное значение поля: 381, Поле не может быть null
+    private  Integer x; //Максимальное значение поля: 381, Поле не может быть null
     /** {@code double} field keeps coordinate Y, cannot be more than 381.*/
-    private final double y;
+    private  double y;
+
+    public Coordinates() {
+    }
 
     /** Constructs a new position */
     public Coordinates(int x, double y) {
@@ -24,11 +27,19 @@ public class Coordinates {
         return this.x;
     }
 
+    public void setX(Integer x) {
+        this.x = x;
+    }
+
     /**
      * @return the field {@link Coordinates#y}.
      */
     public double getY() {
         return this.y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 
     public String getPosition() {

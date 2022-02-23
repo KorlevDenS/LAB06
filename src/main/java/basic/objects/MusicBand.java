@@ -1,5 +1,8 @@
 package basic.objects;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -7,34 +10,36 @@ import java.util.ArrayList;
  * Class {@code MusicBand} makes an object that represents a music
  * band and keeps its data.
  */
+@XmlRootElement(name = "Cat")
+@XmlType(propOrder = {"id", "name", "numberOfParticipants", "frontMan" , "genre",
+        "coordinates", "creationDate"})
 public class MusicBand implements Comparable<MusicBand> {
 
-    /**
-     * {@code ArrayList} keeping {@code Long} values is used for generating unique
-     * {@link MusicBand#id} in method {@link MusicBand#generateId()}
-     */
-    private static final ArrayList<Long> uniqueIdList = new ArrayList<>();
+
     /**
      * Unique id of {@code MusicBand} object. The field shouldn't be {@code null}
      * and should be more than 0. Its value is generated automatically
      * by method {@link MusicBand#generateId().}
      */
-    private final Long id;
+    private Long id;
     /** Name of {@code MusicBand} object. Cannot be {@code null} or empty.*/
-    private final String name;
+    private String name;
     /** Position on of {@code MusicBand} object. Cannot be {@code null}.*/
-    private final Coordinates coordinates;
+    private Coordinates coordinates;
     /**
      * Creation date of music band. The field shouldn't be {@code null}.
      * Its value is generated automatically by method {@link MusicBand#generateDate().}
      */
-    private final java.time.LocalDate creationDate;
+    private java.time.LocalDate creationDate;
     /** Number of music band participants. Should be greater than 0.*/
-    private final long numberOfParticipants;
+    private long numberOfParticipants;
     /** Music genre of music band from {@link MusicGenre}. Cannot be {@code null}.*/
-    private final MusicGenre genre;
+    private MusicGenre genre;
     /** FrontMan of the music band. Can be {@code null}.*/
-    private final Person frontMan;
+    private Person frontMan;
+
+    public MusicBand() {
+    }
 
     /**
      * Constructs a new music band.
@@ -71,16 +76,16 @@ public class MusicBand implements Comparable<MusicBand> {
     }
 
     /**
-     * Generates unique {@link MusicBand#id} using {@link MusicBand#uniqueIdList}
+     * Generates unique {@link MusicBand#id} using {@link Accumulator#uniqueIdList}
      * not to repeat the id of already created music band.
      * @return unique id of MusicBand.
      */
     private Long generateId() {
         Long i = (long) (Math.random() * 100000 + 1);
-        while (uniqueIdList.contains(i)) {
+        while (Accumulator.uniqueIdList.contains(i)) {
             i = (long) (Math.random() * 100000 + 1);
         }
-        uniqueIdList.add(i);
+        Accumulator.uniqueIdList.add(i);
         return i;
     }
 
@@ -103,14 +108,62 @@ public class MusicBand implements Comparable<MusicBand> {
         return this.numberOfParticipants;
     }
 
+    public void setNumberOfParticipants(long numberOfParticipants){
+        this.numberOfParticipants = numberOfParticipants;
+    }
+
     /** @return {@link  MusicBand#frontMan} of the object.*/
     public Person getFrontMan() {
         return this.frontMan;
     }
 
+    public void setFrontMan(Person frontMan){
+        this.frontMan = frontMan;
+    }
+
     /** @return {@link MusicBand#id} of the object.*/
     public Long getId() {
         return this.id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCreationDate(String date) {
+        String[] dates = date.split("-");
+        int year = Integer.parseInt(dates[0]);
+        int month = Integer.parseInt(dates[1]);
+        int day = Integer.parseInt(dates[2]);
+        this.creationDate = LocalDate.of(year, month, day);
+    }
+
+    public String getCreationDate() {
+        return creationDate.toString();
+    }
+
+    public MusicGenre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(MusicGenre genre) {
+        this.genre = genre;
     }
 
     /**

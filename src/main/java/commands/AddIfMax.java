@@ -1,7 +1,6 @@
 package commands;
 
 import basic.objects.Accumulator;
-import basic.objects.MusicBand;
 import exceptions.IncorrectDataForObjectException;
 
 import java.util.Collections;
@@ -13,8 +12,6 @@ import java.util.Collections;
  */
 public class AddIfMax extends Add {
 
-    /** Becomes {@code true} if {@link AddIfMax#addElement()} adds new
-     * element to the collection.*/
     private boolean isAdded;
 
     /**
@@ -35,7 +32,6 @@ public class AddIfMax extends Add {
      */
     @Override
     public void addElement() {
-        MusicBand newBand = loadObjectFromData();
         if (Accumulator.appleMusic.isEmpty()) {
             Accumulator.appleMusic.add(newBand);
             isAdded = true;
@@ -50,13 +46,16 @@ public class AddIfMax extends Add {
     }
 
     public void execute() {
-        addElement();
-        if (isAdded) {
-            System.out.println("Новый элемент оказался больше всех имеющихся в коллекции.");
-            System.out.println("Он успешно добавлен в неё.");
-        } else {
-            System.out.println("В коллекции есть элементы больше данного.");
-            System.out.println("Элемент в неё не добавлен.");
-        }
+        loadElement();
+        if (isLoaded) {
+            addElement();
+            if (isAdded) {
+                System.out.println("Новый элемент оказался больше всех имеющихся в коллекции.");
+                System.out.println("Он успешно добавлен в неё.");
+            } else {
+                System.out.println("В коллекции есть элементы больше данного.");
+                System.out.println("Элемент в неё не добавлен.");
+            }
+        } else System.out.println("Элемент в коллекцию не добавлен");
     }
 }

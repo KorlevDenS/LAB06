@@ -1,5 +1,7 @@
 package basic.objects;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -8,18 +10,21 @@ import java.util.Objects;
 public class Person {
 
     /** Keeps name of the person. Cannot be {@code null} or empty {@code String}.*/
-    private final String name;
+    private String name;
     /** Person's birthday in zoned time. Can be unknown ({@code null}).*/
     private java.time.ZonedDateTime birthday;
     /** Person's height. Should be greater than 0.*/
-    private final long height;
+    private long height;
     /** Person's weight. Should be greater than 0.*/
-    private final int weight;
+    private int weight;
     /**
      * Unique Passport id of {@code Person} object. Can be unknown ({@code null}).
      * The length of Passport id cannot be longer than 29 symbols.
      */
-    private final String passportID;
+    private String passportID;
+
+    public Person(){
+    }
 
     /**
      * Constructs a new Person with unknown birthday.
@@ -48,6 +53,59 @@ public class Person {
         this.passportID = passportID;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public long getHeight() {
+        return height;
+    }
+
+    public void setHeight(long height) {
+        this.height = height;
+    }
+
+    public String getPassportID() {
+        return passportID;
+    }
+
+    public void setPassportID(String passportID) {
+        this.passportID = passportID;
+    }
+
+    public void setBirthday(String birth) {
+        String[] strings = birth.split("(\\+[0-9]{2}:[0-9]{2}:[0-9]{2})");
+        String place = strings[1].replaceAll("[\\[\\]]", "");
+        String[] times = strings[0].split("[-T:.]");
+        int year = Integer.parseInt(times[0]);
+        int month = Integer.parseInt(times[1]);
+        int day = Integer.parseInt(times[2]);
+        int hour = Integer.parseInt(times[3]);
+        int minute = Integer.parseInt(times[4]);
+        int second = Integer.parseInt(times[5]);
+        int nanosecond = Integer.parseInt(times[6]);
+        this.birthday = ZonedDateTime.of(year,month,day,hour,minute,second,nanosecond, ZoneId.of(place));
+    }
+
+    public String getBirthday() {
+        if (this.birthday == null)
+            return null;
+        return birthday.toString();
+    }
+
+
     /**
      * Compares this object to the specified object.
      * All fields are compared. For fields that can be null method
@@ -56,6 +114,9 @@ public class Person {
      * @return {@code true} if the objects are the same;
      *         {@code false} otherwise.
      */
+
+
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

@@ -47,11 +47,14 @@ public class Update extends Add implements Operand, RemovingIf {
 
     @Override
     public void execute() {
-        analyseAndRemove();
-        if (isRemoved) {
-            addElement();
-            System.out.println("Элемент с ID = " + idToUpdateBy + " успешно обновлён.");
-        } else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
+        loadElement();
+        if (isLoaded) {
+            analyseAndRemove();
+            if (isRemoved) {
+                addElement();
+                System.out.println("Элемент с ID = " + idToUpdateBy + " успешно обновлён.");
+            } else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
+        } else System.out.println("Обновление элемента не удалось из-за ошибки в скрипте.");
     }
 
     /** This version of {@link DataLoader#loadObjectFromData()} do not use

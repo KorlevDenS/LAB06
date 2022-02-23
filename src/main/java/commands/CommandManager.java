@@ -36,6 +36,8 @@ public class CommandManager implements CommandManagement {
         }
         Scanner scanner = new Scanner(System.in);
         instructionTitle = scanner.nextLine();
+        if (instructionTitle.equals("exit"))
+            System.exit(0);
         return instructionFetch();
     }
 
