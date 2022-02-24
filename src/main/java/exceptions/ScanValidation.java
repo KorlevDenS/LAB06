@@ -97,7 +97,10 @@ public class ScanValidation {
         return srt;
     }
 
-
+    /**
+     * @return valid {@code int} from file.
+     * @throws InvalidDataFromFileException if Scanner meets not {@code int} in file.
+     */
     public static int ReadNextInt() throws InvalidDataFromFileException {
         int obj;
         try {
@@ -110,6 +113,10 @@ public class ScanValidation {
         return obj;
     }
 
+    /**
+     * @return valid {@code double} from file.
+     * @throws InvalidDataFromFileException if Scanner meets not {@code double} in file.
+     */
     public static double ReadNextDouble() throws InvalidDataFromFileException {
         double obj;
         try {
@@ -122,6 +129,11 @@ public class ScanValidation {
         return obj;
     }
 
+    /**
+     * @return valid {@code long} from file.
+     * @throws InvalidDataFromFileException if Scanner meets not {@code int}
+     * or {@code long} in file.
+     */
     public static long ReadNextLong() throws InvalidDataFromFileException {
         long obj;
         try {
@@ -134,6 +146,10 @@ public class ScanValidation {
         return obj;
     }
 
+    /**
+     * @return valid {@link MusicGenre} from file.
+     * @throws InvalidDataFromFileException if Scanner meets not {@link MusicGenre} in file.
+     */
     public static MusicGenre ReadNextGenre() throws InvalidDataFromFileException{
         MusicGenre genre;
         try {
@@ -146,6 +162,10 @@ public class ScanValidation {
         return genre;
     }
 
+    /**
+     * @return valid non-empty {@code String} from file.
+     * @throws InvalidDataFromFileException if Scanner meets empty {@code String} in file.
+     */
     public static String ReadNextNonEmptyLine() throws InvalidDataFromFileException {
         String srt = Accumulator.fileScanner.nextLine();
         if (srt.equals("")) {

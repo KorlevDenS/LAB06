@@ -23,6 +23,8 @@ public class Clear extends Command{
 
     public void execute() {
         Accumulator.appleMusic.clear();
+        Accumulator.passports.clear();
+        Accumulator.uniqueIdList.clear();
         System.out.println("Из коллекции были удалены все элементы.");
     }
 

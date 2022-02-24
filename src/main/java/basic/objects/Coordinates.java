@@ -7,10 +7,13 @@ package basic.objects;
 public class Coordinates {
 
     /** {@code Integer} field keeps coordinate X, cannot be more than 381.*/
-    private  Integer x; //Максимальное значение поля: 381, Поле не может быть null
+    private  Integer x;
     /** {@code double} field keeps coordinate Y, cannot be more than 381.*/
     private  double y;
 
+    /**
+     * Constructs {@code Coordinates} object for Xml.
+     */
     public Coordinates() {
     }
 
@@ -20,13 +23,15 @@ public class Coordinates {
         this.y = y;
     }
 
-    /**
-     * @return the field {@link Coordinates#x}.
+    /** Used for Xml files.
+     * @return X to write down to or to read from xml.
      */
     public Integer getX() {
         return this.x;
     }
 
+    /** Used for Xml files.
+     */
     public void setX(Integer x) {
         this.x = x;
     }
@@ -38,10 +43,13 @@ public class Coordinates {
         return this.y;
     }
 
+    /** Used for Xml files.
+     */
     public void setY(double y) {
         this.y = y;
     }
 
+    /**@return position of the object.*/
     public String getPosition() {
         return "X = " + x + ", Y = " + y;
     }

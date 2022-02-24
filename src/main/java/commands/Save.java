@@ -1,21 +1,28 @@
 package commands;
 
+import basic.objects.Accumulator;
 import exceptions.IncorrectDataForObjectException;
-
 import javax.xml.bind.JAXBException;
-import java.io.File;
 
+/**
+ * Class {@code Save} is used for creating command "save" objects,
+ * that save current {@code MusicBand} {@code HashSet} to Xml file.
+ */
 public class Save extends Command {
 
+    /**
+     * Constructs new Save object.
+     * @param command enum constant from {@link AvailableCommands}
+     */
     public Save(AvailableCommands command){
         super(command);
         if (command != AvailableCommands.SAVE)
             throw new IncorrectDataForObjectException("Class Save cannot perform this task");
     }
 
+    /** Saves current collection to current xml file.*/
     private void saveCollection() throws JAXBException {
-        File file = new File("src/main/resources/MusicBandCollections.xml");
-        JaxbManager manager = new JaxbManager(file);
+        JaxbManager manager = new JaxbManager(Accumulator.currentXml);
         manager.writeXml();
     }
 

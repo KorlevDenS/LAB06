@@ -2,7 +2,6 @@ package commands;
 
 import interfaces.CommandManagement;
 import interfaces.Operand;
-
 import java.util.Scanner;
 
 /**

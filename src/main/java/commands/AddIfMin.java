@@ -1,10 +1,7 @@
 package commands;
 
 import basic.objects.Accumulator;
-import basic.objects.MusicBand;
 import exceptions.IncorrectDataForObjectException;
-import exceptions.InvalidDataFromFileException;
-
 import java.util.Collections;
 
 /**

@@ -9,24 +9,23 @@ import java.io.IOException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws JAXBException, IOException {
+    public static void main(String[] args) {
         Accumulator.appleMusic = new HashSet<>();
         Accumulator.current = new Date();
-        File file = new File("src/main/resources/MusicBandCollections.xml");
-        JaxbManager manager = new JaxbManager(file);
-        manager.readXml();
+        Accumulator.currentXml = new File("src/main/resources/MusicBandCollections.xml");
+        try {
+            JaxbManager manager = new JaxbManager(Accumulator.currentXml);
+            manager.readXml();
+        } catch (JAXBException | IOException e) {
+            System.out.println("Не удалось загрузить коллекцию из файла, возможно данные представлены.");
+            System.out.println("Попробуйте Исправить их вручную или удалите (команда clear, затем save).");
+        }
         for (MusicBand band : Accumulator.appleMusic) {
             Accumulator.uniqueIdList.add(band.getId());
-            //if (band.getFrontMan() != null)
-            //    Accumulator.passports.add(band.getFrontMan().getPassportID());
-            // Код закомментирован для удобства тестирования программы
+            if (band.getFrontMan() != null)
+                Accumulator.passports.add(band.getFrontMan().getPassportID());
         }
-        //testing();
         scanCommand();
-    }
-
-    public static void testing()  {
-
     }
 
     public static void scanCommand() {

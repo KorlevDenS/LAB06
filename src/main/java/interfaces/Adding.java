@@ -1,5 +1,7 @@
 package interfaces;
 
+import basic.objects.Accumulator;
+import basic.objects.MusicBand;
 import commands.DataLoader;
 import exceptions.InvalidDataFromFileException;
 
@@ -13,4 +15,8 @@ public interface Adding {
      * The method uses {@link DataLoader#loadObjectFromData()} to load the object.
      */
     void addElement() throws InvalidDataFromFileException;
+
+    /** Loads new {@link  MusicBand} objects from data from script or from
+     * {@code System.in}, depends on {@link Accumulator#readingTheScript}.*/
+    void loadElement();
 }

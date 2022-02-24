@@ -1,11 +1,14 @@
 package exceptions;
 
+/**
+ * Class {@code InvalidDataFromFileException} is used for
+ * generating exceptions when user is trying to load
+ * incorrect data from file for building new objects.
+ */
 public class InvalidDataFromFileException extends Exception {
 
     /**
-     * Class {@code InvalidDataFromFileException} is used for
-     * generating exceptions when user is trying to load
-     * incorrect data from file for building new objects.
+     * Constructs {@code InvalidDataFromFileException} object.
      */
     public InvalidDataFromFileException() {
     }

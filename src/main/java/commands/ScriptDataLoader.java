@@ -6,14 +6,30 @@ import exceptions.ScanValidation;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Class {@code ScriptDateLoader} is designed to create {@link MusicBand},
+ * {@link Person} and {@link Coordinates} objects by data from scripts.
+ */
 public class ScriptDataLoader{
 
+    /**
+     * Loads from script a name of a new {@link MusicBand} object.
+     * @return not empty {@code String} name.
+     * @throws InvalidDataFromFileException if name is empty.
+     */
     protected String loadBandName() throws InvalidDataFromFileException {
         return ScanValidation.ReadNextNonEmptyLine();
     }
 
+    /**
+     * Creates a new {@link Coordinates} object from script.
+     * @return valid {@link Coordinates} object with (X,Y) <= 381.
+     * @throws InvalidDataFromFileException if coordinates in the script
+     * are not valid.
+     */
     protected Coordinates loadBandCoordinates() throws InvalidDataFromFileException{
         int coordinateX = ScanValidation.ReadNextInt();
         double coordinateY = ScanValidation.ReadNextDouble();
@@ -24,6 +40,12 @@ public class ScriptDataLoader{
         return new Coordinates(coordinateX, coordinateY);
     }
 
+    /**
+     * Loads from script a number of participants of a new {@link MusicBand} object.
+     * @return {@code long} number of participants > 0.
+     * @throws InvalidDataFromFileException if number of participants
+     * in the script <= 0 or is invalid.
+     */
     protected long loadNumberOfParticipants() throws InvalidDataFromFileException {
         long numberOfParticipants = ScanValidation.ReadNextLong();
         if (numberOfParticipants == 0) {
@@ -33,14 +55,30 @@ public class ScriptDataLoader{
         return numberOfParticipants;
     }
 
+    /**
+     * Loads from script {@link MusicGenre} of a new {@link MusicBand} object.
+     * @return {@link MusicGenre} object.
+     * @throws InvalidDataFromFileException if object in the script does not
+     * exist in {@link MusicGenre}.
+     */
     protected MusicGenre loadBandMusicGenre() throws InvalidDataFromFileException{
         return ScanValidation.ReadNextGenre();
     }
 
+    /**
+     * Loads name from script for new {@link Person} object.
+     * @return not empty {@code String} name.
+     * @throws InvalidDataFromFileException if name in the script is empty.
+     */
     protected String loadFrontManName() throws InvalidDataFromFileException{
         return ScanValidation.ReadNextNonEmptyLine();
     }
 
+    /**
+     * Loads Height from script for new {@link Person} object.
+     * @return {@code long} height > 0.
+     * @throws InvalidDataFromFileException if height in the script <= 0 or invalid.
+     */
     protected long loadFrontManHeight() throws InvalidDataFromFileException {
         long frontManHeight = ScanValidation.ReadNextLong();
         if (frontManHeight <= 0){
@@ -50,6 +88,11 @@ public class ScriptDataLoader{
         return frontManHeight;
     }
 
+    /**
+     * Loads Weight from script for new {@link Person} object.
+     * @return {@code int} weight > 0.
+     * @throws InvalidDataFromFileException if weight in the script <= 0 or invalid.
+     */
     protected int loadFrontManWeight() throws InvalidDataFromFileException{
         int frontManWeight = ScanValidation.ReadNextInt();
         if (frontManWeight <= 0){
@@ -59,14 +102,25 @@ public class ScriptDataLoader{
         return frontManWeight;
     }
 
-    protected String loadFrontManPassportID() throws InvalidDataFromFileException {
+    /**
+     * Loads PassportID from script for new {@link Person} object.
+     * @return @return {@code String} with length <= 29 or {@code null}
+     * if user do not know PassportId. Method checks inputted id
+     * for uniqueness if it is going to be added to the collection with
+     * its music band.
+     * @throws InvalidDataFromFileException if length > 29 or password
+     * is not unique.
+     * @param addToCollection {@code true} if t is going to be added to the
+     * collection with its music band.
+     */
+    protected String loadFrontManPassportID(boolean addToCollection) throws InvalidDataFromFileException {
         String frontManPassportId = Accumulator.fileScanner.nextLine();
         if (frontManPassportId.equals("")) return null;
         if (frontManPassportId.length() > 29) {
             System.out.println("Длинна строки превысила 29 символов.");
             throw new InvalidDataFromFileException();
         }
-        if ((Accumulator.passports.contains(frontManPassportId))&&(!Accumulator.readingTheScript)) {
+        if ((Accumulator.passports.contains(frontManPassportId))&&(addToCollection)) {
             System.out.println("Человек с введенным ID уже существует.");
             throw new InvalidDataFromFileException();
         }
@@ -74,25 +128,49 @@ public class ScriptDataLoader{
         return frontManPassportId;
     }
 
-    protected ZonedDateTime giveBirthFrontMan() {
+    /**
+     * Loads birthday for new {@link Person} object if it is
+     * known by user, else birthday is loaded as {@code null}.
+     * @return {@link ZonedDateTime} object.
+     * @throws InvalidDataFromFileException birthday in script is invalid.
+     */
+    protected ZonedDateTime giveBirthFrontMan() throws InvalidDataFromFileException {
         String LineWithTime = Accumulator.fileScanner.nextLine();
         if (LineWithTime.equals(""))
             return null;
-        Scanner s = new Scanner(LineWithTime);
-        return ZonedDateTime.of(s.nextInt(), s.nextInt(), s.nextInt(),
-                s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), ZoneId.of("Europe/Paris"));
+        try {
+            Scanner s = new Scanner(LineWithTime);
+            return ZonedDateTime.of(s.nextInt(), s.nextInt(), s.nextInt(),
+                    s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), ZoneId.of("Europe/Paris"));
+        } catch (NoSuchElementException ex) {
+            System.out.println("Дата рождения фронтмена записана некорректно.");
+            throw new InvalidDataFromFileException();
+        }
     }
 
-    protected Person loadFrontManFromData() throws InvalidDataFromFileException{
+    /**
+     * Loads a new valid {@link Person} object form script
+     * using data loading methods.
+     * {@link Person} object can be {@code null} if the user decides so.
+     * @return {@link Person} object from script.
+     * @throws InvalidDataFromFileException if some fields in script are invalid.
+     */
+    protected Person loadFrontManFromData(boolean addToCollection) throws InvalidDataFromFileException{
         String frontManName = loadFrontManName();
         if (frontManName.equals("")) return null;
         long frontManHeight = loadFrontManHeight();
         int frontManWeight = loadFrontManWeight();
-        String frontManPassportId = loadFrontManPassportID();
+        String frontManPassportId = loadFrontManPassportID(addToCollection);
         ZonedDateTime frontManBirthday = giveBirthFrontMan();
         return new Person(frontManName, frontManHeight, frontManWeight, frontManBirthday, frontManPassportId);
     }
 
+    /**
+     * Loads a new valid {@link MusicBand} object form script
+     * using data loading methods.
+     * @return {@link MusicBand} object from script.
+     * @throws InvalidDataFromFileException if some fields in script are invalid.
+     */
     public MusicBand loadObjectFromData() throws InvalidDataFromFileException{
         String nameOfBand;
         Coordinates bandCoordinates;
@@ -104,7 +182,7 @@ public class ScriptDataLoader{
             bandCoordinates = loadBandCoordinates();
             numberOfParticipants = loadNumberOfParticipants();
             musicGenre = loadBandMusicGenre();
-            frontMan = loadFrontManFromData();
+            frontMan = loadFrontManFromData(true);
         } catch (InvalidDataFromFileException ex) {
             System.out.println("Получены неверные данные для построения объекта MusicBand.");
             throw new InvalidDataFromFileException();

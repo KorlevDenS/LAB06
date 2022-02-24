@@ -20,6 +20,7 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
     /** The {@code ArrayList} with bands to remove.*/
     private final ArrayList<MusicBand> bandsToRemove = new ArrayList<>();
 
+    /** Becomes {@code true} if {@link Person} object is successfully loaded.*/
     protected boolean isLoaded;
 
     /**
@@ -34,11 +35,14 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
             throw new IncorrectDataForObjectException("Class RemoveAllByFrontMan cannot perform this task");
     }
 
+    /** Loads {@link Person} object from script or from {@code System.in}
+     * to remove by. Method can stop the execution of the script if catches
+     * a mistake of reading it.*/
     public void loadFrontManFromData(){
         if (Accumulator.readingTheScript) {
             try {
                 ScriptDataLoader loader = new ScriptDataLoader();
-                frontManToRemoveBy = loader.loadFrontManFromData();
+                frontManToRemoveBy = loader.loadFrontManFromData(false);
             } catch (InvalidDataFromFileException ex) {
                 System.out.println("В скрипте обнаружена ошибка.");
                 isLoaded = false;
@@ -61,6 +65,7 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
     }
 
     public void execute() {
+
         loadFrontManFromData();
         if (isLoaded) {
             analyseAndRemove();

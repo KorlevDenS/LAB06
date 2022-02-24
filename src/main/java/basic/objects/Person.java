@@ -23,6 +23,9 @@ public class Person {
      */
     private String passportID;
 
+    /**
+     * Constructs {@code Person} object for Xml.
+     */
     public Person(){
     }
 
@@ -53,38 +56,60 @@ public class Person {
         this.passportID = passportID;
     }
 
+    /**
+     * @param name to set field {@link Person#name}.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /** @return {@link  Person#name} of the object.*/
     public String getName() {
         return name;
     }
 
+    /** @return {@link  Person#weight} of the object.*/
     public int getWeight() {
         return weight;
     }
 
+    /**
+     * @param weight to set field {@link Person#weight}.
+     */
     public void setWeight(int weight) {
         this.weight = weight;
     }
 
+    /** @return {@link  Person#height} of the object.*/
     public long getHeight() {
         return height;
     }
 
+    /**
+     * @param height to set field {@link Person#height}.
+     */
     public void setHeight(long height) {
         this.height = height;
     }
 
+    /** @return {@link  Person#passportID} of the object.*/
     public String getPassportID() {
         return passportID;
     }
 
+    /**
+     * @param passportID to set field {@link Person#passportID}.
+     */
     public void setPassportID(String passportID) {
         this.passportID = passportID;
     }
 
+    /**
+     * Parses string representation of frontMan birthday for
+     * interaction with xml file. Class {@link ZonedDateTime}
+     * is not adapted to work with JAXB.
+     * @param birth to set field {@link Person#birthday}.
+     */
     public void setBirthday(String birth) {
         String[] strings = birth.split("(\\+[0-9]{2}:[0-9]{2}:[0-9]{2})");
         String place = strings[1].replaceAll("[\\[\\]]", "");
@@ -99,6 +124,14 @@ public class Person {
         this.birthday = ZonedDateTime.of(year,month,day,hour,minute,second,nanosecond, ZoneId.of(place));
     }
 
+    /**
+     * Parses {@link ZonedDateTime} representation of frontMan birthday for
+     * interaction with xml file. Class {@link ZonedDateTime}
+     * is not adapted to work with JAXB.
+     * Returns {@code null} if {@link Person#birthday} is {@code null}
+     * because it is possible.
+     * @return string representation of {@link ZonedDateTime} object.
+     */
     public String getBirthday() {
         if (this.birthday == null)
             return null;
@@ -114,9 +147,6 @@ public class Person {
      * @return {@code true} if the objects are the same;
      *         {@code false} otherwise.
      */
-
-
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

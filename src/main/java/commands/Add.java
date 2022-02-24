@@ -5,7 +5,7 @@ import exceptions.InvalidDataFromFileException;
 import interfaces.*;
 
 /**
- * Class Add is used for creating command "add" objects,
+ * Class {@code Add} is used for creating command "add" objects,
  * that add {@code MusicBand} objects in the {@code HashSet}.
  */
 public class Add extends DataLoader implements Adding {
@@ -18,8 +18,10 @@ public class Add extends DataLoader implements Adding {
         super(command);
     }
 
+    /** A field to keep successfully loaded {@code MusicBand}.*/
     protected MusicBand newBand;
 
+    /** Becomes {@code true} if {@link Add#loadElement()} loaded data successfully.*/
     protected boolean isLoaded;
 
     public void loadElement(){

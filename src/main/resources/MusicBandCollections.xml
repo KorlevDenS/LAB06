@@ -2,21 +2,40 @@
 <ACCUMULATOR>
     <CollectionKeeper>
         <MusicBand>
-            <id>10534</id>
-            <name>DDDDDDDDDD</name>
-            <numberOfParticipants>23</numberOfParticipants>
+            <id>92178</id>
+            <name>Group1</name>
+            <numberOfParticipants>3</numberOfParticipants>
             <frontMan>
-                <height>125</height>
-                <name>Solid</name>
-                <passportID>12345678</passportID>
+                <birthday>1999-12-02T03:04:05.000000010+01:00[Europe/Paris]</birthday>
+                <height>186</height>
+                <name>Billy</name>
+                <passportID>QW1234556h123563</passportID>
                 <weight>90</weight>
             </frontMan>
             <genre>BRIT_POP</genre>
             <coordinates>
-                <x>12</x>
-                <y>23.0</y>
+                <x>234</x>
+                <y>200.0</y>
             </coordinates>
-            <creationDate>1973-12-10</creationDate>
+            <creationDate>1979-12-01</creationDate>
+        </MusicBand>
+        <MusicBand>
+            <id>17095</id>
+            <name>Group2</name>
+            <numberOfParticipants>5</numberOfParticipants>
+            <frontMan>
+                <birthday>1980-12-02T03:04:05.000000010+01:00[Europe/Paris]</birthday>
+                <height>195</height>
+                <name>Bob</name>
+                <passportID>DR12311111f</passportID>
+                <weight>94</weight>
+            </frontMan>
+            <genre>BRIT_POP</genre>
+            <coordinates>
+                <x>222</x>
+                <y>20.0</y>
+            </coordinates>
+            <creationDate>1984-09-18</creationDate>
         </MusicBand>
     </CollectionKeeper>
 </ACCUMULATOR>

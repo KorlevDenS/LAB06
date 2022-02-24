@@ -2,7 +2,6 @@ package commands;
 
 import basic.objects.Accumulator;
 import exceptions.IncorrectDataForObjectException;
-
 import java.util.Collections;
 
 /**

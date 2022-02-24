@@ -1,10 +1,8 @@
 package basic.objects;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  * Class {@code MusicBand} makes an object that represents a music
@@ -38,6 +36,9 @@ public class MusicBand implements Comparable<MusicBand> {
     /** FrontMan of the music band. Can be {@code null}.*/
     private Person frontMan;
 
+    /**
+     * Constructs {@code MusicBand} object for Xml.
+     */
     public MusicBand() {
     }
 
@@ -117,6 +118,9 @@ public class MusicBand implements Comparable<MusicBand> {
         return this.frontMan;
     }
 
+    /**
+     * @param frontMan to set field {@link MusicBand#frontMan}.
+     */
     public void setFrontMan(Person frontMan){
         this.frontMan = frontMan;
     }
@@ -126,26 +130,43 @@ public class MusicBand implements Comparable<MusicBand> {
         return this.id;
     }
 
+    /**
+     * @param id to set field {@link MusicBand#id}.
+     */
     public void setId(Long id){
         this.id = id;
     }
 
+    /**
+     * @param coordinates to set field {@link MusicBand#coordinates}.
+     */
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 
+    /** @return {@link  MusicBand#coordinates} of the object.*/
     public Coordinates getCoordinates() {
         return coordinates;
     }
 
+    /** @return {@link  MusicBand#name} of the object.*/
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name to set field {@link MusicBand#name}.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Parses string representation of creation date for
+     * interaction with xml file. Class {@link LocalDate}
+     * is not adapted to work with JAXB.
+     * @param date to set field {@link MusicBand#creationDate}.
+     */
     public void setCreationDate(String date) {
         String[] dates = date.split("-");
         int year = Integer.parseInt(dates[0]);
@@ -154,14 +175,24 @@ public class MusicBand implements Comparable<MusicBand> {
         this.creationDate = LocalDate.of(year, month, day);
     }
 
+    /**
+     * Parses {@link LocalDate} representation of creation date for
+     * interaction with xml file. Class {@link LocalDate}
+     * is not adapted to work with JAXB.
+     * @return string representation of {@link LocalDate} object.
+     */
     public String getCreationDate() {
         return creationDate.toString();
     }
 
+    /** @return {@link  MusicBand#genre} of the object.*/
     public MusicGenre getGenre() {
         return genre;
     }
 
+    /**
+     * @param genre to set field {@link MusicBand#genre}.
+     */
     public void setGenre(MusicGenre genre) {
         this.genre = genre;
     }

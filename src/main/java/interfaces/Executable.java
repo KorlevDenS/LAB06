@@ -1,7 +1,5 @@
 package interfaces;
 
-import exceptions.InvalidDataFromFileException;
-
 /**
  * Interface {@code Executable} requires implementing classes
  * to realise execution of some process.
