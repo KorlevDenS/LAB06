@@ -1,5 +1,6 @@
 package commands;
 
+import exceptions.InvalidDataFromFileException;
 import interfaces.CommandManagement;
 import interfaces.Operand;
 import java.util.Scanner;
@@ -46,7 +47,7 @@ public class CommandManager implements CommandManagement {
         return scanner.next();
     }
 
-    public void execution(AvailableCommands command) {
+    public void execution(AvailableCommands command) throws InvalidDataFromFileException {
         String commandName = command.toString();
         CommandObjects currentCommandObj = CommandObjects.valueOf(commandName);
         Command currentCommand = currentCommandObj.getCommand();

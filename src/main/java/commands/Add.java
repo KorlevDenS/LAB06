@@ -21,34 +21,19 @@ public class Add extends DataLoader implements Adding {
     /** A field to keep successfully loaded {@code MusicBand}.*/
     protected MusicBand newBand;
 
-    /** Becomes {@code true} if {@link Add#loadElement()} loaded data successfully.*/
-    protected boolean isLoaded;
-
-    public void loadElement(){
+    public void loadElement() throws InvalidDataFromFileException {
         if (Accumulator.readingTheScript) {
-            try {
-                ScriptDataLoader loader = new ScriptDataLoader();
-                newBand = loader.loadObjectFromData();
-            } catch (InvalidDataFromFileException ex) {
-                System.out.println("В скрипте обнаружена ошибка.");
-                isLoaded = false;
-                Accumulator.readingTheScript = false;
-                return;
-            }
+            ScriptDataLoader loader = new ScriptDataLoader();
+            newBand = loader.loadObjectFromData();
         } else newBand = loadObjectFromData();
-        isLoaded = true;
     }
 
     public void addElement() {
-        if (isLoaded) {
-            Accumulator.appleMusic.add(newBand);
-            System.out.println("Новый элемент успешно добавлен в коллекцию.");
-        } else {
-            System.out.println("Элемент в коллекцию не добавлен");
-        }
+        Accumulator.appleMusic.add(newBand);
+        System.out.println("Новый элемент успешно добавлен в коллекцию.");
     }
 
-    public void execute() {
+    public void execute() throws InvalidDataFromFileException {
         loadElement();
         addElement();
     }

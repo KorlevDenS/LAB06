@@ -16,7 +16,7 @@ public class PrintUniqueNumberOfParticipants extends Command{
 
     /** Set of unique numbers of participants in {@code MusicBand} objects
      * of {@code HashSet}.*/
-    private final HashSet<Long> uniqueNumbers = new HashSet<>();
+    private HashSet<Long> uniqueNumbers;
 
     /**
      * Constructs new {@code PrintUniqueNumberOfParticipants} object.
@@ -34,6 +34,7 @@ public class PrintUniqueNumberOfParticipants extends Command{
     /** Finds unique numbers of participants in {@code MusicBand} objects
      * of {@code HashSet} and puts it into {@link PrintUniqueNumberOfParticipants#uniqueNumbers}.*/
     private void findUniqueNumbers() {
+        uniqueNumbers = new HashSet<>();
         for (MusicBand band : Accumulator.appleMusic) {
             Long number = band.getNumberOfParticipants();
             uniqueNumbers.add(number);

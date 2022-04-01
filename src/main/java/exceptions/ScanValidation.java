@@ -104,11 +104,10 @@ public class ScanValidation {
     public static int ReadNextInt() throws InvalidDataFromFileException {
         int obj;
         try {
-            String str = Accumulator.fileScanner.nextLine();
+            String str = Accumulator.scriptScanner.nextLine();
             obj = Integer.parseInt(str);
         } catch (NumberFormatException ex) {
-            System.out.println("При создании объекта вместо целого числа int введено что-то другое.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("При создании объекта вместо целого числа int введено что-то другое.");
         }
         return obj;
     }
@@ -120,11 +119,10 @@ public class ScanValidation {
     public static double ReadNextDouble() throws InvalidDataFromFileException {
         double obj;
         try {
-            String str = Accumulator.fileScanner.nextLine();
+            String str = Accumulator.scriptScanner.nextLine();
             obj = Double.parseDouble(str);
         } catch (NumberFormatException ex) {
-            System.out.println("При создании объекта вместо вещественного числа введено что-то другое.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("При создании объекта вместо вещественного числа введено что-то другое.");
         }
         return obj;
     }
@@ -137,11 +135,10 @@ public class ScanValidation {
     public static long ReadNextLong() throws InvalidDataFromFileException {
         long obj;
         try {
-            String str = Accumulator.fileScanner.nextLine();
+            String str = Accumulator.scriptScanner.nextLine();
             obj = Long.parseLong(str);
         } catch (NumberFormatException ex) {
-            System.out.println("При создании объекта вместо целого числа введено что-то другое.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("При создании объекта вместо целого числа введено что-то другое.");
         }
         return obj;
     }
@@ -153,11 +150,10 @@ public class ScanValidation {
     public static MusicGenre ReadNextGenre() throws InvalidDataFromFileException{
         MusicGenre genre;
         try {
-            String g = Accumulator.fileScanner.nextLine();
+            String g = Accumulator.scriptScanner.nextLine();
             genre = MusicGenre.valueOf(g);
         } catch (IllegalArgumentException ex) {
-            System.out.println("На музыкальной площадке нет такого жанра, значение введено некорректно.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("Значение жанра введено некорректно.");
         }
         return genre;
     }
@@ -167,10 +163,9 @@ public class ScanValidation {
      * @throws InvalidDataFromFileException if Scanner meets empty {@code String} in file.
      */
     public static String ReadNextNonEmptyLine() throws InvalidDataFromFileException {
-        String srt = Accumulator.fileScanner.nextLine();
+        String srt = Accumulator.scriptScanner.nextLine();
         if (srt.equals("")) {
-            System.out.println("Введена пустая строка, где её не должно быть.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("Введена пустая строка, где её не должно быть.");
         }
         return srt;
     }

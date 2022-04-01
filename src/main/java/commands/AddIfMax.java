@@ -2,6 +2,8 @@ package commands;
 
 import basic.objects.Accumulator;
 import exceptions.IncorrectDataForObjectException;
+import exceptions.InvalidDataFromFileException;
+
 import java.util.Collections;
 
 /**
@@ -44,9 +46,8 @@ public class AddIfMax extends Add {
         }
     }
 
-    public void execute() {
+    public void execute() throws InvalidDataFromFileException {
         loadElement();
-        if (isLoaded) {
             addElement();
             if (isAdded) {
                 System.out.println("Новый элемент оказался больше всех имеющихся в коллекции.");
@@ -55,6 +56,5 @@ public class AddIfMax extends Add {
                 System.out.println("В коллекции есть элементы больше данного.");
                 System.out.println("Элемент в неё не добавлен.");
             }
-        } else System.out.println("Элемент в коллекцию не добавлен");
     }
 }

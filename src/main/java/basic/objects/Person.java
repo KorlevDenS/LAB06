@@ -111,9 +111,7 @@ public class Person {
      * @param birth to set field {@link Person#birthday}.
      */
     public void setBirthday(String birth) {
-        String[] strings = birth.split("(\\+[0-9]{2}:[0-9]{2}:[0-9]{2})");
-        String place = strings[1].replaceAll("[\\[\\]]", "");
-        String[] times = strings[0].split("[-T:.]");
+        String[] times = birth.split("[-T:.+\\[\\]]");
         int year = Integer.parseInt(times[0]);
         int month = Integer.parseInt(times[1]);
         int day = Integer.parseInt(times[2]);
@@ -121,6 +119,7 @@ public class Person {
         int minute = Integer.parseInt(times[4]);
         int second = Integer.parseInt(times[5]);
         int nanosecond = Integer.parseInt(times[6]);
+        String place = times[9];
         this.birthday = ZonedDateTime.of(year,month,day,hour,minute,second,nanosecond, ZoneId.of(place));
     }
 

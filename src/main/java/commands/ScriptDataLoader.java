@@ -4,10 +4,12 @@ import basic.objects.*;
 import exceptions.InvalidDataFromFileException;
 import exceptions.ScanValidation;
 
+import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 /**
  * Class {@code ScriptDateLoader} is designed to create {@link MusicBand},
@@ -34,8 +36,7 @@ public class ScriptDataLoader{
         int coordinateX = ScanValidation.ReadNextInt();
         double coordinateY = ScanValidation.ReadNextDouble();
         if ((coordinateX > 381)||(coordinateY > 381)) {
-            System.out.println("Значения координат превышают 381.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("Значения координат превышают 381.");
         }
         return new Coordinates(coordinateX, coordinateY);
     }
@@ -49,8 +50,7 @@ public class ScriptDataLoader{
     protected long loadNumberOfParticipants() throws InvalidDataFromFileException {
         long numberOfParticipants = ScanValidation.ReadNextLong();
         if (numberOfParticipants == 0) {
-            System.out.println("Количество участников должно быть больше нуля.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("Количество участников должно быть больше нуля.");
         }
         return numberOfParticipants;
     }
@@ -82,8 +82,7 @@ public class ScriptDataLoader{
     protected long loadFrontManHeight() throws InvalidDataFromFileException {
         long frontManHeight = ScanValidation.ReadNextLong();
         if (frontManHeight <= 0){
-            System.out.println("Рост фронтмена должен быть больше нуля.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("Рост фронтмена должен быть больше нуля.");
         }
         return frontManHeight;
     }
@@ -96,8 +95,7 @@ public class ScriptDataLoader{
     protected int loadFrontManWeight() throws InvalidDataFromFileException{
         int frontManWeight = ScanValidation.ReadNextInt();
         if (frontManWeight <= 0){
-            System.out.println("Вес фронтмена должен быть больше нуля.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("Вес фронтмена должен быть больше нуля.");
         }
         return frontManWeight;
     }
@@ -114,15 +112,13 @@ public class ScriptDataLoader{
      * collection with its music band.
      */
     protected String loadFrontManPassportID(boolean addToCollection) throws InvalidDataFromFileException {
-        String frontManPassportId = Accumulator.fileScanner.nextLine();
+        String frontManPassportId = Accumulator.scriptScanner.nextLine();
         if (frontManPassportId.equals("")) return null;
         if (frontManPassportId.length() > 29) {
-            System.out.println("Длинна строки превысила 29 символов.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("Длинна строки превысила 29 символов.");
         }
         if ((Accumulator.passports.contains(frontManPassportId))&&(addToCollection)) {
-            System.out.println("Человек с введенным ID уже существует.");
-            throw new InvalidDataFromFileException();
+            throw new InvalidDataFromFileException("Человек с введенным ID уже существует.");
         }
         Accumulator.passports.add(frontManPassportId);
         return frontManPassportId;
@@ -135,16 +131,15 @@ public class ScriptDataLoader{
      * @throws InvalidDataFromFileException birthday in script is invalid.
      */
     protected ZonedDateTime giveBirthFrontMan() throws InvalidDataFromFileException {
-        String LineWithTime = Accumulator.fileScanner.nextLine();
+        String LineWithTime = Accumulator.scriptScanner.nextLine();
         if (LineWithTime.equals(""))
             return null;
         try {
             Scanner s = new Scanner(LineWithTime);
             return ZonedDateTime.of(s.nextInt(), s.nextInt(), s.nextInt(),
-                    s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), ZoneId.of("Europe/Paris"));
-        } catch (NoSuchElementException ex) {
-            System.out.println("Дата рождения фронтмена записана некорректно.");
-            throw new InvalidDataFromFileException();
+                    s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), ZoneId.of(TimeZone.getDefault().getID()));
+        } catch (NoSuchElementException | DateTimeException ex) {
+            throw new InvalidDataFromFileException("Дата рождения фронтмена записана некорректно.");
         }
     }
 
@@ -177,16 +172,11 @@ public class ScriptDataLoader{
         long numberOfParticipants;
         MusicGenre musicGenre;
         Person frontMan;
-        try {
-            nameOfBand = loadBandName();
-            bandCoordinates = loadBandCoordinates();
-            numberOfParticipants = loadNumberOfParticipants();
-            musicGenre = loadBandMusicGenre();
-            frontMan = loadFrontManFromData(true);
-        } catch (InvalidDataFromFileException ex) {
-            System.out.println("Получены неверные данные для построения объекта MusicBand.");
-            throw new InvalidDataFromFileException();
-        }
+        nameOfBand = loadBandName();
+        bandCoordinates = loadBandCoordinates();
+        numberOfParticipants = loadNumberOfParticipants();
+        musicGenre = loadBandMusicGenre();
+        frontMan = loadFrontManFromData(true);
         return new MusicBand(nameOfBand, bandCoordinates, numberOfParticipants,
                 musicGenre, frontMan);
     }

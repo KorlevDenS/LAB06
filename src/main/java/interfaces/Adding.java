@@ -18,5 +18,5 @@ public interface Adding {
 
     /** Loads new {@link  MusicBand} objects from data from script or from
      * {@code System.in}, depends on {@link Accumulator#readingTheScript}.*/
-    void loadElement();
+    void loadElement() throws InvalidDataFromFileException;
 }

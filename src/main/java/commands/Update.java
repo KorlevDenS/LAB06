@@ -2,6 +2,7 @@ package commands;
 
 import basic.objects.*;
 import exceptions.IncorrectDataForObjectException;
+import exceptions.InvalidDataFromFileException;
 import interfaces.Operand;
 import interfaces.RemovingIf;
 
@@ -17,7 +18,7 @@ public class Update extends Add implements Operand, RemovingIf {
      */
     private long idToUpdateBy;
     /** Becomes {@code true} after removing old data successfully.*/
-    private boolean isRemoved = false;
+    private boolean isRemoved;
 
     /**
      * Constructs new Update object.
@@ -36,6 +37,7 @@ public class Update extends Add implements Operand, RemovingIf {
     }
 
     public void analyseAndRemove() {
+        isRemoved = false;
         for (MusicBand band : Accumulator.appleMusic) {
             if (band.getId() == idToUpdateBy) {
                 Accumulator.appleMusic.remove(band);
@@ -46,15 +48,13 @@ public class Update extends Add implements Operand, RemovingIf {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws InvalidDataFromFileException {
         loadElement();
-        if (isLoaded) {
             analyseAndRemove();
             if (isRemoved) {
                 addElement();
                 System.out.println("Элемент с ID = " + idToUpdateBy + " успешно обновлён.");
             } else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
-        } else System.out.println("Обновление элемента не удалось из-за ошибки в скрипте.");
     }
 
     /** This version of {@link DataLoader#loadObjectFromData()} do not use

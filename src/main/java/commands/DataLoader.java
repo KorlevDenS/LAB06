@@ -2,9 +2,13 @@ package commands;
 
 import basic.objects.*;
 import exceptions.*;
+
+import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 /**
  * Class {@code DateLoader} is designed to create {@link MusicBand},
@@ -142,14 +146,17 @@ public abstract class DataLoader extends Command {
      * @return {@link ZonedDateTime} object.
      */
     protected ZonedDateTime giveBirthFrontMan() {
-        System.out.println("Введите время рождения фронтмена (через пробел): год месяц день час мин. сек. м.сек.");
-        System.out.println("Если оно не известно - пропустите этот пункт.");
         String lineWithTime = scanner1.nextLine();
         if (lineWithTime.equals(""))
             return null;
-        Scanner s = new Scanner(lineWithTime);
-        return ZonedDateTime.of(s.nextInt(), s.nextInt(), s.nextInt(),
-                s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), ZoneId.of("Europe/Paris"));
+        try {
+            Scanner s = new Scanner(lineWithTime);
+            return ZonedDateTime.of(s.nextInt(), s.nextInt(), s.nextInt(),
+                    s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), ZoneId.of(TimeZone.getDefault().getID()));
+        } catch (NoSuchElementException | DateTimeException e) {
+            System.out.println("Дата была введена неверно, введите её корректно.");
+            return giveBirthFrontMan();
+        }
     }
 
     /**
@@ -172,6 +179,8 @@ public abstract class DataLoader extends Command {
         long frontManHeight = loadFrontManHeight();
         int frontManWeight = loadFrontManWeight();
         String frontManPassportId = loadFrontManPassportID();
+        System.out.println("Введите время рождения фронтмена (через пробел): год месяц день час мин. сек. м.сек.");
+        System.out.println("Если оно не известно - пропустите этот пункт.");
         ZonedDateTime frontManBirthday = giveBirthFrontMan();
         return new Person(frontManName, frontManHeight, frontManWeight, frontManBirthday, frontManPassportId);
     }

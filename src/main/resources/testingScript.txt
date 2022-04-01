@@ -1,4 +1,3 @@
-help
 info
 show
 clear
@@ -14,6 +13,7 @@ Billy
 90
 QW1234556h
 1999 12 2 3 4 5 10
+execute_script src/main/java/file4.txt
 add
 Group2
 222
@@ -92,5 +92,6 @@ Billy
 QW1234556h
 1999 12 2 3 4 5 10
 show
+execute_script src/main/java/file4.txt
 save
 exit

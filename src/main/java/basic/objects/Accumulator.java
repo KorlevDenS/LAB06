@@ -1,5 +1,7 @@
 package basic.objects;
 
+import commands.ExecuteScript;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -7,7 +9,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Scanner;
 
 /**
  * Class {@code Accumulator} is used to keep {@code static} collection
@@ -33,13 +34,13 @@ public class Accumulator {
 
     /** Is always initialised at the beginning of script execution
      * and is used to read commands from it.*/
-    public static Scanner fileScanner;
+    public static ExecuteScript.ExecutionStringScanner scriptScanner;
 
     /** Keeps current Xml file read from and write down to.*/
     public static File currentXml;
 
-    /** Keeps current script to execute.*/
-    public static File currentScript;
+
+
 
     /**
      * {@code ArrayList} keeping {@code String} values is used for checking

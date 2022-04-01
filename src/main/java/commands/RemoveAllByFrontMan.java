@@ -18,10 +18,7 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
      * with the same one.*/
     private Person frontManToRemoveBy;
     /** The {@code ArrayList} with bands to remove.*/
-    private final ArrayList<MusicBand> bandsToRemove = new ArrayList<>();
-
-    /** Becomes {@code true} if {@link Person} object is successfully loaded.*/
-    protected boolean isLoaded;
+    private ArrayList<MusicBand> bandsToRemove;
 
     /**
      * Constructs new RemoveAllByFrontMan object.
@@ -38,22 +35,15 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
     /** Loads {@link Person} object from script or from {@code System.in}
      * to remove by. Method can stop the execution of the script if catches
      * a mistake of reading it.*/
-    public void loadFrontManFromData(){
+    public void loadFrontManFromData() throws InvalidDataFromFileException {
         if (Accumulator.readingTheScript) {
-            try {
-                ScriptDataLoader loader = new ScriptDataLoader();
-                frontManToRemoveBy = loader.loadFrontManFromData(false);
-            } catch (InvalidDataFromFileException ex) {
-                System.out.println("В скрипте обнаружена ошибка.");
-                isLoaded = false;
-                Accumulator.readingTheScript = false;
-                return;
-            }
+            ScriptDataLoader loader = new ScriptDataLoader();
+            frontManToRemoveBy = loader.loadFrontManFromData(false);
         } else frontManToRemoveBy = loadFrontMan();
-        isLoaded = true;
     }
 
     public void analyseAndRemove() {
+        bandsToRemove = new ArrayList<>();
         for (MusicBand band : Accumulator.appleMusic) {
             if (Objects.equals(band.getFrontMan(), frontManToRemoveBy)) {
                 bandsToRemove.add(band);
@@ -64,10 +54,8 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
         }
     }
 
-    public void execute() {
-
+    public void execute() throws InvalidDataFromFileException {
         loadFrontManFromData();
-        if (isLoaded) {
             analyseAndRemove();
             if (!bandsToRemove.isEmpty()) {
                 if (frontManToRemoveBy == null)
@@ -76,7 +64,6 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
             } else
                 System.out.println("Ни в одной группе в коллекции не нашлось такого фронтмена. Ничего не было удалено.");
             bandsToRemove.clear();
-        } else System.out.println("Удаление не удалось из-за ошибки загрузки фронтмена в скрипте.");
     }
 
     public String getDescription() {

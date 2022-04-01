@@ -2,6 +2,8 @@ package commands;
 
 import basic.objects.Accumulator;
 import exceptions.IncorrectDataForObjectException;
+import exceptions.InvalidDataFromFileException;
+
 import java.util.Collections;
 
 /**
@@ -46,9 +48,8 @@ public class AddIfMin extends Add {
         }
     }
 
-    public void execute() {
+    public void execute() throws InvalidDataFromFileException {
         loadElement();
-        if (isLoaded) {
             addElement();
             if (isAdded) {
                 System.out.println("Новый элемент оказался меньше всех имеющихся в коллекции.");
@@ -57,6 +58,5 @@ public class AddIfMin extends Add {
                 System.out.println("В коллекции есть элементы меньше данного.");
                 System.out.println("Элемент в неё не добавлен.");
             }
-        } else System.out.println("Элемент в коллекцию не добавлен");
     }
 }

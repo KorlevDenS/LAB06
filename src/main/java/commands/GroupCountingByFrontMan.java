@@ -15,9 +15,9 @@ import java.util.HashSet;
 public class GroupCountingByFrontMan extends Command {
 
     /** {@code Hashset} for {@link MusicBand} objects with {@code frontMan} is not null.*/
-    private final HashSet<MusicBand> bandsWithFrontMan = new HashSet<>();
+    private HashSet<MusicBand> bandsWithFrontMan;
     /** {@code Hashset} for {@link MusicBand} objects with {@code frontMan} = null.*/
-    private final HashSet<MusicBand> bandsWithNoFrontMan = new HashSet<>();
+    private HashSet<MusicBand> bandsWithNoFrontMan;
 
     /**
      * Constructs new GroupCountingByFrontMan object.
@@ -36,6 +36,8 @@ public class GroupCountingByFrontMan extends Command {
      * into groups: with frontMan and without.
      */
     private void groupByFrontMan() {
+        bandsWithFrontMan = new HashSet<>();
+        bandsWithNoFrontMan = new HashSet<>();
         for (MusicBand band : Accumulator.appleMusic) {
             if (band.getFrontMan() == null) {
                 bandsWithNoFrontMan.add(band);
