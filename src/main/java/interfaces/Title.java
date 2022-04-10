@@ -5,6 +5,8 @@ package interfaces;
  * to realise getting title.
  */
 public interface Title {
-    /** @return the title of the operation it is used in.*/
+    /**
+     * @return the title of the operation it is used in.
+     */
     String getTitle();
 }

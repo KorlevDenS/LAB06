@@ -10,9 +10,10 @@ public class Help extends Command {
 
     /**
      * Constructs new {@code Help} object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public Help(AvailableCommands command) {
         super(command);

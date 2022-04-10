@@ -18,16 +18,21 @@ import java.util.TimeZone;
  */
 public abstract class DataLoader extends Command {
 
-    /** {@code Scanner} for getting users' input.*/
+    /**
+     * {@code Scanner} for getting users' input.
+     */
     protected final Scanner scanner1 = new Scanner(System.in);
 
-    /** Creates a new {@code DataLoader} object.*/
+    /**
+     * Creates a new {@code DataLoader} object.
+     */
     public DataLoader(AvailableCommands command) {
         super(command);
     }
 
     /**
      * Loads from input a name of a new {@link MusicBand} object.
+     *
      * @return not empty {@code String} name.
      */
     protected String loadBandName() {
@@ -37,6 +42,7 @@ public abstract class DataLoader extends Command {
 
     /**
      * Creates a new {@link Coordinates} object from input.
+     *
      * @return valid {@link Coordinates} object with (X,Y) <= 381.
      */
     protected Coordinates loadBandCoordinates() {
@@ -57,6 +63,7 @@ public abstract class DataLoader extends Command {
 
     /**
      * Loads from input a number of participants of a new {@link MusicBand} object.
+     *
      * @return {@code long} number of participants > 0.
      */
     protected long loadNumberOfParticipants() {
@@ -71,6 +78,7 @@ public abstract class DataLoader extends Command {
 
     /**
      * Loads from input {@link MusicGenre} of a new {@link MusicBand} object.
+     *
      * @return {@link MusicGenre} object.
      */
     protected MusicGenre loadBandMusicGenre() {
@@ -83,6 +91,7 @@ public abstract class DataLoader extends Command {
 
     /**
      * Loads name for new {@link Person} object.
+     *
      * @return not empty {@code String} name.
      */
     protected String loadFrontManName() {
@@ -92,6 +101,7 @@ public abstract class DataLoader extends Command {
 
     /**
      * Loads Height for new {@link Person} object.
+     *
      * @return {@code long} height > 0.
      */
     protected long loadFrontManHeight() {
@@ -106,6 +116,7 @@ public abstract class DataLoader extends Command {
 
     /**
      * Loads Weight for new {@link Person} object.
+     *
      * @return {@code int} weight > 0.
      */
     protected int loadFrontManWeight() {
@@ -120,6 +131,7 @@ public abstract class DataLoader extends Command {
 
     /**
      * Loads PassportID for new {@link Person} object.
+     *
      * @return {@code String} with length <= 29 or {@code null}
      * if user do not know PassportId. Method checks inputted id
      * for uniqueness.
@@ -143,6 +155,7 @@ public abstract class DataLoader extends Command {
     /**
      * Loads birthday for new {@link Person} object if it is
      * known by user, or birthday is loaded as {@code null}.
+     *
      * @return {@link ZonedDateTime} object.
      */
     protected ZonedDateTime giveBirthFrontMan() {
@@ -164,6 +177,7 @@ public abstract class DataLoader extends Command {
      * using data loading methods. Override these methods
      * if you need to upload otherwise.
      * {@link Person} object can be {@code null} if the user decides so.
+     *
      * @return {@link Person} object from input data.
      */
     protected Person loadFrontMan() {
@@ -189,6 +203,7 @@ public abstract class DataLoader extends Command {
      * Loads a new valid {@link MusicBand} object form user's input
      * using data loading methods. Override these methods
      * if you need to upload otherwise.
+     *
      * @return {@link MusicBand} object from input data.
      */
     public MusicBand loadObjectFromData() {

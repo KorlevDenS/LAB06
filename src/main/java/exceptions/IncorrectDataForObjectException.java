@@ -10,6 +10,7 @@ public class IncorrectDataForObjectException extends RuntimeException {
 
     /**
      * Constructs {@code IncorrectDataForObjectException} object.
+     *
      * @param message contains detailed information about the mistake.
      */
     public IncorrectDataForObjectException(String message) {

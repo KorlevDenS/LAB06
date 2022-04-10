@@ -2,12 +2,12 @@
 <ACCUMULATOR>
     <CollectionKeeper>
         <MusicBand>
-            <id>92776</id>
+            <id>34683</id>
             <name>Group1</name>
             <numberOfParticipants>3</numberOfParticipants>
             <frontMan>
                 <birthday>1999-12-02T03:04:05.000000010+03:00[Europe/Moscow]</birthday>
-                <height>186</height>
+                <height>190</height>
                 <name>Billy</name>
                 <passportID>QW1234556h123563</passportID>
                 <weight>90</weight>
@@ -17,10 +17,10 @@
                 <x>234</x>
                 <y>200.0</y>
             </coordinates>
-            <creationDate>1986-10-07</creationDate>
+            <creationDate>1991-09-16</creationDate>
         </MusicBand>
         <MusicBand>
-            <id>79361</id>
+            <id>45675</id>
             <name>Group2</name>
             <numberOfParticipants>5</numberOfParticipants>
             <frontMan>
@@ -35,7 +35,7 @@
                 <x>222</x>
                 <y>20.0</y>
             </coordinates>
-            <creationDate>2013-03-25</creationDate>
+            <creationDate>1986-09-12</creationDate>
         </MusicBand>
     </CollectionKeeper>
 </ACCUMULATOR>

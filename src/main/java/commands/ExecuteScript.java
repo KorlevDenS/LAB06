@@ -4,6 +4,7 @@ import basic.objects.Accumulator;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
 import interfaces.Operand;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -25,9 +26,10 @@ public class ExecuteScript extends Command implements Operand {
 
     /**
      * Constructs new ExecuteScript object.
+     *
      * @param command enum constant from {@link AvailableCommands}
      */
-    public ExecuteScript(AvailableCommands command){
+    public ExecuteScript(AvailableCommands command) {
         super(command);
         if (command != AvailableCommands.EXECUTE_SCRIPT)
             throw new IncorrectDataForObjectException("Class ExecuteScript cannot perform this task");
@@ -69,7 +71,7 @@ public class ExecuteScript extends Command implements Operand {
 
     }
 
-    static public class ExecutionStringScanner{
+    static public class ExecutionStringScanner {
 
         private final Scanner stringScanner;
         private int commandIndex;
@@ -79,12 +81,12 @@ public class ExecuteScript extends Command implements Operand {
             this.commandIndex = -1;
         }
 
-        public String nextLine(){
+        public String nextLine() {
             this.commandIndex++;
             return stringScanner.nextLine();
         }
 
-        public int getCommandIndex(){
+        public int getCommandIndex() {
             return this.commandIndex;
         }
 
@@ -140,7 +142,7 @@ public class ExecuteScript extends Command implements Operand {
         commandsAndData = dataStringBuilder.toString();
     }
 
-    private void scanScriptCommand(){
+    private void scanScriptCommand() {
         if (!Accumulator.readingTheScript)
             return;
         String line;
@@ -167,10 +169,11 @@ public class ExecuteScript extends Command implements Operand {
                     continue reader;
                 }
             }
-            if (line.equals("RECURSION_ERROR")){
+            if (line.equals("RECURSION_ERROR")) {
                 mistakesInfo.put(infoData.get(Accumulator.scriptScanner.getCommandIndex()), line + ": Исполнение " +
                         "данного скрипта в этом файле вызывает бесконечный цикл.");
-            } else mistakesInfo.put(infoData.get(Accumulator.scriptScanner.getCommandIndex()), line + ": useless data.");
+            } else
+                mistakesInfo.put(infoData.get(Accumulator.scriptScanner.getCommandIndex()), line + ": useless data.");
         }
     }
 
@@ -197,12 +200,12 @@ public class ExecuteScript extends Command implements Operand {
         System.out.println("Выполнение скрипта завершено.");
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 
     public void installOperand(String stringRepresentation) {
-        this.mainScript  = new File(stringRepresentation);
+        this.mainScript = new File(stringRepresentation);
         System.out.println("INSTALLED" + mainScript);
     }
 }

@@ -13,25 +13,38 @@ import java.util.Date;
  */
 public class Info extends Command {
 
-    /** Type of collection received by {@code getClass().getName()}*/
+    /**
+     * Type of collection received by {@code getClass().getName()}
+     */
     private String typeOfCollection;
-    /** Date of initialisation of {@code HashSet} with {@code MusicBand}
-     * objects == Date and time of program has been started.*/
+    /**
+     * Date of initialisation of {@code HashSet} with {@code MusicBand}
+     * objects == Date and time of program has been started.
+     */
     private Date initDateOfCollection;
-    /** Current amount of elements in {@code HashSet}*/
+    /**
+     * Current amount of elements in {@code HashSet}
+     */
     private int amountOfElements;
-    /** Type of {@code HashSet} inner elements.*/
+    /**
+     * Type of {@code HashSet} inner elements.
+     */
     private String typeOfInnerElements;
-    /** Current minimum element of {@code HashSet}.*/
+    /**
+     * Current minimum element of {@code HashSet}.
+     */
     private String minElement;
-    /** Current maximum element of {@code HashSet}.*/
+    /**
+     * Current maximum element of {@code HashSet}.
+     */
     private String maxElement;
 
     /**
      * Constructs new {@code Info} object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public Info(AvailableCommands command) {
         super(command);
@@ -43,7 +56,9 @@ public class Info extends Command {
         return this.description;
     }
 
-    /** Analysing and filling current data about {@code HashSet}.*/
+    /**
+     * Analysing and filling current data about {@code HashSet}.
+     */
     private void knowInformation() {
         typeOfCollection = Accumulator.appleMusic.getClass().getName();
         initDateOfCollection = Accumulator.current;

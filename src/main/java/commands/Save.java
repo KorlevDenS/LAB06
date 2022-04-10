@@ -2,6 +2,7 @@ package commands;
 
 import basic.objects.Accumulator;
 import exceptions.IncorrectDataForObjectException;
+
 import javax.xml.bind.JAXBException;
 
 /**
@@ -12,15 +13,18 @@ public class Save extends Command {
 
     /**
      * Constructs new Save object.
+     *
      * @param command enum constant from {@link AvailableCommands}
      */
-    public Save(AvailableCommands command){
+    public Save(AvailableCommands command) {
         super(command);
         if (command != AvailableCommands.SAVE)
             throw new IncorrectDataForObjectException("Class Save cannot perform this task");
     }
 
-    /** Saves current collection to current xml file.*/
+    /**
+     * Saves current collection to current xml file.
+     */
     private void saveCollection() throws JAXBException {
         JaxbManager manager = new JaxbManager(Accumulator.currentXml);
         manager.writeXml();
@@ -37,7 +41,7 @@ public class Save extends Command {
         System.out.println("Текущая версия коллекции успешно сохранена в файл.");
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 

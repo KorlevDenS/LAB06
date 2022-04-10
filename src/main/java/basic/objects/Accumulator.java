@@ -20,26 +20,34 @@ import java.util.HashSet;
 @XmlRootElement(name = "ACCUMULATOR")
 public class Accumulator {
 
-    /** Main collection fot {@code MusicBand} objects. All commands
-     * are created to work with it.*/
+    /**
+     * Main collection fot {@code MusicBand} objects. All commands
+     * are created to work with it.
+     */
     public static HashSet<MusicBand> appleMusic = new HashSet<>();
 
-    /** Keeps time of main collection initialisation. Is always loaded
-     * in Main class when program starts and can be used by commands.*/
+    /**
+     * Keeps time of main collection initialisation. Is always loaded
+     * in Main class when program starts and can be used by commands.
+     */
     public static Date current;
 
-    /** Is {@code true} when program is executing script. Is used
-     * to help commands understand what to do.*/
+    /**
+     * Is {@code true} when program is executing script. Is used
+     * to help commands understand what to do.
+     */
     public static boolean readingTheScript = false;
 
-    /** Is always initialised at the beginning of script execution
-     * and is used to read commands from it.*/
+    /**
+     * Is always initialised at the beginning of script execution
+     * and is used to read commands from it.
+     */
     public static ExecuteScript.ExecutionStringScanner scriptScanner;
 
-    /** Keeps current Xml file read from and write down to.*/
+    /**
+     * Keeps current Xml file read from and write down to.
+     */
     public static File currentXml;
-
-
 
 
     /**
@@ -59,10 +67,12 @@ public class Accumulator {
     @XmlElement(name = "MusicBand")
     public HashSet<MusicBand> CurrentBandSet = new HashSet<>();
 
-    /** Used for Xml files.
+    /**
+     * Used for Xml files.
+     *
      * @return collection to write down to or to read from xml.
      */
-    public HashSet<MusicBand> getCurrentBandSet(){
+    public HashSet<MusicBand> getCurrentBandSet() {
         return this.CurrentBandSet;
     }
 

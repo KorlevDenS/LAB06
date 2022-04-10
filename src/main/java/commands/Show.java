@@ -12,9 +12,10 @@ public class Show extends Command {
 
     /**
      * Constructs new {@code Show} object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public Show(AvailableCommands command) {
         super(command);

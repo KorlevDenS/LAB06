@@ -34,6 +34,7 @@ public enum CommandObjects implements Described {
 
     /**
      * Creates {@code Command} object.
+     *
      * @param command {@code Command} object.
      */
     CommandObjects(Command command) {

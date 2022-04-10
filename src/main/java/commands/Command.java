@@ -16,6 +16,7 @@ public abstract class Command implements Described, Executable {
 
     /**
      * Constructs a new command.
+     *
      * @param command relevant {@link AvailableCommands} command.
      */
     public Command(AvailableCommands command) {
@@ -26,9 +27,10 @@ public abstract class Command implements Described, Executable {
 
     /**
      * Compares this object to the specified object.
+     *
      * @param obj the object to compare with.
      * @return {@code true} if objects' {@link Command#title}s are the same;
-     *         {@code false} otherwise.
+     * {@code false} otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -42,6 +44,7 @@ public abstract class Command implements Described, Executable {
 
     /**
      * Returns a hash code using all values of {@code Command} fields.
+     *
      * @return a hash code value for this object.
      */
     public int hashCode() {
@@ -52,6 +55,7 @@ public abstract class Command implements Described, Executable {
 
     /**
      * Returns a {@code String} object representing this {@code Command} value.
+     *
      * @return a string representation of the value of this object.
      */
     public String toString() {

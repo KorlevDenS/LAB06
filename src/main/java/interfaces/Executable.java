@@ -7,6 +7,8 @@ import exceptions.InvalidDataFromFileException;
  * to realise execution of some process.
  */
 public interface Executable {
-    /** Executes the operation it is used in and prints a message.*/
+    /**
+     * Executes the operation it is used in and prints a message.
+     */
     void execute() throws InvalidDataFromFileException;
 }

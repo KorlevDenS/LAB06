@@ -12,17 +12,20 @@ import java.util.HashSet;
  * that prints unique numbers of participants of {@code MusicBand} objects
  * of {@code HashSet}.
  */
-public class PrintUniqueNumberOfParticipants extends Command{
+public class PrintUniqueNumberOfParticipants extends Command {
 
-    /** Set of unique numbers of participants in {@code MusicBand} objects
-     * of {@code HashSet}.*/
+    /**
+     * Set of unique numbers of participants in {@code MusicBand} objects
+     * of {@code HashSet}.
+     */
     private HashSet<Long> uniqueNumbers;
 
     /**
      * Constructs new {@code PrintUniqueNumberOfParticipants} object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public PrintUniqueNumberOfParticipants(AvailableCommands command) {
         super(command);
@@ -31,8 +34,10 @@ public class PrintUniqueNumberOfParticipants extends Command{
         }
     }
 
-    /** Finds unique numbers of participants in {@code MusicBand} objects
-     * of {@code HashSet} and puts it into {@link PrintUniqueNumberOfParticipants#uniqueNumbers}.*/
+    /**
+     * Finds unique numbers of participants in {@code MusicBand} objects
+     * of {@code HashSet} and puts it into {@link PrintUniqueNumberOfParticipants#uniqueNumbers}.
+     */
     private void findUniqueNumbers() {
         uniqueNumbers = new HashSet<>();
         for (MusicBand band : Accumulator.appleMusic) {

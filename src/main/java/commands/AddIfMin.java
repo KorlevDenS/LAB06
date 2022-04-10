@@ -13,15 +13,18 @@ import java.util.Collections;
  */
 public class AddIfMin extends Add {
 
-    /** becomes {@code true} if {@link AddIfMin#addElement()} adds new
-     * element to the collection.*/
+    /**
+     * becomes {@code true} if {@link AddIfMin#addElement()} adds new
+     * element to the collection.
+     */
     private boolean isAdded;
 
     /**
      * Constructs new AddIfMin object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public AddIfMin(AvailableCommands command) {
         super(command);
@@ -50,13 +53,13 @@ public class AddIfMin extends Add {
 
     public void execute() throws InvalidDataFromFileException {
         loadElement();
-            addElement();
-            if (isAdded) {
-                System.out.println("Новый элемент оказался меньше всех имеющихся в коллекции.");
-                System.out.println("Он успешно добавлен в неё.");
-            } else {
-                System.out.println("В коллекции есть элементы меньше данного.");
-                System.out.println("Элемент в неё не добавлен.");
-            }
+        addElement();
+        if (isAdded) {
+            System.out.println("Новый элемент оказался меньше всех имеющихся в коллекции.");
+            System.out.println("Он успешно добавлен в неё.");
+        } else {
+            System.out.println("В коллекции есть элементы меньше данного.");
+            System.out.println("Элемент в неё не добавлен.");
+        }
     }
 }

@@ -13,19 +13,23 @@ import interfaces.RemovingIf;
  */
 public class RemoveByID extends Command implements Operand, RemovingIf {
 
-    /** Field for id to remove {@code MusicBand} objects by.
+    /**
+     * Field for id to remove {@code MusicBand} objects by.
      * Is always completed by {@link RemoveByID#installOperand(String)}.
      */
     private long idToRemoveBy;
-    /** Becomes {@code true} if {@code MusicBand} object was
-     *  removed from the {@code HashSet} by {@link RemoveByID#analyseAndRemove()}*/
+    /**
+     * Becomes {@code true} if {@code MusicBand} object was
+     * removed from the {@code HashSet} by {@link RemoveByID#analyseAndRemove()}
+     */
     boolean isRemoved = false;
 
     /**
      * Constructs new RemoveById object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public RemoveByID(AvailableCommands command) {
         super(command);

@@ -16,7 +16,9 @@ public enum MusicGenre implements Described {
 
     private final String description;
 
-    /** Creates MusicGenre {@code Enum} constant.*/
+    /**
+     * Creates MusicGenre {@code Enum} constant.
+     */
     MusicGenre(String description) {
         this.description = description;
     }

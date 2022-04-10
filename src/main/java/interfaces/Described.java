@@ -5,6 +5,8 @@ package interfaces;
  * to realise getting description.
  */
 public interface Described {
-    /** @return the description of the operation it is used in.*/
+    /**
+     * @return the description of the operation it is used in.
+     */
     String getDescription();
 }

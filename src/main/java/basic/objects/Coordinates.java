@@ -6,10 +6,14 @@ package basic.objects;
  */
 public class Coordinates {
 
-    /** {@code Integer} field keeps coordinate X, cannot be more than 381.*/
-    private  Integer x;
-    /** {@code double} field keeps coordinate Y, cannot be more than 381.*/
-    private  double y;
+    /**
+     * {@code Integer} field keeps coordinate X, cannot be more than 381.
+     */
+    private Integer x;
+    /**
+     * {@code double} field keeps coordinate Y, cannot be more than 381.
+     */
+    private double y;
 
     /**
      * Constructs {@code Coordinates} object for Xml.
@@ -17,20 +21,25 @@ public class Coordinates {
     public Coordinates() {
     }
 
-    /** Constructs a new position */
+    /**
+     * Constructs a new position
+     */
     public Coordinates(int x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    /** Used for Xml files.
+    /**
+     * Used for Xml files.
+     *
      * @return X to write down to or to read from xml.
      */
     public Integer getX() {
         return this.x;
     }
 
-    /** Used for Xml files.
+    /**
+     * Used for Xml files.
      */
     public void setX(Integer x) {
         this.x = x;
@@ -43,13 +52,16 @@ public class Coordinates {
         return this.y;
     }
 
-    /** Used for Xml files.
+    /**
+     * Used for Xml files.
      */
     public void setY(double y) {
         this.y = y;
     }
 
-    /**@return position of the object.*/
+    /**
+     * @return position of the object.
+     */
     public String getPosition() {
         return "X = " + x + ", Y = " + y;
     }
@@ -59,7 +71,7 @@ public class Coordinates {
      *
      * @param obj the object to compare with.
      * @return {@code true} if the objects are the same;
-     *         {@code false} otherwise.
+     * {@code false} otherwise.
      */
     @Override
     public boolean equals(Object obj) {

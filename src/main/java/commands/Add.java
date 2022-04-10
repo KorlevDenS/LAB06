@@ -12,13 +12,16 @@ public class Add extends DataLoader implements Adding {
 
     /**
      * Constructs new Add object.
+     *
      * @param command enum constant from {@link AvailableCommands}
      */
     public Add(AvailableCommands command) {
         super(command);
     }
 
-    /** A field to keep successfully loaded {@code MusicBand}.*/
+    /**
+     * A field to keep successfully loaded {@code MusicBand}.
+     */
     protected MusicBand newBand;
 
     public void loadElement() throws InvalidDataFromFileException {

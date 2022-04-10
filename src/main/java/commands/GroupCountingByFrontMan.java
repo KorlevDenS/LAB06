@@ -14,16 +14,21 @@ import java.util.HashSet;
  */
 public class GroupCountingByFrontMan extends Command {
 
-    /** {@code Hashset} for {@link MusicBand} objects with {@code frontMan} is not null.*/
+    /**
+     * {@code Hashset} for {@link MusicBand} objects with {@code frontMan} is not null.
+     */
     private HashSet<MusicBand> bandsWithFrontMan;
-    /** {@code Hashset} for {@link MusicBand} objects with {@code frontMan} = null.*/
+    /**
+     * {@code Hashset} for {@link MusicBand} objects with {@code frontMan} = null.
+     */
     private HashSet<MusicBand> bandsWithNoFrontMan;
 
     /**
      * Constructs new GroupCountingByFrontMan object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public GroupCountingByFrontMan(AvailableCommands command) {
         super(command);

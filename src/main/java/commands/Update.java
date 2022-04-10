@@ -13,18 +13,22 @@ import interfaces.RemovingIf;
  */
 public class Update extends Add implements Operand, RemovingIf {
 
-    /** Field for id to update {@code MusicBand} objects by.
+    /**
+     * Field for id to update {@code MusicBand} objects by.
      * Is always completed by {@link Update#installOperand(String)}.
      */
     private long idToUpdateBy;
-    /** Becomes {@code true} after removing old data successfully.*/
+    /**
+     * Becomes {@code true} after removing old data successfully.
+     */
     private boolean isRemoved;
 
     /**
      * Constructs new Update object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public Update(AvailableCommands command) {
         super(command);
@@ -50,16 +54,18 @@ public class Update extends Add implements Operand, RemovingIf {
     @Override
     public void execute() throws InvalidDataFromFileException {
         loadElement();
-            analyseAndRemove();
-            if (isRemoved) {
-                addElement();
-                System.out.println("Элемент с ID = " + idToUpdateBy + " успешно обновлён.");
-            } else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
+        analyseAndRemove();
+        if (isRemoved) {
+            addElement();
+            System.out.println("Элемент с ID = " + idToUpdateBy + " успешно обновлён.");
+        } else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
     }
 
-    /** This version of {@link DataLoader#loadObjectFromData()} do not use
+    /**
+     * This version of {@link DataLoader#loadObjectFromData()} do not use
      * automatic id generation because it only updates existing object.
-     *  @return {@link Person} object with updated fields.
+     *
+     * @return {@link Person} object with updated fields.
      */
     public MusicBand loadObjectFromData() {
         String nameOfBand = loadBandName();

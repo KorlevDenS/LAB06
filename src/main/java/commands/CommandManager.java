@@ -3,6 +3,7 @@ package commands;
 import exceptions.InvalidDataFromFileException;
 import interfaces.CommandManagement;
 import interfaces.Operand;
+
 import java.util.Scanner;
 
 /**
@@ -12,11 +13,14 @@ import java.util.Scanner;
  */
 public class CommandManager implements CommandManagement {
 
-    /** Title of the current instruction.*/
+    /**
+     * Title of the current instruction.
+     */
     private String instructionTitle;
 
     /**
      * Constructs {@code CommandManager} object.
+     *
      * @param instructionTitle received instruction of the user.
      */
     public CommandManager(String instructionTitle) {
@@ -41,7 +45,7 @@ public class CommandManager implements CommandManagement {
         return instructionFetch();
     }
 
-    public String operandFetch(){
+    public String operandFetch() {
         Scanner scanner = new Scanner(instructionTitle);
         scanner.next();
         return scanner.next();

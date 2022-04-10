@@ -40,13 +40,16 @@ public enum AvailableCommands implements Described, Title {
     private final String title;
     private final String description;
 
-    /** Creates  {@code AvailableCommands Enum} constant.*/
+    /**
+     * Creates  {@code AvailableCommands Enum} constant.
+     */
     AvailableCommands(String title, String description) {
         this.title = title;
         this.description = description;
     }
 
-    /** Method makes regular expression from title of command.
+    /**
+     * Method makes regular expression from title of command.
      *
      * @param input string to compare with pattern.
      * @return regular expression (matcher).

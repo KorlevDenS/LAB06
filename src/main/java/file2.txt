@@ -1,0 +1,13 @@
+execute_script src/main/java/file1.txt
+execute_script src/main/java/file3.txt
+add_if_max 222222222
+23 222222222
+45 222222222
+show 222222222
+info 22222222
+2 2222222222 33
+execute_script src/main/java/file3.txt
+clear 22222222222 33
+help 22222222222
+execute_script src/main/java/file3.txt
+execute_script src/main/java/file2.txt

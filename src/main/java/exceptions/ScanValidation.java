@@ -1,6 +1,7 @@
 package exceptions;
 
 import basic.objects.*;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -15,6 +16,7 @@ public class ScanValidation {
     /**
      * Asks user to enter {@code int} value while
      * catching {@link InputMismatchException} exception.
+     *
      * @return entered {@code int} value.
      */
     public static int nextInt() {
@@ -32,6 +34,7 @@ public class ScanValidation {
     /**
      * Asks user to enter {@code double} value while
      * catching {@link InputMismatchException} exception.
+     *
      * @return entered {@code double} value.
      */
     public static double nextDouble() {
@@ -49,6 +52,7 @@ public class ScanValidation {
     /**
      * Asks user to enter {@code long} value while
      * catching {@link InputMismatchException} exception.
+     *
      * @return entered {@code long} value.
      */
     public static long nextLong() {
@@ -66,6 +70,7 @@ public class ScanValidation {
     /**
      * Asks user to enter {@link MusicGenre} value while
      * catching {@link InputMismatchException} exception.
+     *
      * @return entered {@link MusicGenre} value.
      */
     public static MusicGenre nextGenre() {
@@ -85,6 +90,7 @@ public class ScanValidation {
     /**
      * Asks user to enter not empty {@code String} value
      * while detecting empty inputted {@code String}.
+     *
      * @return entered not empty {@code String} value.
      */
     public static String nextNonEmptyLine() {
@@ -130,7 +136,7 @@ public class ScanValidation {
     /**
      * @return valid {@code long} from file.
      * @throws InvalidDataFromFileException if Scanner meets not {@code int}
-     * or {@code long} in file.
+     *                                      or {@code long} in file.
      */
     public static long ReadNextLong() throws InvalidDataFromFileException {
         long obj;
@@ -147,7 +153,7 @@ public class ScanValidation {
      * @return valid {@link MusicGenre} from file.
      * @throws InvalidDataFromFileException if Scanner meets not {@link MusicGenre} in file.
      */
-    public static MusicGenre ReadNextGenre() throws InvalidDataFromFileException{
+    public static MusicGenre ReadNextGenre() throws InvalidDataFromFileException {
         MusicGenre genre;
         try {
             String g = Accumulator.scriptScanner.nextLine();

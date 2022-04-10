@@ -17,9 +17,10 @@ public class AddIfMax extends Add {
 
     /**
      * Constructs new AddIfMax object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public AddIfMax(AvailableCommands command) {
         super(command);
@@ -48,13 +49,13 @@ public class AddIfMax extends Add {
 
     public void execute() throws InvalidDataFromFileException {
         loadElement();
-            addElement();
-            if (isAdded) {
-                System.out.println("Новый элемент оказался больше всех имеющихся в коллекции.");
-                System.out.println("Он успешно добавлен в неё.");
-            } else {
-                System.out.println("В коллекции есть элементы больше данного.");
-                System.out.println("Элемент в неё не добавлен.");
-            }
+        addElement();
+        if (isAdded) {
+            System.out.println("Новый элемент оказался больше всех имеющихся в коллекции.");
+            System.out.println("Он успешно добавлен в неё.");
+        } else {
+            System.out.println("В коллекции есть элементы больше данного.");
+            System.out.println("Элемент в неё не добавлен.");
+        }
     }
 }

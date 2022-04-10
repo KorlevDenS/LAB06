@@ -5,6 +5,7 @@ import basic.objects.MusicBand;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
 import interfaces.RemovingIf;
+
 import java.util.ArrayList;
 
 /**
@@ -14,14 +15,17 @@ import java.util.ArrayList;
  */
 public class RemoveGreater extends Add implements RemovingIf {
 
-    /** The {@code ArrayList} with bands to remove.*/
+    /**
+     * The {@code ArrayList} with bands to remove.
+     */
     private ArrayList<MusicBand> bandsToRemove;
 
     /**
      * Constructs new RemoveGreater object.
+     *
      * @param command relevant {@link AvailableCommands} command.
      * @throws IncorrectDataForObjectException if {@link AvailableCommands} command
-     * does not match this class.
+     *                                         does not match this class.
      */
     public RemoveGreater(AvailableCommands command) {
         super(command);
@@ -43,11 +47,11 @@ public class RemoveGreater extends Add implements RemovingIf {
 
     public void execute() throws InvalidDataFromFileException {
         loadElement();
-            analyseAndRemove();
-            if (!bandsToRemove.isEmpty())
-                System.out.println("Было успешно удалено " + bandsToRemove.size() + " элементов.");
-            else System.out.println("Ни один из элементов не превышает данный. Ничего не было удалено.");
-            bandsToRemove.clear();
+        analyseAndRemove();
+        if (!bandsToRemove.isEmpty())
+            System.out.println("Было успешно удалено " + bandsToRemove.size() + " элементов.");
+        else System.out.println("Ни один из элементов не превышает данный. Ничего не было удалено.");
+        bandsToRemove.clear();
     }
 
     public String getDescription() {
