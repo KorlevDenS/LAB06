@@ -2,25 +2,7 @@
 <ACCUMULATOR>
     <CollectionKeeper>
         <MusicBand>
-            <id>34683</id>
-            <name>Group1</name>
-            <numberOfParticipants>3</numberOfParticipants>
-            <frontMan>
-                <birthday>1999-12-02T03:04:05.000000010+03:00[Europe/Moscow]</birthday>
-                <height>190</height>
-                <name>Billy</name>
-                <passportID>QW1234556h123563</passportID>
-                <weight>90</weight>
-            </frontMan>
-            <genre>BRIT_POP</genre>
-            <coordinates>
-                <x>234</x>
-                <y>200.0</y>
-            </coordinates>
-            <creationDate>1991-09-16</creationDate>
-        </MusicBand>
-        <MusicBand>
-            <id>45675</id>
+            <id>1648</id>
             <name>Group2</name>
             <numberOfParticipants>5</numberOfParticipants>
             <frontMan>
@@ -35,7 +17,25 @@
                 <x>222</x>
                 <y>20.0</y>
             </coordinates>
-            <creationDate>1986-09-12</creationDate>
+            <creationDate>1981-10-13</creationDate>
+        </MusicBand>
+        <MusicBand>
+            <id>2821</id>
+            <name>Group1</name>
+            <numberOfParticipants>3</numberOfParticipants>
+            <frontMan>
+                <birthday>1999-12-02T03:04:05.000000010+03:00[Europe/Moscow]</birthday>
+                <height>186</height>
+                <name>Billy</name>
+                <passportID>QW1234556h123563</passportID>
+                <weight>90</weight>
+            </frontMan>
+            <genre>BRIT_POP</genre>
+            <coordinates>
+                <x>234</x>
+                <y>200.0</y>
+            </coordinates>
+            <creationDate>1988-09-16</creationDate>
         </MusicBand>
     </CollectionKeeper>
 </ACCUMULATOR>

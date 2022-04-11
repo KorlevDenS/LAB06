@@ -17,7 +17,13 @@ public class Main {
     public static void main(String[] args) throws InvalidDataFromFileException {
         Accumulator.appleMusic = new HashSet<>();
         Accumulator.current = new Date();
-        Accumulator.currentXml = new File(System.getenv("COLLECTION_FILE"));
+        try {
+            Accumulator.currentXml = new File(System.getenv("COLLECTION_FILE"));
+        } catch (NullPointerException e) {
+            System.out.println("Необходимая переменная окружения не задана. \n" +
+                    "Задайте переменную COLLECTION_FILE при помощи команды export c необходимым файлом xml.");
+            System.exit(0);
+        }
         //Accumulator.currentXml = new File("src/main/resources/MusicBandCollections.xml");
         try {
             JaxbManager manager = new JaxbManager(Accumulator.currentXml);

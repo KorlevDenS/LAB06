@@ -119,7 +119,7 @@ public class ExecuteScript extends Command implements Operand {
         }
     }
 
-    private void addNeededData(Matcher matcher, String line) throws FileNotFoundException {
+    private void addNeededData(Matcher matcher, String line)  {
         if (matcher.matches()) {
             Scanner scanner = new Scanner(line);
             scanner.next();
@@ -133,7 +133,16 @@ public class ExecuteScript extends Command implements Operand {
                 }
             }
             fileIndex++;
-            scriptScanners.put(fileIndex, new ScannerWithMemory(newFile));
+            try {
+                scriptScanners.put(fileIndex, new ScannerWithMemory(newFile));
+            } catch (FileNotFoundException e) {
+                fileIndex--;
+                infoData.add("Файл:" + scriptScanners.get(fileIndex).getFileName() + ";стр."
+                        + scriptScanners.get(fileIndex).getStringNumber() + ": ");
+                dataStringBuilder.append("Файла с именем ").append(newFile).append(" не существует").append("\n");
+                return;
+            }
+
         } else {
             infoData.add("Файл:" + scriptScanners.get(fileIndex).getFileName() + ";стр."
                     + scriptScanners.get(fileIndex).getStringNumber() + ": ");
