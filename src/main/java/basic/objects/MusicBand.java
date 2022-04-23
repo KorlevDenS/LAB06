@@ -1,5 +1,6 @@
 package basic.objects;
 
+import com.sun.istack.Nullable;
 import commands.JaxbManager;
 import exceptions.InvalidDataFromFileException;
 
@@ -7,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Class {@code MusicBand} makes an object that represents a music
@@ -300,17 +302,32 @@ public class MusicBand implements Comparable<MusicBand> {
                 + "]";
     }
 
+    @Nullable
     public String toScriptString() {
+        if (frontMan == null)
+            return name + "\n"
+                    + coordinates.getX() + "\n"
+                    + coordinates.getY() + "\n"
+                    + numberOfParticipants + "\n"
+                    + genre + "\n"
+                    + "" + "\n"
+                    + creationDate + "\n"
+                    + id + "\n";
+
+        Optional<String> nullablePassword = Optional.ofNullable(frontMan.getPassportID());
+        Optional<String> nullableBirthday = Optional.ofNullable(frontMan.getBirthdayForScript());
+
         return name + "\n"
                 + coordinates.getX() + "\n"
                 + coordinates.getY() + "\n"
                 + numberOfParticipants + "\n"
                 + genre + "\n"
+                + "да" + "\n"
                 + frontMan.getName() + "\n"
                 + frontMan.getHeight() + "\n"
                 + frontMan.getWeight() + "\n"
-                + frontMan.getPassportID() + "\n"
-                + frontMan.getBirthdayForScript() + "\n"
+                + nullablePassword.orElse("") + "\n"
+                + nullableBirthday.orElse("") + "\n"
                 + creationDate + "\n"
                 + id + "\n";
     }

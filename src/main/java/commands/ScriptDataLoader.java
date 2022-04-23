@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.TimeZone;
 
@@ -162,6 +163,7 @@ public class ScriptDataLoader {
      * @throws InvalidDataFromFileException if some fields in script are invalid.
      */
     protected Person loadFrontManFromData(boolean addToCollection) throws InvalidDataFromFileException {
+        if (!Objects.equals(Accumulator.scriptScanner.nextLine(), "да")) return null;
         String frontManName = loadFrontManName();
         if (frontManName.equals("")) return null;
         long frontManHeight = loadFrontManHeight();
@@ -201,7 +203,4 @@ public class ScriptDataLoader {
         }
     }
 
-    //protected LocalDate loadCreationDate() {
-    //
-    //{
 }

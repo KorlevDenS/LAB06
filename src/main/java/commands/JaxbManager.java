@@ -122,7 +122,8 @@ public class JaxbManager {
             ArrayList<MusicBand> bandsToRemove = new ArrayList<>();
             for (MusicBand band : Accumulator.appleMusic)
                 if (band.getFrontMan() != null) {
-                    if (band.getFrontMan().getPassportID().equals(passport)) count++;
+                    if (band.getFrontMan().getPassportID() != null)
+                        if (band.getFrontMan().getPassportID().equals(passport)) count++;
                 }
             if (count > 1) {
                 for (MusicBand band : Accumulator.appleMusic)

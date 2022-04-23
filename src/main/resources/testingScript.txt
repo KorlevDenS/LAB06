@@ -8,6 +8,7 @@ Group1
 200
 12
 BRIT_POP
+да
 Billy
 186
 90
@@ -20,6 +21,7 @@ Group2
 20
 5
 BRIT_POP
+да
 Bob
 195
 94
@@ -31,6 +33,7 @@ Group1
 200
 11
 BRIT_POP
+да
 Billy
 186
 90
@@ -42,6 +45,7 @@ Group1
 200
 12
 BRIT_POP
+да
 Billy
 186
 90
@@ -53,6 +57,7 @@ Group1
 200
 3
 BRIT_POP
+да
 Billy
 186
 90
@@ -64,6 +69,7 @@ Group1
 200
 25
 BRIT_POP
+да
 Billy
 186
 90
@@ -79,6 +85,7 @@ Group1
 200
 21
 BRIT_POP
+да
 Billy
 186
 90
@@ -86,6 +93,7 @@ QW1234556h543
 1999 12 2 3 4 5 10
 show
 remove_all_by_front_man
+да
 Billy
 186
 90

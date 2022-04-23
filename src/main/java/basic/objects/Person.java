@@ -134,6 +134,8 @@ public class Person {
     }
 
     public String getBirthdayForScript() {
+        if (this.birthday == null)
+            return null;
         String[] times = this.getBirthday().split("[-T:.+\\[\\]]");
         int year = Integer.parseInt(times[0]);
         int month = Integer.parseInt(times[1]);
