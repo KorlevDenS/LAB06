@@ -1,13 +1,10 @@
 package basic.objects;
 
-import com.sun.istack.Nullable;
-import commands.JaxbManager;
 import exceptions.InvalidDataFromFileException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -138,6 +135,7 @@ public class MusicBand implements Comparable<MusicBand> {
      * @return {@link  MusicBand#frontMan} of the object.
      */
     public Person getFrontMan() {
+        if (frontMan == null) return null;
         return this.frontMan;
     }
 
@@ -302,7 +300,6 @@ public class MusicBand implements Comparable<MusicBand> {
                 + "]";
     }
 
-    @Nullable
     public String toScriptString() {
         if (frontMan == null)
             return name + "\n"
@@ -313,10 +310,8 @@ public class MusicBand implements Comparable<MusicBand> {
                     + "" + "\n"
                     + creationDate + "\n"
                     + id + "\n";
-
         Optional<String> nullablePassword = Optional.ofNullable(frontMan.getPassportID());
         Optional<String> nullableBirthday = Optional.ofNullable(frontMan.getBirthdayForScript());
-
         return name + "\n"
                 + coordinates.getX() + "\n"
                 + coordinates.getY() + "\n"

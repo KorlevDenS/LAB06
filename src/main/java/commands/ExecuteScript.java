@@ -160,10 +160,9 @@ public class ExecuteScript extends Command implements Operand {
             line = Accumulator.scriptScanner.nextLine();
             if (line.equals("exit")) {
                 System.out.println("Выполнение скрипта завершено.");
-                for (String key : mistakesInfo.keySet()) {
+                mistakesInfo.keySet().forEach(key -> {
                     if ((!Objects.equals(mistakesInfo.get(key), "")))
-                        System.out.println(key + mistakesInfo.get(key));
-                }
+                        System.out.println(key + mistakesInfo.get(key));});
                 System.exit(0);
             }
             for (AvailableCommands command : AvailableCommands.values()) {
@@ -202,10 +201,9 @@ public class ExecuteScript extends Command implements Operand {
             scanScriptCommand();
         }
         Accumulator.readingTheScript = false;
-        for (String key : mistakesInfo.keySet()) {
+        mistakesInfo.keySet().forEach(key -> {
             if ((!Objects.equals(mistakesInfo.get(key), "")))
-                System.out.println(key + mistakesInfo.get(key));
-        }
+                System.out.println(key + mistakesInfo.get(key));});
         System.out.println("Выполнение скрипта завершено.");
     }
 

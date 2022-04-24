@@ -4,7 +4,9 @@ import basic.objects.Accumulator;
 import basic.objects.MusicBand;
 import exceptions.IncorrectDataForObjectException;
 
-import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Class {@code GroupCountingByFrontMan} is used for creating
@@ -15,13 +17,13 @@ import java.util.HashSet;
 public class GroupCountingByFrontMan extends Command {
 
     /**
-     * {@code Hashset} for {@link MusicBand} objects with {@code frontMan} is not null.
+     * {@code Set} for {@link MusicBand} objects with {@code frontMan} is not null.
      */
-    private HashSet<MusicBand> bandsWithFrontMan;
+    private List<MusicBand> bandsWithFrontMan;
     /**
-     * {@code Hashset} for {@link MusicBand} objects with {@code frontMan} = null.
+     * {@code Set} for {@link MusicBand} objects with {@code frontMan} = null.
      */
-    private HashSet<MusicBand> bandsWithNoFrontMan;
+    private List<MusicBand> bandsWithNoFrontMan;
 
     /**
      * Constructs new GroupCountingByFrontMan object.
@@ -41,15 +43,10 @@ public class GroupCountingByFrontMan extends Command {
      * into groups: with frontMan and without.
      */
     private void groupByFrontMan() {
-        bandsWithFrontMan = new HashSet<>();
-        bandsWithNoFrontMan = new HashSet<>();
-        for (MusicBand band : Accumulator.appleMusic) {
-            if (band.getFrontMan() == null) {
-                bandsWithNoFrontMan.add(band);
-            } else {
-                bandsWithFrontMan.add(band);
-            }
-        }
+        Map<Boolean, List<MusicBand>> map = Accumulator.appleMusic.stream().collect(Collectors
+                .partitioningBy((MusicBand s) -> s.getFrontMan() == null));
+        bandsWithNoFrontMan = map.get(true);
+        bandsWithFrontMan = map.get(false);
     }
 
     public void execute() {

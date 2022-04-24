@@ -18,11 +18,6 @@ public class RemoveByID extends Command implements Operand, RemovingIf {
      * Is always completed by {@link RemoveByID#installOperand(String)}.
      */
     private long idToRemoveBy;
-    /**
-     * Becomes {@code true} if {@code MusicBand} object was
-     * removed from the {@code HashSet} by {@link RemoveByID#analyseAndRemove()}
-     */
-    boolean isRemoved = false;
 
     /**
      * Constructs new RemoveById object.
@@ -38,20 +33,16 @@ public class RemoveByID extends Command implements Operand, RemovingIf {
     }
 
     public void analyseAndRemove() {
-        for (MusicBand band : Accumulator.appleMusic) {
-            if (band.getId() == idToRemoveBy) {
-                Accumulator.appleMusic.remove(band);
-                isRemoved = true;
-                break;
-            }
-        }
+        MusicBand bandToRemove = Accumulator.appleMusic.stream()
+                .filter(s -> s.getId().equals(idToRemoveBy)).findFirst().orElse(null);
+        if (bandToRemove != null) {
+            Accumulator.appleMusic.remove(bandToRemove);
+            System.out.println("Элемент с ID = " + idToRemoveBy + " успешно удалён.");
+        } else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
     }
 
     public void execute() {
         analyseAndRemove();
-        if (isRemoved)
-            System.out.println("Элемент с ID = " + idToRemoveBy + " успешно удалён.");
-        else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
     }
 
     public void installOperand(String stringRepresentation) {

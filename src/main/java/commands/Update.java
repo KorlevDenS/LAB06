@@ -42,12 +42,11 @@ public class Update extends Add implements Operand, RemovingIf {
 
     public void analyseAndRemove() {
         isRemoved = false;
-        for (MusicBand band : Accumulator.appleMusic) {
-            if (band.getId() == idToUpdateBy) {
-                Accumulator.appleMusic.remove(band);
-                isRemoved = true;
-                break;
-            }
+        MusicBand bandToRemove = Accumulator.appleMusic.stream()
+                .filter(s -> s.getId().equals(idToUpdateBy)).findFirst().orElse(null);
+        if (bandToRemove != null) {
+            Accumulator.appleMusic.remove(bandToRemove);
+            isRemoved = true;
         }
     }
 

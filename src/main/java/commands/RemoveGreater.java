@@ -6,7 +6,8 @@ import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
 import interfaces.RemovingIf;
 
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Class {@code RemoveGreater} is used for creating command "remove_greater" object,
@@ -18,7 +19,7 @@ public class RemoveGreater extends Add implements RemovingIf {
     /**
      * The {@code ArrayList} with bands to remove.
      */
-    private ArrayList<MusicBand> bandsToRemove;
+    private Set<MusicBand> bandsToRemove;
 
     /**
      * Constructs new RemoveGreater object.
@@ -34,15 +35,9 @@ public class RemoveGreater extends Add implements RemovingIf {
     }
 
     public void analyseAndRemove() {
-        bandsToRemove = new ArrayList<>();
-        for (MusicBand band : Accumulator.appleMusic) {
-            if (newBand.compareTo(band) < 0) {
-                bandsToRemove.add(band);
-            }
-        }
-        for (MusicBand b : bandsToRemove) {
-            Accumulator.appleMusic.remove(b);
-        }
+        bandsToRemove = Accumulator.appleMusic.stream()
+                .filter(s -> newBand.compareTo(s) < 0).collect(Collectors.toSet());
+        bandsToRemove.forEach(band -> Accumulator.appleMusic.remove(band));
     }
 
     public void execute() throws InvalidDataFromFileException {

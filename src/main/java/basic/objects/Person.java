@@ -1,5 +1,7 @@
 package basic.objects;
 
+import com.sun.istack.Nullable;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -112,6 +114,7 @@ public class Person {
      * @return {@link  Person#passportID} of the object.
      */
     public String getPassportID() {
+        if (passportID == null) return null;
         return passportID;
     }
 

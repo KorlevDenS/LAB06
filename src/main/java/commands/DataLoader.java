@@ -6,6 +6,7 @@ import exceptions.*;
 import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.TimeZone;
@@ -83,9 +84,7 @@ public abstract class DataLoader extends Command {
      */
     protected MusicGenre loadBandMusicGenre() {
         System.out.println("Введите один из возможных жанров:");
-        for (MusicGenre genre : MusicGenre.values()) {
-            System.out.println(genre.toString());
-        }
+        Arrays.stream(MusicGenre.values()).forEachOrdered(genre -> System.out.println(genre.toString()));
         return ScanValidation.nextGenre();
     }
 

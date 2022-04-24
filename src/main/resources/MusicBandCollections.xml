@@ -2,7 +2,7 @@
 <ACCUMULATOR>
     <CollectionKeeper>
         <MusicBand>
-            <id>73250</id>
+            <id>56347</id>
             <name>Group1</name>
             <numberOfParticipants>12</numberOfParticipants>
             <genre>BRIT_POP</genre>
@@ -10,28 +10,10 @@
                 <x>234</x>
                 <y>200.0</y>
             </coordinates>
-            <creationDate>1973-06-22</creationDate>
+            <creationDate>2003-03-16</creationDate>
         </MusicBand>
         <MusicBand>
-            <id>50579</id>
-            <name>Group2</name>
-            <numberOfParticipants>5</numberOfParticipants>
-            <frontMan>
-                <birthday>1980-12-02T03:04:05.000000010+03:00[Europe/Moscow]</birthday>
-                <height>195</height>
-                <name>Bob</name>
-                <passportID>DR12311111f</passportID>
-                <weight>94</weight>
-            </frontMan>
-            <genre>BRIT_POP</genre>
-            <coordinates>
-                <x>222</x>
-                <y>20.0</y>
-            </coordinates>
-            <creationDate>1981-04-16</creationDate>
-        </MusicBand>
-        <MusicBand>
-            <id>52584</id>
+            <id>70449</id>
             <name>Group1</name>
             <numberOfParticipants>3</numberOfParticipants>
             <frontMan>
@@ -46,7 +28,25 @@
                 <x>234</x>
                 <y>200.0</y>
             </coordinates>
-            <creationDate>1982-12-13</creationDate>
+            <creationDate>1997-02-06</creationDate>
+        </MusicBand>
+        <MusicBand>
+            <id>80442</id>
+            <name>Group2</name>
+            <numberOfParticipants>5</numberOfParticipants>
+            <frontMan>
+                <birthday>1980-12-02T03:04:05.000000010+03:00[Europe/Moscow]</birthday>
+                <height>195</height>
+                <name>Bob</name>
+                <passportID>DR12311111f</passportID>
+                <weight>94</weight>
+            </frontMan>
+            <genre>BRIT_POP</genre>
+            <coordinates>
+                <x>222</x>
+                <y>20.0</y>
+            </coordinates>
+            <creationDate>1996-03-26</creationDate>
         </MusicBand>
     </CollectionKeeper>
 </ACCUMULATOR>

@@ -36,7 +36,7 @@ public class Main {
         }
         for (MusicBand band : Accumulator.appleMusic) {
             Accumulator.uniqueIdList.add(band.getId());
-            if (band.getFrontMan() != null)
+            if ((band.getFrontMan() != null)&&(band.getFrontMan().getPassportID() != null))
                 Accumulator.passports.add(band.getFrontMan().getPassportID());
         }
 

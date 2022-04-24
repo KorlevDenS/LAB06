@@ -2,6 +2,8 @@ package commands;
 
 import exceptions.IncorrectDataForObjectException;
 
+import java.util.Arrays;
+
 /**
  * Class {@code Help} is used for creating command "help" object,
  * that prints a manual with all commands and their descriptions.
@@ -22,9 +24,8 @@ public class Help extends Command {
     }
 
     public void execute() {
-        for (AvailableCommands command : AvailableCommands.values()) {
-            System.out.println("Команда " + command.getTitle() + " - " + command.getDescription() + ".");
-        }
+        Arrays.stream(AvailableCommands.values())
+                .forEach(s -> System.out.println("Команда " + s.getTitle() + " - " + s.getDescription() + "."));
     }
 
     public String getDescription() {

@@ -55,13 +55,13 @@ public class Accumulator {
      * for uniqueness of user's input of passportIds when creating
      * new {@link Person} objects.
      */
-    public static final ArrayList<String> passports = new ArrayList<>();
+    public static HashSet<String> passports = new HashSet<>();
 
     /**
      * {@code ArrayList} keeping {@code Long} values is used for generating unique
      * {@code  MusicBand#id} in method of {@code  MusicBand#generateId()}
      */
-    public static ArrayList<Long> uniqueIdList = new ArrayList<>();
+    public static HashSet<Long> uniqueIdList = new HashSet<>();
 
     @XmlElementWrapper(name = "CollectionKeeper")
     @XmlElement(name = "MusicBand")

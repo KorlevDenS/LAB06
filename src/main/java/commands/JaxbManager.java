@@ -11,6 +11,10 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Class {@code JaxbManager} is used to realize opportunities
@@ -97,43 +101,26 @@ public class JaxbManager {
     }
 
     public static void idValidation() {
-        ArrayList<MusicBand> bandsToRemove;
         for (Long id : Accumulator.uniqueIdList) {
-            int count = 0;
-            bandsToRemove = new ArrayList<>();
-            for (MusicBand band : Accumulator.appleMusic)
-                if (id.equals(band.getId())) count++;
-            if (count > 1) {
-                for (MusicBand band : Accumulator.appleMusic)
-                    if (band.getId().equals(id))
-                        bandsToRemove.add(band);
-                Accumulator.uniqueIdList.remove(id);
-                for (MusicBand bandToRemove : bandsToRemove) {
-                    Accumulator.appleMusic.remove(bandToRemove);
-                }
-                System.out.println("Элементы с одинаковыми ID недопустимы и были удалены.");
+            Set<MusicBand> removeSet = Accumulator.appleMusic.stream().filter(s -> id.equals(s.getId()))
+                    .collect(Collectors.toSet());
+            if (removeSet.size() > 1) {
+                removeSet.forEach(band -> Accumulator.appleMusic.remove(band));
+                System.out.println("Элементы с одинаковыми ID недопустимы и были удалены:");
+                removeSet.forEach(band -> System.out.println("Объект: " + band.toString()));
             }
         }
     }
 
     public static void passwordValidation() {
         for (String passport : Accumulator.passports) {
-            int count = 0;
-            ArrayList<MusicBand> bandsToRemove = new ArrayList<>();
-            for (MusicBand band : Accumulator.appleMusic)
-                if (band.getFrontMan() != null) {
-                    if (band.getFrontMan().getPassportID() != null)
-                        if (band.getFrontMan().getPassportID().equals(passport)) count++;
-                }
-            if (count > 1) {
-                for (MusicBand band : Accumulator.appleMusic)
-                    if (band.getFrontMan().getPassportID().equals(passport))
-                        bandsToRemove.add(band);
-                Accumulator.passports.remove(passport);
-                for (MusicBand bandToRemove : bandsToRemove) {
-                    Accumulator.appleMusic.remove(bandToRemove);
-                }
-                System.out.println("Элементы с одинаковыми паролями фронтменов недопустимы и были удалены.");
+            Set<MusicBand> removeSet = Accumulator.appleMusic.stream()
+                    .filter(s -> (s.getFrontMan() != null)&&(Objects.equals(passport, s.getFrontMan().getPassportID())))
+                    .collect(Collectors.toSet());
+            if (removeSet.size() > 1) {
+                removeSet.forEach(band -> Accumulator.appleMusic.remove(band));
+                System.out.println("Элементы с одинаковыми паролями фронтменов недопустимы и были удалены:");
+                removeSet.forEach(band -> System.out.println("Объект: " + band.toString()));
             }
         }
     }

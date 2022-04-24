@@ -5,8 +5,9 @@ import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
 import interfaces.RemovingIf;
 
-import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Class RemoveAllByFrontMan is used for creating command "remove_all_by_front_man" object,
@@ -23,7 +24,7 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
     /**
      * The {@code ArrayList} with bands to remove.
      */
-    private ArrayList<MusicBand> bandsToRemove;
+    private Set<MusicBand> bandsToRemove;
 
     /**
      * Constructs new RemoveAllByFrontMan object.
@@ -51,15 +52,9 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
     }
 
     public void analyseAndRemove() {
-        bandsToRemove = new ArrayList<>();
-        for (MusicBand band : Accumulator.appleMusic) {
-            if (Objects.equals(band.getFrontMan(), frontManToRemoveBy)) {
-                bandsToRemove.add(band);
-            }
-        }
-        for (MusicBand b : bandsToRemove) {
-            Accumulator.appleMusic.remove(b);
-        }
+        bandsToRemove = Accumulator.appleMusic.stream()
+                .filter(s -> Objects.equals(s.getFrontMan(),frontManToRemoveBy)).collect(Collectors.toSet());
+        bandsToRemove.forEach(band -> Accumulator.appleMusic.remove(band));
     }
 
     public void execute() throws InvalidDataFromFileException {
@@ -71,7 +66,6 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
             System.out.println("Было успешно удалено " + bandsToRemove.size() + " элементов.");
         } else
             System.out.println("Ни в одной группе в коллекции не нашлось такого фронтмена. Ничего не было удалено.");
-        bandsToRemove.clear();
     }
 
     public String getDescription() {

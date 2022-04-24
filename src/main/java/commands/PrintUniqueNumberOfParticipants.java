@@ -4,8 +4,6 @@ import basic.objects.Accumulator;
 import basic.objects.MusicBand;
 import exceptions.IncorrectDataForObjectException;
 
-import java.util.HashSet;
-
 /**
  * Class {@code PrintUniqueNumberOfParticipants} is used for creating
  * command "print_unique_number_of_participants" object,
@@ -13,12 +11,6 @@ import java.util.HashSet;
  * of {@code HashSet}.
  */
 public class PrintUniqueNumberOfParticipants extends Command {
-
-    /**
-     * Set of unique numbers of participants in {@code MusicBand} objects
-     * of {@code HashSet}.
-     */
-    private HashSet<Long> uniqueNumbers;
 
     /**
      * Constructs new {@code PrintUniqueNumberOfParticipants} object.
@@ -34,25 +26,10 @@ public class PrintUniqueNumberOfParticipants extends Command {
         }
     }
 
-    /**
-     * Finds unique numbers of participants in {@code MusicBand} objects
-     * of {@code HashSet} and puts it into {@link PrintUniqueNumberOfParticipants#uniqueNumbers}.
-     */
-    private void findUniqueNumbers() {
-        uniqueNumbers = new HashSet<>();
-        for (MusicBand band : Accumulator.appleMusic) {
-            Long number = band.getNumberOfParticipants();
-            uniqueNumbers.add(number);
-        }
-    }
-
     public void execute() {
         if (!Accumulator.appleMusic.isEmpty()) {
-            findUniqueNumbers();
             System.out.println("Список уникальных значений количества участников в группах:");
-            for (Long number : uniqueNumbers) {
-                System.out.println(number);
-            }
+            Accumulator.appleMusic.stream().map(MusicBand::getNumberOfParticipants).distinct().forEach(System.out::println);
         } else {
             System.out.println("Уникальных значений нет, так как в коллекции еще нет элементов.");
         }

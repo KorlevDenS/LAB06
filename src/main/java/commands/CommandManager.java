@@ -4,6 +4,7 @@ import exceptions.InvalidDataFromFileException;
 import interfaces.CommandManagement;
 import interfaces.Operand;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -35,9 +36,7 @@ public class CommandManager implements CommandManagement {
         }
         System.out.println("Команда не существует или введена некорректно");
         System.out.println("Введите одну из доступных команд из списка:");
-        for (AvailableCommands command : AvailableCommands.values()) {
-            System.out.println(command.getTitle());
-        }
+        Arrays.stream(AvailableCommands.values()).forEachOrdered(s -> System.out.println(s.getTitle()));
         Scanner scanner = new Scanner(System.in);
         instructionTitle = scanner.nextLine();
         if (instructionTitle.equals("exit"))

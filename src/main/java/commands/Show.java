@@ -26,9 +26,7 @@ public class Show extends Command {
     public void execute() {
         if (!Accumulator.appleMusic.isEmpty()) {
             System.out.println("Все элементы коллекции:");
-            for (Object element : Accumulator.appleMusic) {
-                System.out.println(element.toString());
-            }
+            Accumulator.appleMusic.stream().map(MusicBand::toString).forEach(System.out::println);
         } else {
             System.out.println("В коллекции ещё нет элементов.");
         }
