@@ -1,15 +1,13 @@
 package basic.objects;
 
-import com.sun.istack.Nullable;
-
-import java.time.ZoneId;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
  * Class {@code Person} makes an object that represents a Person and keeps its data.
  */
-public class Person {
+public class Person implements Serializable {
 
     /**
      * Keeps name of the person. Cannot be {@code null} or empty {@code String}.

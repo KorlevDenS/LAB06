@@ -1,6 +1,6 @@
+import Server.ScriptCommandManager;
 import basic.objects.Accumulator;
 import basic.objects.MusicBand;
-import commands.CommandManager;
 import commands.JaxbManager;
 import exceptions.InvalidDataFromFileException;
 
@@ -14,6 +14,9 @@ import java.util.Scanner;
 import static commands.JaxbManager.*;
 
 public class Main {
+
+    static Scanner commandScanner = new Scanner(System.in);
+
     public static void main(String[] args) throws InvalidDataFromFileException {
         Accumulator.appleMusic = new HashSet<>();
         Accumulator.current = new Date();
@@ -46,14 +49,10 @@ public class Main {
     }
 
     public static void scanCommand() throws InvalidDataFromFileException {
-        Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine();
-
-        while (!line.equals("exit")) {
-            CommandManager manager = new CommandManager(line);
-            manager.execution(manager.instructionFetch());
-            line = scanner.nextLine();
-        }
-
+        String line = commandScanner.nextLine();
+        ScriptCommandManager manager = new ScriptCommandManager(line);
+        manager.execution(manager.instructionFetch());
+        if (line.equals("exit")) return;
+        scanCommand();
     }
 }

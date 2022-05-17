@@ -2,7 +2,7 @@ package commands;
 
 import basic.objects.*;
 import exceptions.InvalidDataFromFileException;
-import exceptions.ScanValidation;
+import common.ScanValidation;
 
 import java.time.DateTimeException;
 

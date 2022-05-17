@@ -1,6 +1,7 @@
 package commands;
 
 import basic.objects.Accumulator;
+import common.ResultPattern;
 import exceptions.*;
 
 import java.util.Collections;
@@ -70,20 +71,21 @@ public class Info extends Command {
         }
     }
 
-    public void execute() {
+    public ResultPattern execute() {
         knowInformation();
-        System.out.println("Информация о созданной коллекции:");
-        System.out.println("Коллекция представляет собой " + typeOfCollection);
-        System.out.println("Дата инициализации: " + initDateOfCollection);
-        System.out.println("Текущее количество элементов: " + amountOfElements);
+        report.getReports().add("Информация о созданной коллекции:");
+        report.getReports().add("Коллекция представляет собой " + typeOfCollection);
+        report.getReports().add("Дата инициализации: " + initDateOfCollection);
+        report.getReports().add("Текущее количество элементов: " + amountOfElements);
         if (Accumulator.appleMusic.isEmpty()) {
-            System.out.println("Минимального элемента ещё нет, коллекция пуста.");
-            System.out.println("Максимального элемента ёщё нет, коллекция пуста.");
-            System.out.println("Тип неизвестен, так как в коллекции еще нет ни одного элемента.");
+            report.getReports().add("Минимального элемента ещё нет, коллекция пуста.");
+            report.getReports().add("Максимального элемента ёщё нет, коллекция пуста.");
+            report.getReports().add("Тип неизвестен, так как в коллекции еще нет ни одного элемента.");
         } else {
-            System.out.println("Минимальный элемент: " + minElement);
-            System.out.println("Максимальный элемент: " + maxElement);
-            System.out.println("Тип хранимых элементов: " + typeOfInnerElements);
+            report.getReports().add("Минимальный элемент: " + minElement);
+            report.getReports().add("Максимальный элемент: " + maxElement);
+            report.getReports().add("Тип хранимых элементов: " + typeOfInnerElements);
         }
+        return report;
     }
 }

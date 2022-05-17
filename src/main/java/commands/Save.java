@@ -1,6 +1,7 @@
 package commands;
 
 import basic.objects.Accumulator;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
 import javax.xml.bind.JAXBException;
@@ -30,15 +31,16 @@ public class Save extends Command {
         manager.writeXml();
     }
 
-    public void execute() {
+    public ResultPattern execute() {
         try {
             saveCollection();
         } catch (JAXBException exception) {
-            System.out.println("Instruction \"save\" cannot save current collection:");
-            System.out.println("Xml JAXB management realized incorrectly in the program.");
-            System.out.println("User cannot fix this problem.");
+            report.getReports().add("Instruction \"save\" cannot save current collection:");
+            report.getReports().add("Xml JAXB management realized incorrectly in the program.");
+            report.getReports().add("User cannot fix this problem.");
         }
-        System.out.println("Текущая версия коллекции успешно сохранена в файл.");
+        report.getReports().add("Текущая версия коллекции успешно сохранена в файл.");
+        return report;
     }
 
     public String getDescription() {

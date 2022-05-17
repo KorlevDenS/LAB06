@@ -2,6 +2,7 @@ package commands;
 
 import basic.objects.Accumulator;
 import basic.objects.MusicBand;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import interfaces.Operand;
 import interfaces.RemovingIf;
@@ -37,12 +38,14 @@ public class RemoveByID extends Command implements Operand, RemovingIf {
                 .filter(s -> s.getId().equals(idToRemoveBy)).findFirst().orElse(null);
         if (bandToRemove != null) {
             Accumulator.appleMusic.remove(bandToRemove);
-            System.out.println("Элемент с ID = " + idToRemoveBy + " успешно удалён.");
-        } else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
+            report.getReports().add("Элемент с ID = " + idToRemoveBy + " успешно удалён.");
+        } else report.getReports().add("Элемента с таким ID в не было найдено в коллекции.");
     }
 
-    public void execute() {
+    public ResultPattern execute() {
+        installOperand(dataBase.getOperand());
         analyseAndRemove();
+        return report;
     }
 
     public void installOperand(String stringRepresentation) {

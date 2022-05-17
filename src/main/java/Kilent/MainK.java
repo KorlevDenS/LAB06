@@ -1,33 +1,35 @@
 package Kilent;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
+import java.io.*;
+import java.net.Socket;
+import java.util.Scanner;
+
 
 public class MainK {
+
     public static void main(String[] args) throws IOException {
-        byte[] arr = {1,2,3,4,5,6,7,8,9};
-        int len = arr.length;
-        DatagramChannel dc;
-        ByteBuffer buf;
-        InetAddress host = InetAddress.getByName("LAPTOP-5P3L6GLR");
-        int port = 6789;
-        SocketAddress addr;
 
-        addr = new InetSocketAddress(host, port);
-        dc = DatagramChannel.open();
+        Socket clientSocket = new Socket("localhost", 4004);
 
-        buf = ByteBuffer.wrap(arr);
-        dc.send(buf, addr);
+        Scanner reader = new Scanner(System.in);
 
-        buf.clear();
-        addr = dc.receive(buf);
+        Scanner in = new Scanner(clientSocket.getInputStream());
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
-        for (byte j: arr){
-            System.out.println(j);
+        System.out.println("Вы что-то хотели сказать? Введите это здесь:");
+        System.out.println(in.nextLine());
+
+
+        boolean done = false;
+        while (!done) {
+            String word = reader.nextLine();
+
+            out.write(word + "\n");
+            out.flush();
+
+            String serverWord = in.nextLine();
+            System.out.println(serverWord);
+            if (word.equals("BYE")) done = true;
         }
 
     }

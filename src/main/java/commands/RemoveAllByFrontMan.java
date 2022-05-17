@@ -1,6 +1,7 @@
 package commands;
 
 import basic.objects.*;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
 import interfaces.RemovingIf;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
  * that removes all {@code MusicBand} objects from the {@code HashSet}
  * with {@link Person} frontMan is the same as in input.
  */
-public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
+public class RemoveAllByFrontMan extends Command implements RemovingIf {
 
     /**
      * {@link Person} frontMan from input to remove all {@code MusicBand} objects
@@ -48,7 +49,7 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
         if (Accumulator.readingTheScript) {
             ScriptDataLoader loader = new ScriptDataLoader();
             frontManToRemoveBy = loader.loadFrontManFromData(false);
-        } else frontManToRemoveBy = loadFrontMan();
+        } else frontManToRemoveBy = dataBase.getFrontMan();
     }
 
     public void analyseAndRemove() {
@@ -57,36 +58,20 @@ public class RemoveAllByFrontMan extends DataLoader implements RemovingIf {
         bandsToRemove.forEach(band -> Accumulator.appleMusic.remove(band));
     }
 
-    public void execute() throws InvalidDataFromFileException {
+    public ResultPattern execute() throws InvalidDataFromFileException {
         loadFrontManFromData();
         analyseAndRemove();
         if (!bandsToRemove.isEmpty()) {
             if (frontManToRemoveBy == null)
-                System.out.println("Удалению подверглись группы без фронтмена.");
-            System.out.println("Было успешно удалено " + bandsToRemove.size() + " элементов.");
+                report.getReports().add("Удалению подверглись группы без фронтмена.");
+            report.getReports().add("Было успешно удалено " + bandsToRemove.size() + " элементов.");
         } else
-            System.out.println("Ни в одной группе в коллекции не нашлось такого фронтмена. Ничего не было удалено.");
+            report.getReports().add("Ни в одной группе в коллекции не нашлось такого фронтмена. Ничего не было удалено.");
+        return report;
     }
 
     public String getDescription() {
         return this.description;
     }
 
-    /**
-     * Overrides {@link DataLoader#loadFrontManPassportID()}.
-     * In this class Method does not check inputted id for uniqueness
-     * because it is not used to add new {@code Person} anywhere.
-     */
-    @Override
-    protected String loadFrontManPassportID() {
-        System.out.println("Введите уникальный номер паспорта фронтмена группы.");
-        System.out.println("Если он неизвестен - пропустите.");
-        String frontManPassportId = scanner1.nextLine();
-        if (frontManPassportId.equals("")) return null;
-        while ((frontManPassportId.length() > 29)) {
-            System.out.println("Длинна строки не должна превышать 29 символов, введите ее правильно.");
-            frontManPassportId = scanner1.nextLine();
-        }
-        return frontManPassportId;
-    }
 }

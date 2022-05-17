@@ -1,5 +1,7 @@
 package commands;
 
+import common.InstructionPattern;
+import common.ResultPattern;
 import interfaces.Described;
 import interfaces.Executable;
 
@@ -13,7 +15,11 @@ public abstract class Command implements Described, Executable {
     public String title;
     public String description;
     public AvailableCommands command;
+    protected ResultPattern report;
+    protected InstructionPattern dataBase;
 
+    public Command(){
+    }
     /**
      * Constructs a new command.
      *
@@ -23,7 +29,17 @@ public abstract class Command implements Described, Executable {
         this.command = command;
         this.title = command.getTitle();
         this.description = command.getDescription();
+        this.report = new ResultPattern();
     }
+
+    public void setDataBase(InstructionPattern pattern) {
+        this.dataBase = pattern;
+    }
+
+    public ResultPattern getReport() {
+        return this.report;
+    }
+
 
     /**
      * Compares this object to the specified object.

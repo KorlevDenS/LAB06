@@ -2,6 +2,7 @@ package commands;
 
 import basic.objects.Accumulator;
 import basic.objects.MusicBand;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
 /**
@@ -26,13 +27,15 @@ public class PrintUniqueNumberOfParticipants extends Command {
         }
     }
 
-    public void execute() {
+    public ResultPattern execute() {
         if (!Accumulator.appleMusic.isEmpty()) {
-            System.out.println("Список уникальных значений количества участников в группах:");
-            Accumulator.appleMusic.stream().map(MusicBand::getNumberOfParticipants).distinct().forEach(System.out::println);
+            report.getReports().add("Список уникальных значений количества участников в группах:");
+            Accumulator.appleMusic.stream().map(MusicBand::getNumberOfParticipants)
+                    .distinct().forEach(s -> report.getReports().add(s.toString()));
         } else {
-            System.out.println("Уникальных значений нет, так как в коллекции еще нет элементов.");
+            report.getReports().add("Уникальных значений нет, так как в коллекции еще нет элементов.");
         }
+        return report;
     }
 
     public String getDescription() {

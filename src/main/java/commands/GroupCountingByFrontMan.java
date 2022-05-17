@@ -2,6 +2,7 @@ package commands;
 
 import basic.objects.Accumulator;
 import basic.objects.MusicBand;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
 import java.util.List;
@@ -49,15 +50,16 @@ public class GroupCountingByFrontMan extends Command {
         bandsWithFrontMan = map.get(false);
     }
 
-    public void execute() {
+    public ResultPattern execute() {
         if (!Accumulator.appleMusic.isEmpty()) {
             groupByFrontMan();
-            System.out.println("Групп с фронтменом: " + bandsWithFrontMan.size());
-            System.out.println("Групп без фронтмена: " + bandsWithNoFrontMan.size());
+            report.getReports().add("Групп с фронтменом: " + bandsWithFrontMan.size());
+            report.getReports().add("Групп без фронтмена: " + bandsWithNoFrontMan.size());
         } else {
-            System.out.println("Групп с фронтменом: 0; Групп без фронтмена: 0.");
-            System.out.println("В коллекции ещё нет элементов.");
+            report.getReports().add("Групп с фронтменом: 0; Групп без фронтмена: 0.");
+            report.getReports().add("В коллекции ещё нет элементов.");
         }
+        return report;
     }
 
     public String getDescription() {

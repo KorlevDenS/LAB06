@@ -1,10 +1,12 @@
 package basic.objects;
 
+import java.io.Serializable;
+
 /**
  * Class {@code Coordinates} makes an object that represents
  * position of something using rectangular cartesian coordinate system.
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
 
     /**
      * {@code Integer} field keeps coordinate X, cannot be more than 381.

@@ -1,6 +1,7 @@
 package commands;
 
 import basic.objects.*;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
 import interfaces.Operand;
@@ -51,28 +52,16 @@ public class Update extends Add implements Operand, RemovingIf {
     }
 
     @Override
-    public void execute() throws InvalidDataFromFileException {
+    public ResultPattern execute() throws InvalidDataFromFileException {
+        installOperand(dataBase.getOperand());
         loadElement();
+        newBand.setId(idToUpdateBy);
         analyseAndRemove();
         if (isRemoved) {
             addElement();
-            System.out.println("Элемент с ID = " + idToUpdateBy + " успешно обновлён.");
-        } else System.out.println("Элемента с таким ID в не было найдено в коллекции.");
+            report.getReports().add("Элемент с ID = " + idToUpdateBy + " успешно обновлён.");
+        } else report.getReports().add("Элемента с таким ID в не было найдено в коллекции.");
+        return report;
     }
 
-    /**
-     * This version of {@link DataLoader#loadObjectFromData()} do not use
-     * automatic id generation because it only updates existing object.
-     *
-     * @return {@link Person} object with updated fields.
-     */
-    public MusicBand loadObjectFromData() {
-        String nameOfBand = loadBandName();
-        Coordinates bandCoordinates = loadBandCoordinates();
-        long numberOfParticipants = loadNumberOfParticipants();
-        MusicGenre musicGenre = loadBandMusicGenre();
-        Person frontMan = loadFrontMan();
-        return new MusicBand(nameOfBand, bandCoordinates, numberOfParticipants,
-                musicGenre, frontMan, idToUpdateBy);
-    }
 }

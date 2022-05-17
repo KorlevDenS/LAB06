@@ -1,6 +1,7 @@
 package commands;
 
 import basic.objects.*;
+import common.ResultPattern;
 import exceptions.InvalidDataFromFileException;
 import interfaces.*;
 
@@ -8,7 +9,7 @@ import interfaces.*;
  * Class {@code Add} is used for creating command "add" objects,
  * that add {@code MusicBand} objects in the {@code HashSet}.
  */
-public class Add extends DataLoader implements Adding {
+public class Add extends Command implements Adding {
 
     /**
      * Constructs new Add object.
@@ -28,17 +29,18 @@ public class Add extends DataLoader implements Adding {
         if (Accumulator.readingTheScript) {
             ScriptDataLoader loader = new ScriptDataLoader();
             newBand = loader.loadObjectFromData();
-        } else newBand = loadObjectFromData();
+        } else newBand = dataBase.getMusicBand();
     }
 
     public void addElement() {
         Accumulator.appleMusic.add(newBand);
-        System.out.println("Новый элемент успешно добавлен в коллекцию.");
+        report.getReports().add("Новый элемент успешно добавлен в коллекцию.");
     }
 
-    public void execute() throws InvalidDataFromFileException {
+    public ResultPattern execute() throws InvalidDataFromFileException {
         loadElement();
         addElement();
+        return report;
     }
 
     public String getDescription() {

@@ -4,6 +4,7 @@ import exceptions.InvalidDataFromFileException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 @XmlRootElement(name = "Cat")
 @XmlType(propOrder = {"id", "name", "numberOfParticipants", "frontMan", "genre",
         "coordinates", "creationDate"})
-public class MusicBand implements Comparable<MusicBand> {
+public class MusicBand implements Comparable<MusicBand>, Serializable {
 
 
     /**

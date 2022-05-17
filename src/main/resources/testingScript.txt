@@ -102,4 +102,3 @@ QW1234556h
 show
 execute_script src/main/java/file4.txt
 save
-exit

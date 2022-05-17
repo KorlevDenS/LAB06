@@ -1,6 +1,8 @@
 package commands;
 
+import Server.ScriptCommandManager;
 import basic.objects.Accumulator;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
 import interfaces.Operand;
@@ -159,16 +161,17 @@ public class ExecuteScript extends Command implements Operand {
         while (Accumulator.scriptScanner.hasNextLine()) {
             line = Accumulator.scriptScanner.nextLine();
             if (line.equals("exit")) {
-                System.out.println("Выполнение скрипта завершено.");
+                report.getReports().add("Выполнение скрипта завершено.");
                 mistakesInfo.keySet().forEach(key -> {
                     if ((!Objects.equals(mistakesInfo.get(key), "")))
-                        System.out.println(key + mistakesInfo.get(key));});
-                System.exit(0);
+                        report.getReports().add(key + mistakesInfo.get(key));});
+                report.setTimeToExit(true);
+                break;
             }
             for (AvailableCommands command : AvailableCommands.values()) {
                 if (command.getRegex(line).matches()) {
                     try {
-                        CommandManager manager = new CommandManager(line);
+                        ScriptCommandManager manager = new ScriptCommandManager(line);
                         manager.execution(manager.instructionFetch());
                     } catch (InvalidDataFromFileException ex) {
                         mistakesInfo.put(infoData.get(Accumulator.scriptScanner.getCommandIndex()), line +
@@ -185,16 +188,16 @@ public class ExecuteScript extends Command implements Operand {
         }
     }
 
-
-    public void execute() {
+    public ResultPattern execute() {
         Accumulator.readingTheScript = true;
+        installOperand(dataBase.getOperand());
         try {
             fillScriptData();
         } catch (FileNotFoundException e) {
-            System.out.println("Файла с таким именем не существует.");
-            System.out.println("Ведите команду с аргументом в виде имени существующего файла.");
+            report.getReports().add("Файла с таким именем не существует.");
+            report.getReports().add("Ведите команду с аргументом в виде имени существующего файла.");
             Accumulator.readingTheScript = false;
-            return;
+            return report;
         }
         if (commandsAndData != null) {
             Accumulator.scriptScanner = new ExecutionStringScanner(commandsAndData);
@@ -203,8 +206,9 @@ public class ExecuteScript extends Command implements Operand {
         Accumulator.readingTheScript = false;
         mistakesInfo.keySet().forEach(key -> {
             if ((!Objects.equals(mistakesInfo.get(key), "")))
-                System.out.println(key + mistakesInfo.get(key));});
-        System.out.println("Выполнение скрипта завершено.");
+                report.getReports().add(key + mistakesInfo.get(key));});
+        report.getReports().add("Выполнение скрипта завершено.");
+        return report;
     }
 
     public String getDescription() {
@@ -213,6 +217,6 @@ public class ExecuteScript extends Command implements Operand {
 
     public void installOperand(String stringRepresentation) {
         this.mainScript = new File(stringRepresentation);
-        System.out.println("INSTALLED" + mainScript);
+        report.getReports().add("INSTALLED" + mainScript);
     }
 }

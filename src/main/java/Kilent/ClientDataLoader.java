@@ -1,4 +1,4 @@
-package commands;
+package Kilent;
 
 import basic.objects.*;
 import common.ScanValidation;
@@ -11,26 +11,11 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.TimeZone;
 
-/**
- * Class {@code DateLoader} is designed to create {@link MusicBand},
- * {@link Person} and {@link Coordinates} objects by user input.
- * Commands that extend this class may use or override its methods
- * to get and to use listed objects by user input.
- */
-@Deprecated
-public abstract class DataLoader extends Command {
-
+public abstract class ClientDataLoader {
     /**
      * {@code Scanner} for getting users' input.
      */
     protected final Scanner scanner1 = new Scanner(System.in);
-
-    /**
-     * Creates a new {@code DataLoader} object.
-     */
-    public DataLoader(AvailableCommands command) {
-        super(command);
-    }
 
     /**
      * Loads from input a name of a new {@link MusicBand} object.
@@ -216,4 +201,3 @@ public abstract class DataLoader extends Command {
                 musicGenre, frontMan);
     }
 }
-

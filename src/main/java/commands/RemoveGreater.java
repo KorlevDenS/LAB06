@@ -2,6 +2,7 @@ package commands;
 
 import basic.objects.Accumulator;
 import basic.objects.MusicBand;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
 import interfaces.RemovingIf;
@@ -40,13 +41,14 @@ public class RemoveGreater extends Add implements RemovingIf {
         bandsToRemove.forEach(band -> Accumulator.appleMusic.remove(band));
     }
 
-    public void execute() throws InvalidDataFromFileException {
+    public ResultPattern execute() throws InvalidDataFromFileException {
         loadElement();
         analyseAndRemove();
         if (!bandsToRemove.isEmpty())
-            System.out.println("Было успешно удалено " + bandsToRemove.size() + " элементов.");
-        else System.out.println("Ни один из элементов не превышает данный. Ничего не было удалено.");
+            report.getReports().add("Было успешно удалено " + bandsToRemove.size() + " элементов.");
+        else report.getReports().add("Ни один из элементов не превышает данный. Ничего не было удалено.");
         bandsToRemove.clear();
+        return report;
     }
 
     public String getDescription() {

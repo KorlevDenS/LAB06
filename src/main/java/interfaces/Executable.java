@@ -1,5 +1,6 @@
 package interfaces;
 
+import common.ResultPattern;
 import exceptions.InvalidDataFromFileException;
 
 /**
@@ -10,5 +11,5 @@ public interface Executable {
     /**
      * Executes the operation it is used in and prints a message.
      */
-    void execute() throws InvalidDataFromFileException;
+    ResultPattern execute() throws InvalidDataFromFileException;
 }

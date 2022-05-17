@@ -2,6 +2,7 @@ package commands;
 
 import basic.objects.Accumulator;
 import basic.objects.MusicBand;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
 /**
@@ -23,13 +24,14 @@ public class Show extends Command {
             throw new IncorrectDataForObjectException("Class Show cannot perform this task");
     }
 
-    public void execute() {
+    public ResultPattern execute() {
         if (!Accumulator.appleMusic.isEmpty()) {
-            System.out.println("Все элементы коллекции:");
-            Accumulator.appleMusic.stream().map(MusicBand::toString).forEach(System.out::println);
+            report.getReports().add("Все элементы коллекции:");
+            Accumulator.appleMusic.stream().map(MusicBand::toString).forEach(s -> report.getReports().add(s));
         } else {
-            System.out.println("В коллекции ещё нет элементов.");
+            report.getReports().add("В коллекции ещё нет элементов.");
         }
+        return report;
     }
 
     public String getDescription() {

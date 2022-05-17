@@ -1,32 +1,31 @@
 package Server;
 
-import java.io.IOException;
-import java.net.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 public class MainS {
     public static void main(String[] args) throws IOException {
-        byte[] arr = new byte[10];
-        int len = arr.length;
-        DatagramChannel dc;
-        ByteBuffer buf;
-        InetAddress host = InetAddress.getByName("LAPTOP-5P3L6GLR");
-        int port = 6789;
-        SocketAddress addr;
 
-        addr = new InetSocketAddress(port);
-        dc = DatagramChannel.open();
-        dc.bind(addr);
+        var s = new ServerSocket(4004);
 
-        buf = ByteBuffer.wrap(arr);
-        addr = dc.receive(buf);
+        Socket incoming = s.accept();
 
-        for (int j = 0; j < len; j++) {
-            arr[j] *= 2;
+        InputStream inStream = incoming.getInputStream();
+        OutputStream outStream = incoming.getOutputStream();
+
+        var in = new Scanner(inStream, StandardCharsets.UTF_8);
+        var out = new PrintWriter(new OutputStreamWriter(outStream, StandardCharsets.UTF_8), true);
+
+        out.println("Hello! Enter BYE to exit.");
+
+        var done = false;
+        while (!done && in.hasNextLine()) {
+            String line = in.nextLine();
+            out.println("Echo: " + line);
+            if (line.trim().equals("BYE")) done = true;
         }
-
-        buf.flip();
-        dc.send(buf, addr);
     }
 }

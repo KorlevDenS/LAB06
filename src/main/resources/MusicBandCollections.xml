@@ -2,18 +2,7 @@
 <ACCUMULATOR>
     <CollectionKeeper>
         <MusicBand>
-            <id>56347</id>
-            <name>Group1</name>
-            <numberOfParticipants>12</numberOfParticipants>
-            <genre>BRIT_POP</genre>
-            <coordinates>
-                <x>234</x>
-                <y>200.0</y>
-            </coordinates>
-            <creationDate>2003-03-16</creationDate>
-        </MusicBand>
-        <MusicBand>
-            <id>70449</id>
+            <id>2727</id>
             <name>Group1</name>
             <numberOfParticipants>3</numberOfParticipants>
             <frontMan>
@@ -28,10 +17,10 @@
                 <x>234</x>
                 <y>200.0</y>
             </coordinates>
-            <creationDate>1997-02-06</creationDate>
+            <creationDate>2010-12-13</creationDate>
         </MusicBand>
         <MusicBand>
-            <id>80442</id>
+            <id>86665</id>
             <name>Group2</name>
             <numberOfParticipants>5</numberOfParticipants>
             <frontMan>
@@ -46,7 +35,18 @@
                 <x>222</x>
                 <y>20.0</y>
             </coordinates>
-            <creationDate>1996-03-26</creationDate>
+            <creationDate>1975-04-22</creationDate>
+        </MusicBand>
+        <MusicBand>
+            <id>22977</id>
+            <name>Group1</name>
+            <numberOfParticipants>12</numberOfParticipants>
+            <genre>BRIT_POP</genre>
+            <coordinates>
+                <x>234</x>
+                <y>200.0</y>
+            </coordinates>
+            <creationDate>1995-11-24</creationDate>
         </MusicBand>
     </CollectionKeeper>
 </ACCUMULATOR>

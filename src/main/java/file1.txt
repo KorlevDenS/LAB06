@@ -1,11 +1,1 @@
-help 111111111
-show 111111111
-info 11111111111
-1 11111111111 22
-execute_script src/main/java/file3.txt
-1-2 1111111111 22
-show 111111111 22
-execute_script src/main/java/file1.txt
-exit 11111111 22
-execute_script src/main/java/file2.txt
-exit2 11111111111
+gktb9rojob9eogo9wfko9wf09fk913oj3o9219ei9fsj4

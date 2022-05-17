@@ -1,6 +1,7 @@
 package commands;
 
 import basic.objects.Accumulator;
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
 /**
@@ -22,11 +23,12 @@ public class Clear extends Command {
             throw new IncorrectDataForObjectException("Class Clear cannot perform this task");
     }
 
-    public void execute() {
+    public ResultPattern execute() {
         Accumulator.appleMusic.clear();
         Accumulator.passports.clear();
         Accumulator.uniqueIdList.clear();
-        System.out.println("Из коллекции были удалены все элементы.");
+        report.getReports().add("Из коллекции были удалены все элементы.");
+        return report;
     }
 
     public String getDescription() {

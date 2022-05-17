@@ -1,5 +1,6 @@
 package commands;
 
+import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
 import java.util.Arrays;
@@ -23,9 +24,10 @@ public class Help extends Command {
             throw new IncorrectDataForObjectException("Class Help cannot perform this task");
     }
 
-    public void execute() {
+    public ResultPattern execute() {
         Arrays.stream(AvailableCommands.values())
-                .forEach(s -> System.out.println("Команда " + s.getTitle() + " - " + s.getDescription() + "."));
+                .forEach(s -> report.getReports().add("Команда " + s.getTitle() + " - " + s.getDescription() + "."));
+        return report;
     }
 
     public String getDescription() {

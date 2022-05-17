@@ -1,5 +1,6 @@
 package commands;
 
+import Server.ScriptCommandManager;
 import interfaces.Described;
 
 /**
@@ -8,7 +9,7 @@ import interfaces.Described;
  * Every constant has the identical name as in relevant {@link AvailableCommands} object.
  * {@code CommandObjects} uses {@link AvailableCommands} to create
  * {@code Command} objects. These {@code Command} objects are used
- * in {@link CommandManager#execution(AvailableCommands)}.
+ * in {@link ScriptCommandManager#execution(AvailableCommands)}.
  * It is necessary to include here a new constant, linked to relevant
  * {@link AvailableCommands} object, when adding a new instruction to execute to this program.
  */
@@ -28,7 +29,8 @@ public enum CommandObjects implements Described {
     REMOVE_ALL_BY_FRONT_MAN(new RemoveAllByFrontMan(AvailableCommands.REMOVE_ALL_BY_FRONT_MAN)),
     UPDATE(new Update(AvailableCommands.UPDATE)),
     SAVE(new Save(AvailableCommands.SAVE)),
-    EXECUTE_SCRIPT(new ExecuteScript(AvailableCommands.EXECUTE_SCRIPT));
+    EXECUTE_SCRIPT(new ExecuteScript(AvailableCommands.EXECUTE_SCRIPT)),
+    EXIT(new Exit(AvailableCommands.EXIT));
 
     private final Command command;
 
