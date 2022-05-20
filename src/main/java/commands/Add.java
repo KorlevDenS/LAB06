@@ -1,6 +1,8 @@
 package commands;
 
-import basic.objects.*;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.InvalidDataFromFileException;
 import interfaces.*;
@@ -26,14 +28,14 @@ public class Add extends Command implements Adding {
     protected MusicBand newBand;
 
     public void loadElement() throws InvalidDataFromFileException {
-        if (Accumulator.readingTheScript) {
+        if (ServerStatusRegister.readingTheScript) {
             ScriptDataLoader loader = new ScriptDataLoader();
             newBand = loader.loadObjectFromData();
         } else newBand = dataBase.getMusicBand();
     }
 
     public void addElement() {
-        Accumulator.appleMusic.add(newBand);
+        ServerStatusRegister.appleMusic.add(newBand);
         report.getReports().add("Новый элемент успешно добавлен в коллекцию.");
     }
 

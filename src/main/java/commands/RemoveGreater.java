@@ -1,7 +1,8 @@
 package commands;
 
-import basic.objects.Accumulator;
-import basic.objects.MusicBand;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
@@ -36,9 +37,9 @@ public class RemoveGreater extends Add implements RemovingIf {
     }
 
     public void analyseAndRemove() {
-        bandsToRemove = Accumulator.appleMusic.stream()
+        bandsToRemove = ServerStatusRegister.appleMusic.stream()
                 .filter(s -> newBand.compareTo(s) < 0).collect(Collectors.toSet());
-        bandsToRemove.forEach(band -> Accumulator.appleMusic.remove(band));
+        bandsToRemove.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
     }
 
     public ResultPattern execute() throws InvalidDataFromFileException {

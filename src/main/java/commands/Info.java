@@ -1,6 +1,7 @@
 package commands;
 
-import basic.objects.Accumulator;
+import Server.ServerStatusRegister;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.*;
 
@@ -61,13 +62,13 @@ public class Info extends Command {
      * Analysing and filling current data about {@code HashSet}.
      */
     private void knowInformation() {
-        typeOfCollection = Accumulator.appleMusic.getClass().getName();
-        initDateOfCollection = Accumulator.current;
-        amountOfElements = Accumulator.appleMusic.size();
-        if (!Accumulator.appleMusic.isEmpty()) {
-            minElement = Collections.min(Accumulator.appleMusic).toString();
-            maxElement = Collections.max(Accumulator.appleMusic).toString();
-            typeOfInnerElements = Collections.min(Accumulator.appleMusic).getClass().getName();
+        typeOfCollection = ServerStatusRegister.appleMusic.getClass().getName();
+        initDateOfCollection = ServerStatusRegister.current;
+        amountOfElements = ServerStatusRegister.appleMusic.size();
+        if (!ServerStatusRegister.appleMusic.isEmpty()) {
+            minElement = Collections.min(ServerStatusRegister.appleMusic).toString();
+            maxElement = Collections.max(ServerStatusRegister.appleMusic).toString();
+            typeOfInnerElements = Collections.min(ServerStatusRegister.appleMusic).getClass().getName();
         }
     }
 
@@ -77,7 +78,7 @@ public class Info extends Command {
         report.getReports().add("Коллекция представляет собой " + typeOfCollection);
         report.getReports().add("Дата инициализации: " + initDateOfCollection);
         report.getReports().add("Текущее количество элементов: " + amountOfElements);
-        if (Accumulator.appleMusic.isEmpty()) {
+        if (ServerStatusRegister.appleMusic.isEmpty()) {
             report.getReports().add("Минимального элемента ещё нет, коллекция пуста.");
             report.getReports().add("Максимального элемента ёщё нет, коллекция пуста.");
             report.getReports().add("Тип неизвестен, так как в коллекции еще нет ни одного элемента.");

@@ -1,6 +1,10 @@
-package commands;
+package Kilent;
 
-import basic.objects.*;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import commands.Add;
+import commands.ExecuteScript;
+import common.AvailableCommands;
 import exceptions.InvalidDataFromFileException;
 
 import javax.xml.bind.JAXBContext;
@@ -39,7 +43,7 @@ public class JaxbManager {
      */
     public JaxbManager(File file) throws JAXBException {
         this.collectionLink = file;
-        this.context = JAXBContext.newInstance(Accumulator.class);
+        this.context = JAXBContext.newInstance(ServerStatusRegister.class);
     }
 
     /**
@@ -48,8 +52,8 @@ public class JaxbManager {
      * @throws JAXBException if collection cannot be written down.
      */
     public void writeXml() throws JAXBException {
-        Accumulator accumulator = new Accumulator();
-        accumulator.CurrentBandSet = Accumulator.appleMusic;
+        ServerStatusRegister accumulator = new ServerStatusRegister();
+        accumulator.CurrentBandSet = ServerStatusRegister.appleMusic;
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         marshaller.marshal(accumulator, collectionLink);
@@ -58,29 +62,32 @@ public class JaxbManager {
     /**
      * Reads collections of objects to xml file.
      *
-     * @throws JAXBException if collection cannot be read.
-     * @throws IOException   if something is wrong with current file.
      */
-    public void readXml() throws JAXBException, IOException {
-        BufferedReader br = new BufferedReader(new FileReader(collectionLink));
-        if (br.readLine() == null) {
-            writeXml();
+    public void readXml() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(collectionLink));
+            if (br.readLine() == null) {
+                writeXml();
+            }
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            ServerStatusRegister musicBands = (ServerStatusRegister) unmarshaller.unmarshal(new InputStreamReader(
+                    new FileInputStream(collectionLink), StandardCharsets.UTF_8));
+            ServerStatusRegister.appleMusic = musicBands.getCurrentBandSet();
+        } catch (JAXBException e) {
+            System.out.println("Не удалось загрузить коллекцию из файла, нарушен формат XML.");
+        } catch (IOException e) {
+            System.out.println("Не удалось загрузить коллекцию из файла, файл не существует или нечитаем");
         }
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-
-        Accumulator musicBands = (Accumulator) unmarshaller.unmarshal(new InputStreamReader(
-                new FileInputStream(collectionLink), StandardCharsets.UTF_8));
-        Accumulator.appleMusic = musicBands.getCurrentBandSet();
     }
 
     public void validateXmlData() {
-        HashSet<MusicBand> checkSet = new HashSet<>(Accumulator.appleMusic);
-        Accumulator.appleMusic.clear();
+        HashSet<MusicBand> checkSet = new HashSet<>(ServerStatusRegister.appleMusic);
+        ServerStatusRegister.appleMusic.clear();
         for (MusicBand band : checkSet) {
 
             String validateString = band.toScriptString();
-            Accumulator.scriptScanner = new ExecuteScript.ExecutionStringScanner(validateString);
-            Accumulator.readingTheScript = true;
+            ServerStatusRegister.scriptScanner = new ExecuteScript.ExecutionStringScanner(validateString);
+            ServerStatusRegister.readingTheScript = true;
             readingXml = true;
             Add add = new Add(AvailableCommands.ADD);
             try {
@@ -88,22 +95,22 @@ public class JaxbManager {
             } catch (InvalidDataFromFileException ex) {
                 System.out.println("Загрузка прервана ошибкой: " + ex.getMessage());
                 System.out.println("Объект " + band);
-                Accumulator.readingTheScript = false;
+                ServerStatusRegister.readingTheScript = false;
                 readingXml = false;
                 continue;
             }
             System.out.println("Объект " + band);
-            Accumulator.readingTheScript = false;
+            ServerStatusRegister.readingTheScript = false;
             readingXml = false;
         }
     }
 
     public static void idValidation() {
-        for (Long id : Accumulator.uniqueIdList) {
-            Set<MusicBand> removeSet = Accumulator.appleMusic.stream().filter(s -> id.equals(s.getId()))
+        for (Long id : ServerStatusRegister.uniqueIdList) {
+            Set<MusicBand> removeSet = ServerStatusRegister.appleMusic.stream().filter(s -> id.equals(s.getId()))
                     .collect(Collectors.toSet());
             if (removeSet.size() > 1) {
-                removeSet.forEach(band -> Accumulator.appleMusic.remove(band));
+                removeSet.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
                 System.out.println("Элементы с одинаковыми ID недопустимы и были удалены:");
                 removeSet.forEach(band -> System.out.println("Объект: " + band.toString()));
             }
@@ -111,12 +118,12 @@ public class JaxbManager {
     }
 
     public static void passwordValidation() {
-        for (String passport : Accumulator.passports) {
-            Set<MusicBand> removeSet = Accumulator.appleMusic.stream()
-                    .filter(s -> (s.getFrontMan() != null)&&(Objects.equals(passport, s.getFrontMan().getPassportID())))
+        for (String passport : ServerStatusRegister.passports) {
+            Set<MusicBand> removeSet = ServerStatusRegister.appleMusic.stream()
+                    .filter(s -> (s.getFrontMan() != null) && (Objects.equals(passport, s.getFrontMan().getPassportID())))
                     .collect(Collectors.toSet());
             if (removeSet.size() > 1) {
-                removeSet.forEach(band -> Accumulator.appleMusic.remove(band));
+                removeSet.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
                 System.out.println("Элементы с одинаковыми паролями фронтменов недопустимы и были удалены:");
                 removeSet.forEach(band -> System.out.println("Объект: " + band.toString()));
             }

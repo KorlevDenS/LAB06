@@ -1,6 +1,7 @@
 package commands;
 
-import basic.objects.Accumulator;
+import Server.ServerStatusRegister;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
@@ -39,12 +40,12 @@ public class AddIfMin extends Add {
      */
     @Override
     public void addElement() {
-        if (Accumulator.appleMusic.isEmpty()) {
-            Accumulator.appleMusic.add(newBand);
+        if (ServerStatusRegister.appleMusic.isEmpty()) {
+            ServerStatusRegister.appleMusic.add(newBand);
             isAdded = true;
         } else {
-            if (newBand.compareTo(Collections.min(Accumulator.appleMusic)) < 0) {
-                Accumulator.appleMusic.add(newBand);
+            if (newBand.compareTo(Collections.min(ServerStatusRegister.appleMusic)) < 0) {
+                ServerStatusRegister.appleMusic.add(newBand);
                 isAdded = true;
             } else {
                 isAdded = false;

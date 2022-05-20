@@ -1,6 +1,8 @@
 package commands;
 
-import basic.objects.*;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
@@ -43,10 +45,10 @@ public class Update extends Add implements Operand, RemovingIf {
 
     public void analyseAndRemove() {
         isRemoved = false;
-        MusicBand bandToRemove = Accumulator.appleMusic.stream()
+        MusicBand bandToRemove = ServerStatusRegister.appleMusic.stream()
                 .filter(s -> s.getId().equals(idToUpdateBy)).findFirst().orElse(null);
         if (bandToRemove != null) {
-            Accumulator.appleMusic.remove(bandToRemove);
+            ServerStatusRegister.appleMusic.remove(bandToRemove);
             isRemoved = true;
         }
     }

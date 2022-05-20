@@ -1,6 +1,7 @@
 package commands;
 
-import basic.objects.Accumulator;
+import Server.ServerStatusRegister;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
@@ -24,9 +25,9 @@ public class Clear extends Command {
     }
 
     public ResultPattern execute() {
-        Accumulator.appleMusic.clear();
-        Accumulator.passports.clear();
-        Accumulator.uniqueIdList.clear();
+        ServerStatusRegister.appleMusic.clear();
+        ServerStatusRegister.passports.clear();
+        ServerStatusRegister.uniqueIdList.clear();
         report.getReports().add("Из коллекции были удалены все элементы.");
         return report;
     }

@@ -1,4 +1,4 @@
-package Kilent;
+package testing;
 
 import java.io.*;
 import java.net.Socket;

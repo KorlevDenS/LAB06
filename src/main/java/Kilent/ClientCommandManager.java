@@ -1,6 +1,6 @@
 package Kilent;
 
-import commands.AvailableCommands;
+import common.AvailableCommands;
 import common.InstructionPattern;
 import exceptions.InvalidDataFromFileException;
 

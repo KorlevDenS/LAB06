@@ -1,5 +1,6 @@
 package commands;
 
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;

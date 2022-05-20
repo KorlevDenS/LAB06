@@ -1,46 +1,43 @@
 import Server.ScriptCommandManager;
-import basic.objects.Accumulator;
-import basic.objects.MusicBand;
-import commands.JaxbManager;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import Kilent.JaxbManager;
 import exceptions.InvalidDataFromFileException;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Scanner;
 
-import static commands.JaxbManager.*;
+import static Kilent.JaxbManager.*;
 
 public class Main {
 
     static Scanner commandScanner = new Scanner(System.in);
 
     public static void main(String[] args) throws InvalidDataFromFileException {
-        Accumulator.appleMusic = new HashSet<>();
-        Accumulator.current = new Date();
+        ServerStatusRegister.appleMusic = new HashSet<>();
+        ServerStatusRegister.current = new Date();
         //try {
-        //    Accumulator.currentXml = new File(System.getenv("COLLECTION_FILE"));
+        //    ServerStatusRegister.currentXml = new File(System.getenv("COLLECTION_FILE"));
         //} catch (NullPointerException e) {
         //    System.out.println("Необходимая переменная окружения не задана. \n" +
         //            "Задайте переменную COLLECTION_FILE при помощи команды export c необходимым файлом xml.");
         //    System.exit(0);
         //}
-        Accumulator.currentXml = new File("src/main/resources/MusicBandCollections.xml");
+        ServerStatusRegister.currentXml = new File("src/main/resources/MusicBandCollections.xml");
         try {
-            JaxbManager manager = new JaxbManager(Accumulator.currentXml);
+            JaxbManager manager = new JaxbManager(ServerStatusRegister.currentXml);
             manager.readXml();
             manager.validateXmlData();
         } catch (JAXBException e) {
             System.out.println("Не удалось загрузить коллекцию из файла, нарушен формат XML.");
-        } catch (IOException e) {
-            System.out.println("Не удалось загрузить коллекцию из файла, файл не существует или нечитаем");
         }
-        for (MusicBand band : Accumulator.appleMusic) {
-            Accumulator.uniqueIdList.add(band.getId());
+        for (MusicBand band : ServerStatusRegister.appleMusic) {
+            ServerStatusRegister.uniqueIdList.add(band.getId());
             if ((band.getFrontMan() != null)&&(band.getFrontMan().getPassportID() != null))
-                Accumulator.passports.add(band.getFrontMan().getPassportID());
+                ServerStatusRegister.passports.add(band.getFrontMan().getPassportID());
         }
 
         idValidation();

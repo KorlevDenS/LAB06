@@ -1,6 +1,7 @@
 package common;
 
-import basic.objects.*;
+import Server.ServerStatusRegister;
+import common.basic.MusicGenre;
 import exceptions.InvalidDataFromFileException;
 
 import java.util.InputMismatchException;
@@ -111,7 +112,7 @@ public class ScanValidation {
     public static int ReadNextInt() throws InvalidDataFromFileException {
         int obj;
         try {
-            String str = Accumulator.scriptScanner.nextLine();
+            String str = ServerStatusRegister.scriptScanner.nextLine();
             obj = Integer.parseInt(str);
         } catch (NumberFormatException ex) {
             throw new InvalidDataFromFileException("При создании объекта вместо целого числа int введено что-то другое.");
@@ -126,7 +127,7 @@ public class ScanValidation {
     public static double ReadNextDouble() throws InvalidDataFromFileException {
         double obj;
         try {
-            String str = Accumulator.scriptScanner.nextLine();
+            String str = ServerStatusRegister.scriptScanner.nextLine();
             obj = Double.parseDouble(str);
         } catch (NumberFormatException ex) {
             throw new InvalidDataFromFileException("При создании объекта вместо вещественного числа введено что-то другое.");
@@ -142,7 +143,7 @@ public class ScanValidation {
     public static long ReadNextLong() throws InvalidDataFromFileException {
         long obj;
         try {
-            String str = Accumulator.scriptScanner.nextLine();
+            String str = ServerStatusRegister.scriptScanner.nextLine();
             obj = Long.parseLong(str);
         } catch (NumberFormatException ex) {
             throw new InvalidDataFromFileException("При создании объекта вместо целого числа введено что-то другое.");
@@ -157,7 +158,7 @@ public class ScanValidation {
     public static MusicGenre ReadNextGenre() throws InvalidDataFromFileException {
         MusicGenre genre;
         try {
-            String g = Accumulator.scriptScanner.nextLine();
+            String g = ServerStatusRegister.scriptScanner.nextLine();
             genre = MusicGenre.valueOf(g);
         } catch (IllegalArgumentException ex) {
             throw new InvalidDataFromFileException("Значение жанра введено некорректно.");
@@ -170,7 +171,7 @@ public class ScanValidation {
      * @throws InvalidDataFromFileException if Scanner meets empty {@code String} in file.
      */
     public static String ReadNextNonEmptyLine() throws InvalidDataFromFileException {
-        String srt = Accumulator.scriptScanner.nextLine();
+        String srt = ServerStatusRegister.scriptScanner.nextLine();
         if (srt.equals("")) {
             throw new InvalidDataFromFileException("Введена пустая строка, где её не должно быть.");
         }

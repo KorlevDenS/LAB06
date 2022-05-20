@@ -1,4 +1,4 @@
-package Kilent;
+package testing;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

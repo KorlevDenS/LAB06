@@ -1,7 +1,8 @@
 package commands;
 
-import basic.objects.Accumulator;
-import basic.objects.MusicBand;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
@@ -25,9 +26,9 @@ public class Show extends Command {
     }
 
     public ResultPattern execute() {
-        if (!Accumulator.appleMusic.isEmpty()) {
+        if (!ServerStatusRegister.appleMusic.isEmpty()) {
             report.getReports().add("Все элементы коллекции:");
-            Accumulator.appleMusic.stream().map(MusicBand::toString).forEach(s -> report.getReports().add(s));
+            ServerStatusRegister.appleMusic.stream().map(MusicBand::toString).forEach(s -> report.getReports().add(s));
         } else {
             report.getReports().add("В коллекции ещё нет элементов.");
         }

@@ -1,7 +1,8 @@
 package commands;
 
-import basic.objects.Accumulator;
-import basic.objects.MusicBand;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
@@ -44,14 +45,14 @@ public class GroupCountingByFrontMan extends Command {
      * into groups: with frontMan and without.
      */
     private void groupByFrontMan() {
-        Map<Boolean, List<MusicBand>> map = Accumulator.appleMusic.stream().collect(Collectors
+        Map<Boolean, List<MusicBand>> map = ServerStatusRegister.appleMusic.stream().collect(Collectors
                 .partitioningBy((MusicBand s) -> s.getFrontMan() == null));
         bandsWithNoFrontMan = map.get(true);
         bandsWithFrontMan = map.get(false);
     }
 
     public ResultPattern execute() {
-        if (!Accumulator.appleMusic.isEmpty()) {
+        if (!ServerStatusRegister.appleMusic.isEmpty()) {
             groupByFrontMan();
             report.getReports().add("Групп с фронтменом: " + bandsWithFrontMan.size());
             report.getReports().add("Групп без фронтмена: " + bandsWithNoFrontMan.size());

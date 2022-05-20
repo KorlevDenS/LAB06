@@ -1,6 +1,6 @@
 package interfaces;
 
-import commands.AvailableCommands;
+import common.AvailableCommands;
 import exceptions.InvalidDataFromFileException;
 
 /**

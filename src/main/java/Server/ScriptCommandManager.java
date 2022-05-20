@@ -1,6 +1,6 @@
 package Server;
 
-import commands.AvailableCommands;
+import common.AvailableCommands;
 import commands.Command;
 import commands.CommandObjects;
 import exceptions.InstructionFetchException;

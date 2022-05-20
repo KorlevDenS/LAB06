@@ -1,24 +1,26 @@
-package basic.objects;
+package Server;
 
+import Kilent.JaxbManager;
 import commands.ExecuteScript;
+import common.basic.MusicBand;
+import common.basic.Person;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
 /**
- * Class {@code Accumulator} is used to keep {@code static} collection
+ * Class {@code ServerStatusRegister} is used to keep {@code static} collection
  * of {@code MusicBand} and also for variables that keeps data using
  * by various commands.
- * Objects of {@code Accumulator} are used to load current collection
- * to Xml file and to load elements from it in class {@link commands.JaxbManager}
+ * Objects of {@code ServerStatusRegister} are used to load current collection
+ * to Xml file and to load elements from it in class {@link JaxbManager}
  */
-@XmlRootElement(name = "ACCUMULATOR")
-public class Accumulator {
+@XmlRootElement(name = "SERVER_STATUS_REGISTER")
+public class ServerStatusRegister {
 
     /**
      * Main collection fot {@code MusicBand} objects. All commands

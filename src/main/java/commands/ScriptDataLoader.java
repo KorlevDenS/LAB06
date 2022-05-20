@@ -1,6 +1,8 @@
 package commands;
 
-import basic.objects.*;
+import Kilent.JaxbManager;
+import Server.ServerStatusRegister;
+import common.basic.*;
 import exceptions.InvalidDataFromFileException;
 import common.ScanValidation;
 
@@ -122,15 +124,15 @@ public class ScriptDataLoader {
      *                                      is not unique.
      */
     protected String loadFrontManPassportID(boolean addToCollection) throws InvalidDataFromFileException {
-        String frontManPassportId = Accumulator.scriptScanner.nextLine();
+        String frontManPassportId = ServerStatusRegister.scriptScanner.nextLine();
         if (frontManPassportId.equals("")) return null;
         if (frontManPassportId.length() > 29) {
             throw new InvalidDataFromFileException("Длинна строки превысила 29 символов.");
         }
-        if ((Accumulator.passports.contains(frontManPassportId)) && (addToCollection)) {
+        if ((ServerStatusRegister.passports.contains(frontManPassportId)) && (addToCollection)) {
             throw new InvalidDataFromFileException("Человек с введенным ID уже существует.");
         }
-        Accumulator.passports.add(frontManPassportId);
+        ServerStatusRegister.passports.add(frontManPassportId);
         return frontManPassportId;
     }
 
@@ -142,7 +144,7 @@ public class ScriptDataLoader {
      * @throws InvalidDataFromFileException birthday in script is invalid.
      */
     protected ZonedDateTime giveBirthFrontMan() throws InvalidDataFromFileException {
-        String LineWithTime = Accumulator.scriptScanner.nextLine();
+        String LineWithTime = ServerStatusRegister.scriptScanner.nextLine();
         if (LineWithTime.equals(""))
             return null;
         try {
@@ -163,7 +165,7 @@ public class ScriptDataLoader {
      * @throws InvalidDataFromFileException if some fields in script are invalid.
      */
     protected Person loadFrontManFromData(boolean addToCollection) throws InvalidDataFromFileException {
-        if (!Objects.equals(Accumulator.scriptScanner.nextLine(), "да")) return null;
+        if (!Objects.equals(ServerStatusRegister.scriptScanner.nextLine(), "да")) return null;
         String frontManName = loadFrontManName();
         if (frontManName.equals("")) return null;
         long frontManHeight = loadFrontManHeight();

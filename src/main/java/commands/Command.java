@@ -1,5 +1,6 @@
 package commands;
 
+import common.AvailableCommands;
 import common.InstructionPattern;
 import common.ResultPattern;
 import interfaces.Described;

@@ -1,6 +1,8 @@
 package commands;
 
-import basic.objects.Accumulator;
+import Kilent.JaxbManager;
+import Server.ServerStatusRegister;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
@@ -27,7 +29,7 @@ public class Save extends Command {
      * Saves current collection to current xml file.
      */
     private void saveCollection() throws JAXBException {
-        JaxbManager manager = new JaxbManager(Accumulator.currentXml);
+        JaxbManager manager = new JaxbManager(ServerStatusRegister.currentXml);
         manager.writeXml();
     }
 

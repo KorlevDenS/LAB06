@@ -1,7 +1,8 @@
 package commands;
 
 import Server.ScriptCommandManager;
-import basic.objects.Accumulator;
+import Server.ServerStatusRegister;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
@@ -154,12 +155,12 @@ public class ExecuteScript extends Command implements Operand {
     }
 
     private void scanScriptCommand() {
-        if (!Accumulator.readingTheScript)
+        if (!ServerStatusRegister.readingTheScript)
             return;
         String line;
         reader:
-        while (Accumulator.scriptScanner.hasNextLine()) {
-            line = Accumulator.scriptScanner.nextLine();
+        while (ServerStatusRegister.scriptScanner.hasNextLine()) {
+            line = ServerStatusRegister.scriptScanner.nextLine();
             if (line.equals("exit")) {
                 report.getReports().add("Выполнение скрипта завершено.");
                 mistakesInfo.keySet().forEach(key -> {
@@ -174,36 +175,36 @@ public class ExecuteScript extends Command implements Operand {
                         ScriptCommandManager manager = new ScriptCommandManager(line);
                         manager.execution(manager.instructionFetch());
                     } catch (InvalidDataFromFileException ex) {
-                        mistakesInfo.put(infoData.get(Accumulator.scriptScanner.getCommandIndex()), line +
+                        mistakesInfo.put(infoData.get(ServerStatusRegister.scriptScanner.getCommandIndex()), line +
                                 ": " + ex.getMessage());
                     }
                     continue reader;
                 }
             }
             if (line.equals("RECURSION_ERROR")) {
-                mistakesInfo.put(infoData.get(Accumulator.scriptScanner.getCommandIndex()), line + ": Исполнение " +
+                mistakesInfo.put(infoData.get(ServerStatusRegister.scriptScanner.getCommandIndex()), line + ": Исполнение " +
                         "данного скрипта в этом файле вызывает бесконечный цикл.");
             } else
-                mistakesInfo.put(infoData.get(Accumulator.scriptScanner.getCommandIndex()), line + ": useless data.");
+                mistakesInfo.put(infoData.get(ServerStatusRegister.scriptScanner.getCommandIndex()), line + ": useless data.");
         }
     }
 
     public ResultPattern execute() {
-        Accumulator.readingTheScript = true;
+        ServerStatusRegister.readingTheScript = true;
         installOperand(dataBase.getOperand());
         try {
             fillScriptData();
         } catch (FileNotFoundException e) {
             report.getReports().add("Файла с таким именем не существует.");
             report.getReports().add("Ведите команду с аргументом в виде имени существующего файла.");
-            Accumulator.readingTheScript = false;
+            ServerStatusRegister.readingTheScript = false;
             return report;
         }
         if (commandsAndData != null) {
-            Accumulator.scriptScanner = new ExecutionStringScanner(commandsAndData);
+            ServerStatusRegister.scriptScanner = new ExecutionStringScanner(commandsAndData);
             scanScriptCommand();
         }
-        Accumulator.readingTheScript = false;
+        ServerStatusRegister.readingTheScript = false;
         mistakesInfo.keySet().forEach(key -> {
             if ((!Objects.equals(mistakesInfo.get(key), "")))
                 report.getReports().add(key + mistakesInfo.get(key));});

@@ -1,7 +1,8 @@
 package Kilent;
 
-import basic.objects.*;
+import Server.ServerStatusRegister;
 import common.ScanValidation;
+import common.basic.*;
 
 import java.time.DateTimeException;
 import java.time.ZoneId;
@@ -126,14 +127,14 @@ public abstract class ClientDataLoader {
         System.out.println("Если он неизвестен - пропустите.");
         String frontManPassportId = scanner1.nextLine();
         if (frontManPassportId.equals("")) return null;
-        while ((frontManPassportId.length() > 29) || (Accumulator.passports.contains(frontManPassportId))) {
+        while ((frontManPassportId.length() > 29) || (ServerStatusRegister.passports.contains(frontManPassportId))) {
             if (frontManPassportId.length() > 29)
                 System.out.println("Длинна строки не должна превышать 29 символов, введите ее правильно.");
-            if (Accumulator.passports.contains(frontManPassportId))
+            if (ServerStatusRegister.passports.contains(frontManPassportId))
                 System.out.println("Человек с таким ID уже существует, попробуйте ввести другой");
             frontManPassportId = scanner1.nextLine();
         }
-        Accumulator.passports.add(frontManPassportId);
+        ServerStatusRegister.passports.add(frontManPassportId);
         return frontManPassportId;
     }
 

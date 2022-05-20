@@ -1,9 +1,9 @@
 package common;
 
 import Kilent.ClientDataLoader;
-import basic.objects.MusicBand;
-import basic.objects.Person;
-import commands.AvailableCommands;
+import common.basic.MusicBand;
+import common.basic.Person;
+
 import java.io.Serializable;
 
 public class InstructionPattern extends ClientDataLoader implements Serializable {

@@ -1,6 +1,7 @@
 package commands;
 
 import Server.ScriptCommandManager;
+import common.AvailableCommands;
 import interfaces.Described;
 
 /**

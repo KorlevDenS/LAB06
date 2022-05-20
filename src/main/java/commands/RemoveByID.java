@@ -1,7 +1,8 @@
 package commands;
 
-import basic.objects.Accumulator;
-import basic.objects.MusicBand;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import interfaces.Operand;
@@ -34,10 +35,12 @@ public class RemoveByID extends Command implements Operand, RemovingIf {
     }
 
     public void analyseAndRemove() {
-        MusicBand bandToRemove = Accumulator.appleMusic.stream()
+        MusicBand bandToRemove = ServerStatusRegister.appleMusic.stream()
                 .filter(s -> s.getId().equals(idToRemoveBy)).findFirst().orElse(null);
         if (bandToRemove != null) {
-            Accumulator.appleMusic.remove(bandToRemove);
+            ServerStatusRegister.passports.remove(bandToRemove.getFrontMan().getPassportID());
+            ServerStatusRegister.uniqueIdList.remove(bandToRemove.getId());
+            ServerStatusRegister.appleMusic.remove(bandToRemove);
             report.getReports().add("Элемент с ID = " + idToRemoveBy + " успешно удалён.");
         } else report.getReports().add("Элемента с таким ID в не было найдено в коллекции.");
     }

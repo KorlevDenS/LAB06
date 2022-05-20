@@ -1,7 +1,8 @@
 package commands;
 
-import basic.objects.Accumulator;
-import basic.objects.MusicBand;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 
@@ -28,9 +29,9 @@ public class PrintUniqueNumberOfParticipants extends Command {
     }
 
     public ResultPattern execute() {
-        if (!Accumulator.appleMusic.isEmpty()) {
+        if (!ServerStatusRegister.appleMusic.isEmpty()) {
             report.getReports().add("Список уникальных значений количества участников в группах:");
-            Accumulator.appleMusic.stream().map(MusicBand::getNumberOfParticipants)
+            ServerStatusRegister.appleMusic.stream().map(MusicBand::getNumberOfParticipants)
                     .distinct().forEach(s -> report.getReports().add(s.toString()));
         } else {
             report.getReports().add("Уникальных значений нет, так как в коллекции еще нет элементов.");

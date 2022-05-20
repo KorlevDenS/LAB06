@@ -1,6 +1,9 @@
 package commands;
 
-import basic.objects.*;
+import Server.ServerStatusRegister;
+import common.basic.MusicBand;
+import common.basic.Person;
+import common.AvailableCommands;
 import common.ResultPattern;
 import exceptions.IncorrectDataForObjectException;
 import exceptions.InvalidDataFromFileException;
@@ -46,16 +49,16 @@ public class RemoveAllByFrontMan extends Command implements RemovingIf {
      * a mistake of reading it.
      */
     public void loadFrontManFromData() throws InvalidDataFromFileException {
-        if (Accumulator.readingTheScript) {
+        if (ServerStatusRegister.readingTheScript) {
             ScriptDataLoader loader = new ScriptDataLoader();
             frontManToRemoveBy = loader.loadFrontManFromData(false);
         } else frontManToRemoveBy = dataBase.getFrontMan();
     }
 
     public void analyseAndRemove() {
-        bandsToRemove = Accumulator.appleMusic.stream()
+        bandsToRemove = ServerStatusRegister.appleMusic.stream()
                 .filter(s -> Objects.equals(s.getFrontMan(),frontManToRemoveBy)).collect(Collectors.toSet());
-        bandsToRemove.forEach(band -> Accumulator.appleMusic.remove(band));
+        bandsToRemove.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
     }
 
     public ResultPattern execute() throws InvalidDataFromFileException {
