@@ -1,6 +1,6 @@
 package common.basic;
 
-import interfaces.Described;
+import server.interfaces.Described;
 
 import java.io.Serializable;
 

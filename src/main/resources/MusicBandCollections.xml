@@ -1,26 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ACCUMULATOR>
+<SERVER_STATUS_REGISTER>
     <CollectionKeeper>
         <MusicBand>
-            <id>2727</id>
-            <name>Group1</name>
-            <numberOfParticipants>3</numberOfParticipants>
-            <frontMan>
-                <birthday>1999-12-02T03:04:05.000000010+03:00[Europe/Moscow]</birthday>
-                <height>186</height>
-                <name>Billy</name>
-                <passportID>QW1234556h123563</passportID>
-                <weight>90</weight>
-            </frontMan>
-            <genre>BRIT_POP</genre>
-            <coordinates>
-                <x>234</x>
-                <y>200.0</y>
-            </coordinates>
-            <creationDate>2010-12-13</creationDate>
-        </MusicBand>
-        <MusicBand>
-            <id>86665</id>
+            <id>21637</id>
             <name>Group2</name>
             <numberOfParticipants>5</numberOfParticipants>
             <frontMan>
@@ -35,18 +17,25 @@
                 <x>222</x>
                 <y>20.0</y>
             </coordinates>
-            <creationDate>1975-04-22</creationDate>
+            <creationDate>1980-07-28</creationDate>
         </MusicBand>
         <MusicBand>
-            <id>22977</id>
+            <id>80370</id>
             <name>Group1</name>
-            <numberOfParticipants>12</numberOfParticipants>
+            <numberOfParticipants>3</numberOfParticipants>
+            <frontMan>
+                <birthday>1999-12-02T03:04:05.000000010+03:00[Europe/Moscow]</birthday>
+                <height>186</height>
+                <name>Billy</name>
+                <passportID>QW1234556h123563</passportID>
+                <weight>90</weight>
+            </frontMan>
             <genre>BRIT_POP</genre>
             <coordinates>
                 <x>234</x>
                 <y>200.0</y>
             </coordinates>
-            <creationDate>1995-11-24</creationDate>
+            <creationDate>1972-07-11</creationDate>
         </MusicBand>
     </CollectionKeeper>
-</ACCUMULATOR>
+</SERVER_STATUS_REGISTER>

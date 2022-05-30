@@ -1,7 +1,7 @@
 package common.basic;
 
-import Server.ServerStatusRegister;
-import exceptions.InvalidDataFromFileException;
+import server.ServerStatusRegister;
+import common.exceptions.InvalidDataFromFileException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -13,7 +13,7 @@ import java.util.Optional;
  * Class {@code MusicBand} makes an object that represents a music
  * band and keeps its data.
  */
-@XmlRootElement(name = "Cat")
+@XmlRootElement(name = "MusicBand")
 @XmlType(propOrder = {"id", "name", "numberOfParticipants", "frontMan", "genre",
         "coordinates", "creationDate"})
 public class MusicBand implements Comparable<MusicBand>, Serializable {
@@ -103,7 +103,7 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
         while (ServerStatusRegister.uniqueIdList.contains(i)) {
             i = (long) (Math.random() * 100000 + 1);
         }
-        ServerStatusRegister.uniqueIdList.add(i);
+
         return i;
     }
 

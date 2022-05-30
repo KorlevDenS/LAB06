@@ -1,10 +1,14 @@
 package common;
 
-import Kilent.ClientDataLoader;
+import client.ClientDataLoader;
+import client.RecursiveScriptReader;
 import common.basic.MusicBand;
 import common.basic.Person;
+import common.exceptions.InvalidDataFromFileException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class InstructionPattern extends ClientDataLoader implements Serializable {
 
@@ -15,20 +19,34 @@ public class InstructionPattern extends ClientDataLoader implements Serializable
     private MusicBand musicBand;
     private Person frontMan;
     private String operand;
+    protected ArrayList<String> infoData;
+    protected String commandsAndData;
+    protected LinkedHashMap<String, String> mistakesInfo;
 
-    public InstructionPattern(AvailableCommands command){
+    public InstructionPattern(AvailableCommands command, String operand) {
+        this.operand = operand;
         this.instructionType = command.toString();
         this.titleRegex = command.getTitle();
         this.description = command.getDescription();
         this.argumentTitle = command.getArgumentTitle();
     }
 
-    public void chooseAndLoadArguments() {
+    public void chooseAndLoadArguments() throws InvalidDataFromFileException {
         switch (argumentTitle) {
-            case ("MusicBand") -> this.musicBand = super.loadObjectFromData();
-            case ("FrontMan") -> this.frontMan = loadFrontMan();
-            default -> {
-            }
+            case ("MusicBand"):
+                this.musicBand = super.loadObjectFromData();
+                break;
+            case ("FrontMan"):
+                this.frontMan = loadFrontMan();
+                break;
+            case ("Script"):
+                RecursiveScriptReader scriptReader = new RecursiveScriptReader(operand);
+                scriptReader.installScriptData();
+                this.infoData = scriptReader.getInfoData();
+                this.mistakesInfo = scriptReader.getMistakesInfo();
+                this.commandsAndData = scriptReader.getCommandsAndData();
+            default:
+                break;
         }
     }
 
@@ -66,6 +84,18 @@ public class InstructionPattern extends ClientDataLoader implements Serializable
 
     public Person getFrontMan() {
         return frontMan;
+    }
+
+    public ArrayList<String> getInfoData() {
+        return this.infoData;
+    }
+
+    public String getCommandsAndData() {
+        return this.commandsAndData;
+    }
+
+    public LinkedHashMap<String, String> getMistakesInfo() {
+        return this.mistakesInfo;
     }
 
     @Override

@@ -1,8 +1,7 @@
-package common;
+package common.exceptions;
 
 import server.ServerStatusRegister;
 import common.basic.MusicGenre;
-import common.exceptions.InvalidDataFromFileException;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

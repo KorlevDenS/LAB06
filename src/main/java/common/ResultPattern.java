@@ -7,7 +7,7 @@ public class ResultPattern implements Serializable {
 
     private ArrayList<String> reports = new ArrayList<>();
     private String instructionTitle;
-    private boolean timeToExit;
+    private boolean timeToExit = false;
 
     public String getInstructionTitle() {
         return instructionTitle;

@@ -6,8 +6,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class UDPClient
-{
+public class UDPClient {
     /* Объявляются переменные */
     static DatagramSocket socket;
     static InetAddress address;
@@ -15,7 +14,8 @@ public class UDPClient
     static DatagramPacket packet;
     static String str, str2;
     static BufferedReader br;
-    public static void main(String[] arg) throws Exception{
+
+    public static void main(String[] arg) throws Exception {
         /* Создается входной поток, который читается с консоли */
         br = new BufferedReader(new InputStreamReader(System.in));
         do {

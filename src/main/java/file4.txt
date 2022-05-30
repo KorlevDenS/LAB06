@@ -7,11 +7,12 @@ Group1
 200
 12
 BRIT_POP
+да
 Billy
 186
 90
 QW1234556h
-1999 12 2 3 4 5 10
+1999 120 2 3 4 5 10
 show
 execute_script src/main/resources/testingScript.txt
 show

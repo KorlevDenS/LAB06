@@ -1,6 +1,9 @@
 <component name="libraryTable">
   <library name="javax.activation" type="repository">
     <properties maven-id="javax.activation:activation:1.1.1" />
+    <ANNOTATIONS>
+      <root url="file://$MAVEN_REPOSITORY$/javax/activation/activation/1.1.1" />
+    </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1.1/activation-1.1.1.jar!/" />
     </CLASSES>

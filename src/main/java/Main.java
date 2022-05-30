@@ -1,8 +1,8 @@
-import Server.ScriptCommandManager;
-import Server.ServerStatusRegister;
+import server.ScriptCommandManager;
+import server.ServerStatusRegister;
 import common.basic.MusicBand;
-import Kilent.JaxbManager;
-import exceptions.InvalidDataFromFileException;
+import server.JaxbManager;
+import common.exceptions.InvalidDataFromFileException;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Scanner;
 
-import static Kilent.JaxbManager.*;
+import static server.JaxbManager.*;
 
 public class Main {
 
@@ -28,8 +28,8 @@ public class Main {
         //}
         ServerStatusRegister.currentXml = new File("src/main/resources/MusicBandCollections.xml");
         try {
-            JaxbManager manager = new JaxbManager(ServerStatusRegister.currentXml);
-            manager.readXml();
+            JaxbManager manager = new JaxbManager();
+           //manager.readXml();
             manager.validateXmlData();
         } catch (JAXBException e) {
             System.out.println("Не удалось загрузить коллекцию из файла, нарушен формат XML.");
