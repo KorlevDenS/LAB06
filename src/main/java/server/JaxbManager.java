@@ -12,6 +12,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -30,6 +31,8 @@ public class JaxbManager {
     private final JAXBContext context;
 
     public static boolean readingXml = false;
+
+    public ArrayList<String> loadInfo = new ArrayList<>();
 
     /**
      * Constructs new JaxbManger object.
@@ -65,7 +68,7 @@ public class JaxbManager {
         }
     }
 
-    public void validateXmlData() {
+    private void validateXmlData() {
         HashSet<MusicBand> checkSet = new HashSet<>(ServerStatusRegister.appleMusic);
         ServerStatusRegister.appleMusic.clear();
         for (MusicBand band : checkSet) {
@@ -78,40 +81,48 @@ public class JaxbManager {
             try {
                 add.execute();
             } catch (InvalidDataFromFileException ex) {
-                System.out.println("Загрузка прервана ошибкой: " + ex.getMessage());
-                System.out.println("Объект " + band);
+                loadInfo.add("Загрузка прервана ошибкой: " + ex.getMessage());
+                loadInfo.add("Объект " + band);
                 ServerStatusRegister.readingTheScript = false;
                 readingXml = false;
                 continue;
             }
-            System.out.println("Объект " + band);
+            loadInfo.add("Объект " + band);
             ServerStatusRegister.readingTheScript = false;
             readingXml = false;
         }
+        loadInfo.add(0,"Загруженные элементы:");
     }
 
-    public static void idValidation() {
+    private void idValidation() {
         for (Long id : ServerStatusRegister.uniqueIdList) {
             Set<MusicBand> removeSet = ServerStatusRegister.appleMusic.stream().filter(s -> id.equals(s.getId()))
                     .collect(Collectors.toSet());
             if (removeSet.size() > 1) {
                 removeSet.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
-                System.out.println("Элементы с одинаковыми ID недопустимы и были удалены:");
-                removeSet.forEach(band -> System.out.println("Объект: " + band.toString()));
+                loadInfo.add("Элементы с одинаковыми ID недопустимы и были удалены:");
+                removeSet.forEach(band -> loadInfo.add("Объект: " + band.toString()));
             }
         }
     }
 
-    public static void passwordValidation() {
+    private void passwordValidation() {
         for (String passport : ServerStatusRegister.passports) {
             Set<MusicBand> removeSet = ServerStatusRegister.appleMusic.stream()
                     .filter(s -> (s.getFrontMan() != null) && (Objects.equals(passport, s.getFrontMan().getPassportID())))
                     .collect(Collectors.toSet());
             if (removeSet.size() > 1) {
                 removeSet.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
-                System.out.println("Элементы с одинаковыми паролями фронтменов недопустимы и были удалены:");
-                removeSet.forEach(band -> System.out.println("Объект: " + band.toString()));
+                loadInfo.add("Элементы с одинаковыми паролями фронтменов недопустимы и были удалены:");
+                removeSet.forEach(band -> loadInfo.add("Объект: " + band.toString()));
             }
         }
+    }
+
+    public ArrayList<String> validateXmlCollection() {
+        validateXmlData();
+        idValidation();
+        passwordValidation();
+        return this.loadInfo;
     }
 }

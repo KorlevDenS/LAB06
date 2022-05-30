@@ -27,14 +27,14 @@ public class ClientControlUnit {
 
     public static void prepareData() throws IOException {
         ClientStatusRegister.current = new Date();
-        try {
-            ClientStatusRegister.currentXml = new File(System.getenv("COLLECTION_FILE"));
-        } catch (NullPointerException e) {
-            System.out.println("Необходимая переменная окружения не задана. \n" +
-                    "Задайте переменную COLLECTION_FILE при помощи команды export c необходимым файлом xml.");
-            System.exit(0);
-        }
-        //ClientStatusRegister.currentXml = new File("src/main/resources/MusicBandCollections.xml");
+        //try {
+        //    ClientStatusRegister.currentXml = new File(System.getenv("COLLECTION_FILE"));
+        //} catch (NullPointerException e) {
+        //    System.out.println("Необходимая переменная окружения не задана. \n" +
+        //            "Задайте переменную COLLECTION_FILE при помощи команды export c необходимым файлом xml.");
+        //    System.exit(0);
+        //}
+        ClientStatusRegister.currentXml = new File("src/main/resources/MusicBandCollections.xml");
         try {
             ClientStatusRegister.xmlData = Files.readAllBytes(ClientStatusRegister.currentXml.toPath());
         } catch (NoSuchFileException e) {

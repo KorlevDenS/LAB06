@@ -30,7 +30,7 @@ public class Main {
         try {
             JaxbManager manager = new JaxbManager();
            //manager.readXml();
-            manager.validateXmlData();
+           //manager.validateXmlData();
         } catch (JAXBException e) {
             System.out.println("Не удалось загрузить коллекцию из файла, нарушен формат XML.");
         }
@@ -40,8 +40,8 @@ public class Main {
                 ServerStatusRegister.passports.add(band.getFrontMan().getPassportID());
         }
 
-        idValidation();
-        passwordValidation();
+        //idValidation();
+        //passwordValidation();
         scanCommand();
     }
 

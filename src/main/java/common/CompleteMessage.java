@@ -29,4 +29,5 @@ public class CompleteMessage implements Serializable {
     public TransportedData getTransportedData() {
         return this.transportedData;
     }
+
 }
