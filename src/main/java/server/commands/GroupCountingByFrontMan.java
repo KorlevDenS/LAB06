@@ -64,7 +64,4 @@ public class GroupCountingByFrontMan extends Command {
         return report;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
 }

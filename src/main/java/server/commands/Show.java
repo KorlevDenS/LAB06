@@ -35,8 +35,4 @@ public class Show extends Command {
         }
         return report;
     }
-
-    public String getDescription() {
-        return this.description;
-    }
 }

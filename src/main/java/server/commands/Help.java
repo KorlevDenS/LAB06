@@ -31,8 +31,4 @@ public class Help extends Command {
                 .forEach(s -> report.getReports().add("Команда " + s.getTitle() + " - " + s.getDescription() + "."));
         return report;
     }
-
-    public String getDescription() {
-        return this.description;
-    }
 }

@@ -13,8 +13,7 @@ public interface Adding {
     void addElement() throws InvalidDataFromFileException;
 
     /**
-     * Loads new {@link  MusicBand} objects from data from script or from
-     * {@code System.in}, depends on {@link ServerStatusRegister#readingTheScript}.
+     * Loads new {@link  MusicBand} objects from data from script
      */
     void loadElement() throws InvalidDataFromFileException;
 }

@@ -49,9 +49,9 @@ public class RemoveAllByFrontMan extends Command implements RemovingIf {
      * a mistake of reading it.
      */
     public void loadFrontManFromData() throws InvalidDataFromFileException {
-        if (ServerStatusRegister.readingTheScript) {
+        if (isReadingTheScript()) {
             ScriptDataLoader loader = new ScriptDataLoader();
-            frontManToRemoveBy = loader.loadFrontManFromData(false);
+            frontManToRemoveBy = loader.loadFrontManFromData(false, scriptScanner);
         } else frontManToRemoveBy = dataBase.getFrontMan();
     }
 
@@ -74,10 +74,6 @@ public class RemoveAllByFrontMan extends Command implements RemovingIf {
         } else
             report.getReports().add("Ни в одной группе в коллекции не нашлось такого фронтмена. Ничего не было удалено.");
         return report;
-    }
-
-    public String getDescription() {
-        return this.description;
     }
 
 }

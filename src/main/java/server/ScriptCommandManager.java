@@ -7,6 +7,7 @@ import common.ResultPattern;
 import common.exceptions.InstructionFetchException;
 import common.exceptions.InvalidDataFromFileException;
 import common.CommandManagement;
+import server.commands.ExecuteScript;
 import server.interfaces.Operand;
 
 import java.util.Scanner;
@@ -22,14 +23,16 @@ public class ScriptCommandManager implements CommandManagement<AvailableCommands
      * Title of the current instruction.
      */
     private final String instructionTitle;
+    private ExecuteScript.ExecutionStringScanner scriptScanner;
 
     /**
      * Constructs {@code ScriptCommandManager} object.
      *
      * @param instructionTitle received instruction of the user's script.
      */
-    public ScriptCommandManager(String instructionTitle) {
+    public ScriptCommandManager(String instructionTitle, ExecuteScript.ExecutionStringScanner scriptScanner) {
         this.instructionTitle = instructionTitle;
+        this.scriptScanner = scriptScanner;
     }
 
     public AvailableCommands instructionFetch() {
@@ -51,6 +54,8 @@ public class ScriptCommandManager implements CommandManagement<AvailableCommands
         String commandName = command.toString();
         CommandObjects currentCommandObj = CommandObjects.valueOf(commandName);
         Command currentCommand = currentCommandObj.getCommand();
+        currentCommand.turnOnScriptMode();
+        currentCommand.setScriptScanner(scriptScanner);
         if (currentCommand instanceof Operand)
             ((Operand) currentCommand).installOperand(operandFetch());
         return currentCommand.execute();

@@ -28,9 +28,9 @@ public class Add extends Command implements Adding {
     protected MusicBand newBand;
 
     public void loadElement() throws InvalidDataFromFileException {
-        if (ServerStatusRegister.readingTheScript) {
+        if (isReadingTheScript()) {
             ScriptDataLoader loader = new ScriptDataLoader();
-            newBand = loader.loadObjectFromData();
+            newBand = loader.loadObjectFromData(scriptScanner);
         } else newBand = dataBase.getMusicBand();
     }
 
@@ -47,9 +47,5 @@ public class Add extends Command implements Adding {
         loadElement();
         addElement();
         return report;
-    }
-
-    public String getDescription() {
-        return this.description;
     }
 }

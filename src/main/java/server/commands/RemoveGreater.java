@@ -56,7 +56,4 @@ public class RemoveGreater extends Add implements RemovingIf {
         return report;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
 }

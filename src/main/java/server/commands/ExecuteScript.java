@@ -17,6 +17,7 @@ public class ExecuteScript extends Command {
     protected ArrayList<String> infoData;
     protected String commandsAndData;
     protected LinkedHashMap<String, String> mistakesInfo;
+    private ExecutionStringScanner scriptScanner;
 
     /**
      * Constructs new ExecuteScript object.
@@ -54,12 +55,12 @@ public class ExecuteScript extends Command {
     }
 
     private void scanScriptCommand() {
-        if (!ServerStatusRegister.readingTheScript)
+        if (!isReadingTheScript())
             return;
         String line;
         reader:
-        while (ServerStatusRegister.scriptScanner.hasNextLine()) {
-            line = ServerStatusRegister.scriptScanner.nextLine();
+        while (scriptScanner.hasNextLine()) {
+            line = scriptScanner.nextLine();
             if (line.equals("exit")) {
                 report.getReports().add("Выполнение скрипта завершено.");
                 mistakesInfo.keySet().forEach(key -> {
@@ -72,45 +73,41 @@ public class ExecuteScript extends Command {
             for (AvailableCommands command : AvailableCommands.values()) {
                 if (command.getRegex(line).matches()) {
                     try {
-                        ScriptCommandManager manager = new ScriptCommandManager(line);
+                        ScriptCommandManager manager = new ScriptCommandManager(line, scriptScanner);
                         report.getReports().addAll(manager.execution(manager.instructionFetch()).getReports());
                         report.getReports().add("");
                     } catch (InvalidDataFromFileException ex) {
-                        mistakesInfo.put(infoData.get(ServerStatusRegister.scriptScanner.getCommandIndex()), line +
+                        mistakesInfo.put(infoData.get(scriptScanner.getCommandIndex()), line +
                                 ": " + ex.getMessage());
                     }
                     continue reader;
                 }
             }
             if (line.equals("RECURSION_ERROR")) {
-                mistakesInfo.put(infoData.get(ServerStatusRegister.scriptScanner.getCommandIndex()), line + ": Исполнение " +
+                mistakesInfo.put(infoData.get(scriptScanner.getCommandIndex()), line + ": Исполнение " +
                         "данного скрипта в этом файле вызывает бесконечный цикл.");
             } else
-                mistakesInfo.put(infoData.get(ServerStatusRegister.scriptScanner.getCommandIndex()), line + ": useless data.");
+                mistakesInfo.put(infoData.get(scriptScanner.getCommandIndex()), line + ": useless data.");
         }
     }
 
     public ResultPattern execute() {
-        ServerStatusRegister.readingTheScript = true;
+        turnOnScriptMode();
         report = new ResultPattern();
         this.mistakesInfo = dataBase.getMistakesInfo();
         this.infoData = dataBase.getInfoData();
         this.commandsAndData = dataBase.getCommandsAndData();
         if (commandsAndData != null) {
-            ServerStatusRegister.scriptScanner = new ExecutionStringScanner(commandsAndData);
+            this.scriptScanner = new ExecutionStringScanner(commandsAndData);
             scanScriptCommand();
         }
-        ServerStatusRegister.readingTheScript = false;
         mistakesInfo.keySet().forEach(key -> {
             if ((!Objects.equals(mistakesInfo.get(key), "")))
                 report.getReports().add(key + mistakesInfo.get(key));
         });
         report.getReports().add("Выполнение скрипта завершено.");
-        return report;
-    }
 
-    public String getDescription() {
-        return this.description;
+        return report;
     }
 
 }

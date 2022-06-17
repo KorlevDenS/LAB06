@@ -32,8 +32,4 @@ public class Clear extends Command {
         report.getReports().add("Из коллекции были удалены все элементы.");
         return report;
     }
-
-    public String getDescription() {
-        return this.description;
-    }
 }

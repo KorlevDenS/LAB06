@@ -1,10 +1,9 @@
 package server.commands;
 
-import server.JaxbManager;
+import server.ScriptScanValidation;
 import server.ServerStatusRegister;
 import common.basic.*;
 import common.exceptions.InvalidDataFromFileException;
-import common.ScanValidation;
 
 import java.time.DateTimeException;
 
@@ -27,8 +26,8 @@ public class ScriptDataLoader {
      * @return not empty {@code String} name.
      * @throws InvalidDataFromFileException if name is empty.
      */
-    protected String loadBandName() throws InvalidDataFromFileException {
-        return ScanValidation.ReadNextNonEmptyLine();
+    protected String loadBandName(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        return ScriptScanValidation.ReadNextNonEmptyLine(scriptScanner);
     }
 
     /**
@@ -38,9 +37,9 @@ public class ScriptDataLoader {
      * @throws InvalidDataFromFileException if coordinates in the script
      *                                      are not valid.
      */
-    protected Coordinates loadBandCoordinates() throws InvalidDataFromFileException {
-        int coordinateX = ScanValidation.ReadNextInt();
-        double coordinateY = ScanValidation.ReadNextDouble();
+    protected Coordinates loadBandCoordinates(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        int coordinateX = ScriptScanValidation.ReadNextInt(scriptScanner);
+        double coordinateY = ScriptScanValidation.ReadNextDouble(scriptScanner);
         if ((coordinateX > 381) || (coordinateY > 381)) {
             throw new InvalidDataFromFileException("Значения координат превышают 381.");
         }
@@ -54,8 +53,8 @@ public class ScriptDataLoader {
      * @throws InvalidDataFromFileException if number of participants
      *                                      in the script <= 0 or is invalid.
      */
-    protected long loadNumberOfParticipants() throws InvalidDataFromFileException {
-        long numberOfParticipants = ScanValidation.ReadNextLong();
+    protected long loadNumberOfParticipants(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        long numberOfParticipants = ScriptScanValidation.ReadNextLong(scriptScanner);
         if (numberOfParticipants == 0) {
             throw new InvalidDataFromFileException("Количество участников должно быть больше нуля.");
         }
@@ -69,8 +68,8 @@ public class ScriptDataLoader {
      * @throws InvalidDataFromFileException if object in the script does not
      *                                      exist in {@link MusicGenre}.
      */
-    protected MusicGenre loadBandMusicGenre() throws InvalidDataFromFileException {
-        return ScanValidation.ReadNextGenre();
+    protected MusicGenre loadBandMusicGenre(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        return ScriptScanValidation.ReadNextGenre(scriptScanner);
     }
 
     /**
@@ -79,8 +78,8 @@ public class ScriptDataLoader {
      * @return not empty {@code String} name.
      * @throws InvalidDataFromFileException if name in the script is empty.
      */
-    protected String loadFrontManName() throws InvalidDataFromFileException {
-        return ScanValidation.ReadNextNonEmptyLine();
+    protected String loadFrontManName(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        return ScriptScanValidation.ReadNextNonEmptyLine(scriptScanner);
     }
 
     /**
@@ -89,8 +88,8 @@ public class ScriptDataLoader {
      * @return {@code long} height > 0.
      * @throws InvalidDataFromFileException if height in the script <= 0 or invalid.
      */
-    protected long loadFrontManHeight() throws InvalidDataFromFileException {
-        long frontManHeight = ScanValidation.ReadNextLong();
+    protected long loadFrontManHeight(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        long frontManHeight = ScriptScanValidation.ReadNextLong(scriptScanner);
         if (frontManHeight <= 0) {
             throw new InvalidDataFromFileException("Рост фронтмена должен быть больше нуля.");
         }
@@ -103,8 +102,8 @@ public class ScriptDataLoader {
      * @return {@code int} weight > 0.
      * @throws InvalidDataFromFileException if weight in the script <= 0 or invalid.
      */
-    protected int loadFrontManWeight() throws InvalidDataFromFileException {
-        int frontManWeight = ScanValidation.ReadNextInt();
+    protected int loadFrontManWeight(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        int frontManWeight = ScriptScanValidation.ReadNextInt(scriptScanner);
         if (frontManWeight <= 0) {
             throw new InvalidDataFromFileException("Вес фронтмена должен быть больше нуля.");
         }
@@ -123,8 +122,8 @@ public class ScriptDataLoader {
      * @throws InvalidDataFromFileException if length > 29 or password
      *                                      is not unique.
      */
-    protected String loadFrontManPassportID(boolean addToCollection) throws InvalidDataFromFileException {
-        String frontManPassportId = ServerStatusRegister.scriptScanner.nextLine();
+    protected String loadFrontManPassportID(boolean addToCollection, ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        String frontManPassportId = scriptScanner.nextLine();
         if (frontManPassportId.equals("")) return null;
         if (frontManPassportId.length() > 29) {
             throw new InvalidDataFromFileException("Длинна строки превысила 29 символов.");
@@ -142,8 +141,8 @@ public class ScriptDataLoader {
      * @return {@link ZonedDateTime} object.
      * @throws InvalidDataFromFileException birthday in script is invalid.
      */
-    protected ZonedDateTime giveBirthFrontMan() throws InvalidDataFromFileException {
-        String LineWithTime = ServerStatusRegister.scriptScanner.nextLine();
+    protected ZonedDateTime giveBirthFrontMan(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        String LineWithTime = scriptScanner.nextLine();
         if (LineWithTime.equals(""))
             return null;
         try {
@@ -163,15 +162,23 @@ public class ScriptDataLoader {
      * @return {@link Person} object from script.
      * @throws InvalidDataFromFileException if some fields in script are invalid.
      */
-    protected Person loadFrontManFromData(boolean addToCollection) throws InvalidDataFromFileException {
-        if (!Objects.equals(ServerStatusRegister.scriptScanner.nextLine(), "да")) return null;
-        String frontManName = loadFrontManName();
+    protected Person loadFrontManFromData(boolean addToCollection, ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
+        if (!Objects.equals(scriptScanner.nextLine(), "да")) return null;
+        String frontManName = loadFrontManName(scriptScanner);
         if (frontManName.equals("")) return null;
-        long frontManHeight = loadFrontManHeight();
-        int frontManWeight = loadFrontManWeight();
-        String frontManPassportId = loadFrontManPassportID(addToCollection);
-        ZonedDateTime frontManBirthday = giveBirthFrontMan();
+        long frontManHeight = loadFrontManHeight(scriptScanner);
+        int frontManWeight = loadFrontManWeight(scriptScanner);
+        String frontManPassportId = loadFrontManPassportID(addToCollection, scriptScanner);
+        ZonedDateTime frontManBirthday = giveBirthFrontMan(scriptScanner);
         return new Person(frontManName, frontManHeight, frontManWeight, frontManBirthday, frontManPassportId);
+    }
+
+    private Long generateId() {
+        long i = (long) (Math.random() * 100000 + 1);
+        while (ServerStatusRegister.uniqueIdList.contains(i)) {
+            i = (long) (Math.random() * 100000 + 1);
+        }
+        return i;
     }
 
     /**
@@ -181,26 +188,20 @@ public class ScriptDataLoader {
      * @return {@link MusicBand} object from script.
      * @throws InvalidDataFromFileException if some fields in script are invalid.
      */
-    public MusicBand loadObjectFromData() throws InvalidDataFromFileException {
+    public MusicBand loadObjectFromData(ExecuteScript.ExecutionStringScanner scriptScanner) throws InvalidDataFromFileException {
         String nameOfBand;
         Coordinates bandCoordinates;
         long numberOfParticipants;
         MusicGenre musicGenre;
         Person frontMan;
-        nameOfBand = loadBandName();
-        bandCoordinates = loadBandCoordinates();
-        numberOfParticipants = loadNumberOfParticipants();
-        musicGenre = loadBandMusicGenre();
-        frontMan = loadFrontManFromData(true);
-        if (!JaxbManager.readingXml) {
-            return new MusicBand(nameOfBand, bandCoordinates, numberOfParticipants,
+        nameOfBand = loadBandName(scriptScanner);
+        bandCoordinates = loadBandCoordinates(scriptScanner);
+        numberOfParticipants = loadNumberOfParticipants(scriptScanner);
+        musicGenre = loadBandMusicGenre(scriptScanner);
+        frontMan = loadFrontManFromData(true, scriptScanner);
+            MusicBand band = new MusicBand(nameOfBand, bandCoordinates, numberOfParticipants,
                     musicGenre, frontMan);
-        } else {
-            MusicBand xmlBand = new MusicBand(nameOfBand, bandCoordinates, numberOfParticipants,
-                    musicGenre, frontMan);
-            xmlBand.setCreationDate(ScanValidation.ReadNextNonEmptyLine());
-            xmlBand.setId(ScanValidation.ReadNextLong());
-            return xmlBand;
-        }
+            band.setId(generateId());
+            return band;
     }
 }

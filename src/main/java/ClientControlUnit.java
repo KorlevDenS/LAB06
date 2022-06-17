@@ -1,5 +1,7 @@
-package client;
-
+import client.ClientCommandManager;
+import client.ClientDataInstaller;
+import client.ClientStatusRegister;
+import client.Demonstrator;
 import common.CompleteMessage;
 import common.InstructionPattern;
 import common.TransportedData;
@@ -10,12 +12,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.util.Date;
 import java.util.Scanner;
 
-
+@Deprecated
 public class ClientControlUnit {
 
     static DatagramSocket ds;
@@ -25,38 +24,14 @@ public class ClientControlUnit {
     static CompleteMessage receivedMessage;
     static CompleteMessage sendingMessage;
 
-    public static void prepareData() throws IOException {
-        ClientStatusRegister.current = new Date();
-        //try {
-        //    ClientStatusRegister.currentXml = new File(System.getenv("COLLECTION_FILE"));
-        //} catch (NullPointerException e) {
-        //    System.out.println("Необходимая переменная окружения не задана. \n" +
-        //            "Задайте переменную COLLECTION_FILE при помощи команды export c необходимым файлом xml.");
-        //    System.exit(0);
-        //}
-        ClientStatusRegister.currentXml = new File("src/main/resources/MusicBandCollections.xml");
-        try {
-            ClientStatusRegister.xmlData = Files.readAllBytes(ClientStatusRegister.currentXml.toPath());
-        } catch (NoSuchFileException e) {
-            System.out.println("Файл, указанный в переменной среды не существует. \n" +
-                    "Задайте переменную COLLECTION_FILE при помощи команды export c существующим файлом xml.");
-            System.exit(0);
-        }
-    }
-
     public static void main(String[] args) throws IOException, ClassNotFoundException, InvalidDataFromFileException {
-        prepareData();
-
         while (true) {
             sendData();
             getData();
             if (receivedMessage.getResultPattern().isTimeToExit()) {
-                FileOutputStream outputStream = new FileOutputStream(ClientStatusRegister.currentXml);
-                outputStream.write(receivedMessage.getTransportedData().getXmlData());
                 System.exit(0);
             }
         }
-
     }
 
     public static void sendData() throws IOException {
@@ -67,12 +42,14 @@ public class ClientControlUnit {
             InstructionPattern instructionPattern = commandManager.execution(commandManager.instructionFetch());
             TransportedData transportedData = ClientDataInstaller.installIntoTransported();
             sendingMessage = new CompleteMessage(transportedData, instructionPattern);
+
             ds = new DatagramSocket();
             host = InetAddress.getByName("localhost");
             port = 6789;
             ByteArrayOutputStream o = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(o);
             out.writeObject(sendingMessage);
+
             byte[] buff = o.toByteArray();
             dp = new DatagramPacket(buff, buff.length, host, port);
             ds.send(dp);

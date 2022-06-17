@@ -6,7 +6,6 @@ import common.AvailableCommands;
 import common.ResultPattern;
 
 import java.util.Collections;
-import java.util.Date;
 
 /**
  * Class {@code Info} is used for creating command "info" object,
@@ -19,11 +18,7 @@ public class Info extends Command {
      * Type of collection received by {@code getClass().getName()}
      */
     private String typeOfCollection;
-    /**
-     * Date of initialisation of {@code HashSet} with {@code MusicBand}
-     * objects == Date and time of program has been started.
-     */
-    private Date initDateOfCollection;
+
     /**
      * Current amount of elements in {@code HashSet}
      */
@@ -54,16 +49,11 @@ public class Info extends Command {
             throw new IncorrectDataForObjectException("Class Info cannot perform this task");
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
     /**
      * Analysing and filling current data about {@code HashSet}.
      */
     private void knowInformation() {
         typeOfCollection = ServerStatusRegister.appleMusic.getClass().getName();
-        initDateOfCollection = ServerStatusRegister.current;
         amountOfElements = ServerStatusRegister.appleMusic.size();
         if (!ServerStatusRegister.appleMusic.isEmpty()) {
             minElement = Collections.min(ServerStatusRegister.appleMusic).toString();
@@ -77,7 +67,6 @@ public class Info extends Command {
         knowInformation();
         report.getReports().add("Информация о созданной коллекции:");
         report.getReports().add("Коллекция представляет собой " + typeOfCollection);
-        report.getReports().add("Дата инициализации: " + initDateOfCollection);
         report.getReports().add("Текущее количество элементов: " + amountOfElements);
         if (ServerStatusRegister.appleMusic.isEmpty()) {
             report.getReports().add("Минимального элемента ещё нет, коллекция пуста.");

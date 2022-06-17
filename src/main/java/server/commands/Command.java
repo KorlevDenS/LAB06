@@ -12,12 +12,15 @@ import server.interfaces.Executable;
  * as a superclass.
  * All commands can be executed and described.
  */
-public abstract class Command implements Described, Executable {
-    public String title;
-    public String description;
-    public AvailableCommands command;
+public abstract class Command implements Described, Executable, Cloneable {
+    private String title;
+    private String description;
+    private AvailableCommands command;
     protected ResultPattern report;
     protected InstructionPattern dataBase;
+    private boolean readingTheScript;
+    protected ExecuteScript.ExecutionStringScanner scriptScanner;
+
 
     public Command() {
     }
@@ -32,6 +35,19 @@ public abstract class Command implements Described, Executable {
         this.title = command.getTitle();
         this.description = command.getDescription();
         this.report = new ResultPattern();
+        this.readingTheScript = false;
+    }
+
+    public void setScriptScanner(ExecuteScript.ExecutionStringScanner scriptScanner) {
+        this.scriptScanner = scriptScanner;
+    }
+
+    public void turnOnScriptMode() {
+        this.readingTheScript = true;
+    }
+
+    public boolean isReadingTheScript(){
+        return readingTheScript;
     }
 
     public void setDataBase(InstructionPattern pattern) {
@@ -49,7 +65,6 @@ public abstract class Command implements Described, Executable {
     public String getTitle() {
         return this.title;
     }
-
 
     /**
      * Compares this object to the specified object.
@@ -89,5 +104,18 @@ public abstract class Command implements Described, Executable {
                 + "[title=" + title
                 + ";description=" + description
                 + "]";
+    }
+
+    public String getDescription(){
+        return this.description;
+    }
+
+    @Override
+    public Command clone() {
+        try {
+            return (Command) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

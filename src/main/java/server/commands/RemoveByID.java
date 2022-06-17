@@ -55,8 +55,4 @@ public class RemoveByID extends Command implements Operand, RemovingIf {
     public void installOperand(String stringRepresentation) {
         idToRemoveBy = Long.parseLong(stringRepresentation);
     }
-
-    public String getDescription() {
-        return this.description;
-    }
 }

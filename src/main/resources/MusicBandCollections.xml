@@ -2,7 +2,7 @@
 <SERVER_STATUS_REGISTER>
     <CollectionKeeper>
         <MusicBand>
-            <id>21637</id>
+            <id>327</id>
             <name>Group2</name>
             <numberOfParticipants>5</numberOfParticipants>
             <frontMan>
@@ -17,10 +17,10 @@
                 <x>222</x>
                 <y>20.0</y>
             </coordinates>
-            <creationDate>1980-07-28</creationDate>
+            <creationDate>1981-02-20</creationDate>
         </MusicBand>
         <MusicBand>
-            <id>80370</id>
+            <id>80310</id>
             <name>Group1</name>
             <numberOfParticipants>3</numberOfParticipants>
             <frontMan>
@@ -35,7 +35,7 @@
                 <x>234</x>
                 <y>200.0</y>
             </coordinates>
-            <creationDate>1972-07-11</creationDate>
+            <creationDate>2021-10-10</creationDate>
         </MusicBand>
     </CollectionKeeper>
 </SERVER_STATUS_REGISTER>

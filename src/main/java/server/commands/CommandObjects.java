@@ -48,7 +48,7 @@ public enum CommandObjects implements Described {
      * @return {@code Command} object.
      */
     public Command getCommand() {
-        return this.command;
+        return this.command.clone();
     }
 
     public String getDescription() {

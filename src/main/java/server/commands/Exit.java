@@ -26,14 +26,6 @@ public class Exit extends Command {
     }
 
     /**
-     * @return the description of the operation it is used in.
-     */
-    @Override
-    public String getDescription() {
-        return this.description;
-    }
-
-    /**
      * Executes the operation it is used in and prints a message.
      */
     @Override
@@ -41,7 +33,7 @@ public class Exit extends Command {
         report = new ResultPattern();
         report.getReports().add("Завершение работы...");
         report.setTimeToExit(true);
-        ScriptCommandManager manager = new ScriptCommandManager("save");
+        ScriptCommandManager manager = new ScriptCommandManager("save",scriptScanner);
         ResultPattern savePattern = manager.execution(manager.instructionFetch());
         report.getReports().addAll(savePattern.getReports());
         return report;
