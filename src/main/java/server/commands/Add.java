@@ -1,11 +1,20 @@
 package server.commands;
 
+import common.TransportedData;
+import server.DataBaseManager;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.interfaces.Adding;
 import server.ServerStatusRegister;
 import common.basic.MusicBand;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.InvalidDataFromFileException;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Class {@code Add} is used for creating command "add" objects,
@@ -34,18 +43,35 @@ public class Add extends Command implements Adding {
         } else newBand = dataBase.getMusicBand();
     }
 
-    public void addElement() {
+    public void addElement() throws InvalidDataFromFileException {
+        try {
+            DataBaseManager manager = new DataBaseManager();
+            Connection conn = manager.getConnection();
+
+
+
+        } catch (SQLException | IOException e) {
+            if (isReadingTheScript())
+                throw new InvalidDataFromFileException("Ошибка добавления в базу данных.");
+            else report.getReports().add("шибка добавления в базу данных.");
+        }
+
+
+
         ServerStatusRegister.appleMusic.add(newBand);
-        ServerStatusRegister.uniqueIdList.add(newBand.getId());
         if (newBand.getFrontMan() != null)
             ServerStatusRegister.passports.add(newBand.getFrontMan().getPassportID());
         report.getReports().add("Новый элемент успешно добавлен в коллекцию.");
+
     }
 
-    public ResultPattern execute() throws InvalidDataFromFileException {
+    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         loadElement();
         addElement();
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 }

@@ -13,6 +13,7 @@ import server.interfaces.Executable;
  * All commands can be executed and described.
  */
 public abstract class Command implements Described, Executable, Cloneable {
+    private long clientId;
     private String title;
     private String description;
     private AvailableCommands command;
@@ -46,7 +47,7 @@ public abstract class Command implements Described, Executable, Cloneable {
         this.readingTheScript = true;
     }
 
-    public boolean isReadingTheScript(){
+    public boolean isReadingTheScript() {
         return readingTheScript;
     }
 
@@ -64,6 +65,14 @@ public abstract class Command implements Described, Executable, Cloneable {
 
     public String getTitle() {
         return this.title;
+    }
+
+    public long getClientId() {
+        return this.clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     /**
@@ -106,7 +115,7 @@ public abstract class Command implements Described, Executable, Cloneable {
                 + "]";
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 

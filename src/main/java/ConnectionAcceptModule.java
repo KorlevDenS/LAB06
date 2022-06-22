@@ -1,4 +1,4 @@
-package server;
+import server.ClientThreadHandler;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -11,7 +11,6 @@ public class ConnectionAcceptModule {
     public static void main(String[] args) throws IOException {
 
         //тут загрузка коллекции из бд
-
         try (ServerSocket server = new ServerSocket(6789)) {
             System.out.print("Сервер начал слушать клиентов: " + "Порт " + server.getLocalPort() +
                     " / Адрес " + InetAddress.getLocalHost() + ".\nОжидаем подключения клиентов");

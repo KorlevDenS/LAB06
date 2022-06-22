@@ -2,9 +2,14 @@ package server.commands;
 
 import common.AvailableCommands;
 import common.ResultPattern;
+import common.TransportedData;
 import common.exceptions.IncorrectDataForObjectException;
 import common.exceptions.InvalidDataFromFileException;
+import server.ResponseHandler;
 import server.ScriptCommandManager;
+import server.ServerDataInstaller;
+
+import java.io.ObjectOutputStream;
 
 /**
  * Class {@code Exit} is used for creating command "exit" object,
@@ -28,14 +33,16 @@ public class Exit extends Command {
     /**
      * Executes the operation it is used in and prints a message.
      */
-    @Override
-    public ResultPattern execute() throws InvalidDataFromFileException {
+    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         report.getReports().add("Завершение работы...");
         report.setTimeToExit(true);
-        ScriptCommandManager manager = new ScriptCommandManager("save",scriptScanner);
-        ResultPattern savePattern = manager.execution(manager.instructionFetch());
-        report.getReports().addAll(savePattern.getReports());
-        return report;
+        ScriptCommandManager manager = new ScriptCommandManager("save", scriptScanner);
+        manager.execution(manager.instructionFetch(), sendToClient);
+        //report.getReports().addAll(savePattern.getReports());
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 }

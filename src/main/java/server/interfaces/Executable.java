@@ -1,7 +1,8 @@
 package server.interfaces;
 
-import common.ResultPattern;
 import common.exceptions.InvalidDataFromFileException;
+
+import java.io.ObjectOutputStream;
 
 /**
  * Interface {@code Executable} requires implementing classes
@@ -11,5 +12,5 @@ public interface Executable {
     /**
      * Executes the operation it is used in and prints a message.
      */
-    ResultPattern execute() throws InvalidDataFromFileException;
+    void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException;
 }

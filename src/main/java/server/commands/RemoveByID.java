@@ -1,5 +1,8 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.basic.MusicBand;
 import common.AvailableCommands;
@@ -7,6 +10,8 @@ import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
 import server.interfaces.Operand;
 import server.interfaces.RemovingIf;
+
+import java.io.ObjectOutputStream;
 
 /**
  * Class {@code RemoveById} is used for creating command "remove_by_id" object,
@@ -38,18 +43,22 @@ public class RemoveByID extends Command implements Operand, RemovingIf {
         MusicBand bandToRemove = ServerStatusRegister.appleMusic.stream()
                 .filter(s -> s.getId().equals(idToRemoveBy)).findFirst().orElse(null);
         if (bandToRemove != null) {
-            ServerStatusRegister.passports.remove(bandToRemove.getFrontMan().getPassportID());
-            ServerStatusRegister.uniqueIdList.remove(bandToRemove.getId());
+            if (bandToRemove.getFrontMan() != null)
+                ServerStatusRegister.passports.remove(bandToRemove.getFrontMan().getPassportID());
             ServerStatusRegister.appleMusic.remove(bandToRemove);
             report.getReports().add("Элемент с ID = " + idToRemoveBy + " успешно удалён.");
         } else report.getReports().add("Элемента с таким ID в не было найдено в коллекции.");
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
-        installOperand(dataBase.getOperand());
+        if (!isReadingTheScript())
+            installOperand(dataBase.getOperand());
         analyseAndRemove();
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 
     public void installOperand(String stringRepresentation) {

@@ -2,8 +2,12 @@ package server.commands;
 
 import common.AvailableCommands;
 import common.ResultPattern;
+import common.TransportedData;
 import common.exceptions.IncorrectDataForObjectException;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
 /**
@@ -25,10 +29,13 @@ public class Help extends Command {
             throw new IncorrectDataForObjectException("Class Help cannot perform this task");
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
         Arrays.stream(AvailableCommands.values())
                 .forEach(s -> report.getReports().add("Команда " + s.getTitle() + " - " + s.getDescription() + "."));
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 }

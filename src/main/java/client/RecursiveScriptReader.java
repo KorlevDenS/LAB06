@@ -30,8 +30,13 @@ public class RecursiveScriptReader {
         protected File file;
         protected Integer stringNumber;
 
-        ScannerWithMemory(File file) throws FileNotFoundException {
-            this.scanner = new Scanner(file);
+        ScannerWithMemory(File file) throws InvalidDataFromFileException {
+            try {
+                this.scanner = new Scanner(file);
+            } catch (FileNotFoundException e) {
+                throw new InvalidDataFromFileException("Файла с таким именем не существует." + "\n"
+                        + "Ведите команду с аргументом в виде имени существующего файла.");
+            }
             this.file = file;
             this.stringNumber = 0;
         }
@@ -60,7 +65,7 @@ public class RecursiveScriptReader {
 
     }
 
-    private void fillScriptData() throws FileNotFoundException {
+    private void fillScriptData() throws InvalidDataFromFileException {
         dataStringBuilder = new StringBuilder();
         infoData = new ArrayList<>();
         commandsAndData = null;
@@ -100,7 +105,7 @@ public class RecursiveScriptReader {
             fileIndex++;
             try {
                 scriptScanners.put(fileIndex, new ScannerWithMemory(newFile));
-            } catch (FileNotFoundException e) {
+            } catch (InvalidDataFromFileException e) {
                 fileIndex--;
                 infoData.add("Файл:" + scriptScanners.get(fileIndex).getFileName() + ";стр."
                         + scriptScanners.get(fileIndex).getStringNumber() + ": ");
@@ -117,12 +122,7 @@ public class RecursiveScriptReader {
     }
 
     public void installScriptData() throws InvalidDataFromFileException {
-        try {
-            fillScriptData();
-        } catch (FileNotFoundException e) {
-            throw new InvalidDataFromFileException("Файла с таким именем не существует." + "\n"
-                    + "Ведите команду с аргументом в виде имени существующего файла.");
-        }
+        fillScriptData();
     }
 
     public ArrayList<String> getInfoData() {

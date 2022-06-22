@@ -1,15 +1,13 @@
 package client;
 
 import common.AvailableCommands;
-import common.CommandManagement;
 import common.InstructionPattern;
 import common.exceptions.InvalidDataFromFileException;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class ClientCommandManager extends ClientDataLoader implements CommandManagement<AvailableCommands, InstructionPattern, AvailableCommands> {
-
+public class ClientCommandManager extends ClientDataLoader {
     private String instructionTitle;
 
     public ClientCommandManager(String instructionTitle) {
@@ -33,7 +31,7 @@ public class ClientCommandManager extends ClientDataLoader implements CommandMan
     public String operandFetch() {
         Scanner scanner = new Scanner(instructionTitle);
         scanner.next();
-        if (scanner.hasNext()) return scanner.next();
+        if (scanner.hasNext()) return scanner.nextLine().trim();
         else return "";
     }
 

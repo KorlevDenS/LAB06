@@ -1,3 +1,6 @@
+package testing;
+
+
 import client.ClientCommandManager;
 import client.ClientDataInstaller;
 import client.Demonstrator;
@@ -5,12 +8,14 @@ import common.CompleteMessage;
 import common.InstructionPattern;
 import common.exceptions.InvalidDataFromFileException;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientControlUnitTCP {
+public class CCC {
 
     public static void main(String[] args) {
         while (true) {

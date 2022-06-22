@@ -1,4 +1,5 @@
 package common;
+
 import common.basic.MusicGenre;
 
 import java.util.InputMismatchException;

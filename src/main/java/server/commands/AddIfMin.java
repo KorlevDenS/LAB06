@@ -1,11 +1,15 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
 import common.exceptions.InvalidDataFromFileException;
 
+import java.io.ObjectOutputStream;
 import java.util.Collections;
 
 /**
@@ -42,14 +46,12 @@ public class AddIfMin extends Add {
     public void addElement() {
         if (ServerStatusRegister.appleMusic.isEmpty()) {
             ServerStatusRegister.appleMusic.add(newBand);
-            ServerStatusRegister.uniqueIdList.add(newBand.getId());
             if (newBand.getFrontMan() != null)
                 ServerStatusRegister.passports.add(newBand.getFrontMan().getPassportID());
             isAdded = true;
         } else {
             if (newBand.compareTo(Collections.min(ServerStatusRegister.appleMusic)) < 0) {
                 ServerStatusRegister.appleMusic.add(newBand);
-                ServerStatusRegister.uniqueIdList.add(newBand.getId());
                 if (newBand.getFrontMan() != null)
                     ServerStatusRegister.passports.add(newBand.getFrontMan().getPassportID());
                 isAdded = true;
@@ -59,7 +61,7 @@ public class AddIfMin extends Add {
         }
     }
 
-    public ResultPattern execute() throws InvalidDataFromFileException {
+    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         loadElement();
         addElement();
@@ -70,6 +72,9 @@ public class AddIfMin extends Add {
             report.getReports().add("В коллекции есть элементы меньше данного.");
             report.getReports().add("Элемент в неё не добавлен.");
         }
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 }

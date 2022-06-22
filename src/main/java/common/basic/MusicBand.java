@@ -4,6 +4,7 @@ import common.exceptions.InvalidDataFromFileException;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -16,7 +17,7 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
     /**
      * Unique id of {@code MusicBand} object. The field shouldn't be {@code null}
      * and should be more than 0. Its value is generated automatically
-     * by method {@link MusicBand#generateId().}
+     * by method DATABASE
      */
     private Long id;
     /**
@@ -67,7 +68,6 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
         this.genre = genre;
         this.frontMan = frontMan;
         this.creationDate = generateDate();
-        this.id = generateId();
     }
 
     /**
@@ -84,16 +84,6 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
         this.creationDate = generateDate();
         this.frontMan = frontMan;
         this.id = id;
-    }
-
-    /**
-     * Generates unique {@link MusicBand#id}
-     * not to repeat the id of already created music band.
-     *
-     * @return unique id of MusicBand.
-     */
-    private Long generateId() {
-        return (Long) (long) (Math.random() * 100000 + 1);
     }
 
     /**
@@ -141,6 +131,7 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
      * @return {@link MusicBand#id} of the object.
      */
     public Long getId() {
+        if (id == null) return 0L;
         return this.id;
     }
 
@@ -253,7 +244,7 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
         if (this.getClass() != obj.getClass())
             return false;
         MusicBand otherObj = (MusicBand) obj;
-        return id.equals(otherObj.id);
+        return Objects.equals(id, otherObj.id);
     }
 
     /**

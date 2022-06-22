@@ -1,10 +1,15 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.basic.MusicBand;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
+
+import java.io.ObjectOutputStream;
 
 /**
  * Class {@code PrintUniqueNumberOfParticipants} is used for creating
@@ -28,7 +33,7 @@ public class PrintUniqueNumberOfParticipants extends Command {
         }
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
         if (!ServerStatusRegister.appleMusic.isEmpty()) {
             report.getReports().add("Список уникальных значений количества участников в группах:");
@@ -37,6 +42,9 @@ public class PrintUniqueNumberOfParticipants extends Command {
         } else {
             report.getReports().add("Уникальных значений нет, так как в коллекции еще нет элементов.");
         }
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 }

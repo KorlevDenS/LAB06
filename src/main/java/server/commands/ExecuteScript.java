@@ -1,12 +1,15 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
 import server.ScriptCommandManager;
-import server.ServerStatusRegister;
+import server.ServerDataInstaller;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
 import common.exceptions.InvalidDataFromFileException;
 
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.*;
@@ -54,7 +57,7 @@ public class ExecuteScript extends Command {
         }
     }
 
-    private void scanScriptCommand() {
+    private void scanScriptCommand(ObjectOutputStream sendToClient) {
         if (!isReadingTheScript())
             return;
         String line;
@@ -74,7 +77,9 @@ public class ExecuteScript extends Command {
                 if (command.getRegex(line).matches()) {
                     try {
                         ScriptCommandManager manager = new ScriptCommandManager(line, scriptScanner);
-                        report.getReports().addAll(manager.execution(manager.instructionFetch()).getReports());
+                        manager.setClientId(getClientId());
+                        manager.execution(manager.instructionFetch(), sendToClient);
+                        report.getReports().addAll(manager.getCommandResult().getReports());
                         report.getReports().add("");
                     } catch (InvalidDataFromFileException ex) {
                         mistakesInfo.put(infoData.get(scriptScanner.getCommandIndex()), line +
@@ -91,7 +96,7 @@ public class ExecuteScript extends Command {
         }
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         turnOnScriptMode();
         report = new ResultPattern();
         this.mistakesInfo = dataBase.getMistakesInfo();
@@ -99,7 +104,7 @@ public class ExecuteScript extends Command {
         this.commandsAndData = dataBase.getCommandsAndData();
         if (commandsAndData != null) {
             this.scriptScanner = new ExecutionStringScanner(commandsAndData);
-            scanScriptCommand();
+            scanScriptCommand(sendToClient);
         }
         mistakesInfo.keySet().forEach(key -> {
             if ((!Objects.equals(mistakesInfo.get(key), "")))
@@ -107,7 +112,8 @@ public class ExecuteScript extends Command {
         });
         report.getReports().add("Выполнение скрипта завершено.");
 
-        return report;
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        new ResponseHandler(sendToClient, newData, report).start();
     }
 
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class CompleteMessage implements Serializable {
 
-    private final TransportedData transportedData;
+    private TransportedData transportedData;
     private ResultPattern resultPattern;
     private InstructionPattern instructionPattern;
 
@@ -13,8 +13,7 @@ public class CompleteMessage implements Serializable {
         this.resultPattern = result;
     }
 
-    public CompleteMessage(TransportedData data, InstructionPattern pattern) {
-        this.transportedData = data;
+    public CompleteMessage(InstructionPattern pattern) {
         this.instructionPattern = pattern;
     }
 

@@ -25,10 +25,4 @@ public class ServerStatusRegister {
      */
     public static HashSet<String> passports = new HashSet<>();
 
-    /**
-     * {@code ArrayList} keeping {@code Long} values is used for generating unique
-     * {@code  MusicBand#id} in method of {@code  MusicBand#generateId()}
-     */
-    public static HashSet<Long> uniqueIdList = new HashSet<>();
-
 }

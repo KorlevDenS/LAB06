@@ -32,7 +32,8 @@ public enum AvailableCommands {
     GROUP_COUNTING_BY_FRONT_MAN("group_counting_by_front_man", "", "сгруппировать элементы коллекции " +
             "по значению поля frontMan, вывести количество элементов в каждой группе"),
     PRINT_UNIQUE_NUMBER_OF_PARTICIPANTS("print_unique_number_of_participants", "", "вывести уникальные " +
-            "значения поля numberOfParticipants всех элементов в коллекции");
+            "значения поля numberOfParticipants всех элементов в коллекции"),
+    REGISTER("register [^\\s]+\\s[^\\s]+", "", "зарегистрироваться на сервере");
 
     private final String title;
     private final String description;

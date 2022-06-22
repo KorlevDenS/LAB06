@@ -1,10 +1,14 @@
 package server.commands;
 
+import common.TransportedData;
 import common.exceptions.IncorrectDataForObjectException;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.AvailableCommands;
 import common.ResultPattern;
 
+import java.io.ObjectOutputStream;
 import java.util.Collections;
 
 /**
@@ -62,7 +66,7 @@ public class Info extends Command {
         }
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
         knowInformation();
         report.getReports().add("Информация о созданной коллекции:");
@@ -77,6 +81,9 @@ public class Info extends Command {
             report.getReports().add("Максимальный элемент: " + maxElement);
             report.getReports().add("Тип хранимых элементов: " + typeOfInnerElements);
         }
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 }

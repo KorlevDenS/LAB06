@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 
 public class InstructionPattern implements Serializable {
 
+    private long clientId;
     private final String argumentTitle;
     private final String titleRegex;
     private final String description;
@@ -32,7 +33,7 @@ public class InstructionPattern implements Serializable {
         this.commandsAndData = commandsAndData;
     }
 
-    public void setMistakesInfo(LinkedHashMap<String,String> mistakesInfo) {
+    public void setMistakesInfo(LinkedHashMap<String, String> mistakesInfo) {
         this.mistakesInfo = mistakesInfo;
     }
 
@@ -95,6 +96,14 @@ public class InstructionPattern implements Serializable {
 
     public LinkedHashMap<String, String> getMistakesInfo() {
         return this.mistakesInfo;
+    }
+
+    public long getClientId() {
+        return this.clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
 }

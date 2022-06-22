@@ -1,0 +1,10 @@
+ssh -p 2222 s333165@se.ifmo.ru
+java -classpath postgresql-42.4.0.jar:. MainT
+psql -d studs -h pg -U s333165
+
+h2 C:\Users\mvideo\Desktop\ProgLab07\db\stockExchange.mv.db
+
+SELECT column_name, column_default, data_type
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE table_name = 'my_table';
+

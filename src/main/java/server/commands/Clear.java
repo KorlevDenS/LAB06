@@ -1,9 +1,14 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
+
+import java.io.ObjectOutputStream;
 
 /**
  * Class Clear is used for creating command "clear" object,
@@ -24,12 +29,14 @@ public class Clear extends Command {
             throw new IncorrectDataForObjectException("Class Clear cannot perform this task");
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
         ServerStatusRegister.appleMusic.clear();
         ServerStatusRegister.passports.clear();
-        ServerStatusRegister.uniqueIdList.clear();
         report.getReports().add("Из коллекции были удалены все элементы.");
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 }

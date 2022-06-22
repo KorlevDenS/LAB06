@@ -1,10 +1,15 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.basic.MusicBand;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
+
+import java.io.ObjectOutputStream;
 
 /**
  * Class {@code Show} is used for showing all current elements of
@@ -25,14 +30,18 @@ public class Show extends Command {
             throw new IncorrectDataForObjectException("Class Show cannot perform this task");
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
+        report.getReports().add(getClientId() + " ");
         if (!ServerStatusRegister.appleMusic.isEmpty()) {
             report.getReports().add("Все элементы коллекции:");
             ServerStatusRegister.appleMusic.stream().map(MusicBand::toString).forEach(s -> report.getReports().add(s));
         } else {
             report.getReports().add("В коллекции ещё нет элементов.");
         }
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 }

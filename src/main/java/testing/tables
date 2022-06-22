@@ -1,0 +1,47 @@
+CREATE TABLE users (
+	user_id serial UNIQUE,
+	login varchar(255) NOT NULL,
+	password text NOT NULL);
+
+
+
+CREATE TABLE music_bands (
+    user_id int NOT NULL,
+    band_id serial NOT NULL UNIQUE,
+    band_name text NOT NULL,
+    coordinate_x int NOT NULL,
+    coordinate_y real NOT NULL,
+    creation_date varchar(100) NOT NULL,
+    number_of_participants bigint NOT NULL,
+    music_genre varchar(100) NOT NULL,
+    frontman_name varchar(100),
+    frontman_birthday varchar(200),
+    height bigint,
+    weight int,
+    passport_id text UNIQUE);
+    passport_id text UNIQUE);
+INSERT INTO music_bands (
+    user_id,
+    band_name,
+    coordinate_x,
+    coordinate_y,
+    creation_date,
+    number_of_participants,
+    music_genre,
+    frontman_name,
+    frontman_birthday,
+    height,
+    weight,
+    passport_id) VALUES (
+    3,
+    'group1',
+    123,
+    34,
+    '2004-10-16',
+    NULL,
+    NULL,
+    'Bob',
+    '1999-12-02T03:04:05.000000010+03:00[Europe/Moscow]',
+    180,
+    80,
+    'ighoieiigioewgpgesdfer');

@@ -1,5 +1,6 @@
-package common;
+package server.interfaces;
 
+import common.AvailableCommands;
 import common.exceptions.InvalidDataFromFileException;
 
 /**
@@ -25,5 +26,5 @@ public interface CommandManagement<T, U, S> {
      *
      * @param command {@link AvailableCommands} object.
      */
-    U execution(S command) throws InvalidDataFromFileException;
+    void execution(U command, S sendToClient) throws InvalidDataFromFileException;
 }

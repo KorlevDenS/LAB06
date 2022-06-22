@@ -9,7 +9,6 @@ public class TransportedData implements Serializable {
 
     private HashSet<MusicBand> appleMusic;
     private HashSet<String> passports;
-    private HashSet<Long> uniqueIdList;
 
     public HashSet<String> getPassports() {
         return this.passports;
@@ -25,14 +24,6 @@ public class TransportedData implements Serializable {
 
     public HashSet<MusicBand> getAppleMusic() {
         return this.appleMusic;
-    }
-
-    public void setUniqueIdList(HashSet<Long> uniqueIdList) {
-        this.uniqueIdList = uniqueIdList;
-    }
-
-    public HashSet<Long> getUniqueIdList() {
-        return this.uniqueIdList;
     }
 
 }

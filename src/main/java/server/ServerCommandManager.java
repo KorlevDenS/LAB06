@@ -2,12 +2,13 @@ package server;
 
 import server.commands.Command;
 import server.commands.CommandObjects;
-import common.CommandManagement;
 import common.InstructionPattern;
-import common.ResultPattern;
 import common.exceptions.InvalidDataFromFileException;
+import server.interfaces.CommandManagement;
 
-public class ServerCommandManager implements CommandManagement<Command, ResultPattern, Command> {
+import java.io.ObjectOutputStream;
+
+public class ServerCommandManager implements CommandManagement<Command, Command, ObjectOutputStream> {
 
     private final InstructionPattern instructionPattern;
 
@@ -20,11 +21,12 @@ public class ServerCommandManager implements CommandManagement<Command, ResultPa
         CommandObjects emptyCommand = CommandObjects.valueOf(instructionType);
         Command readyCommand = emptyCommand.getCommand();
         readyCommand.setDataBase(instructionPattern);
+        readyCommand.setClientId(instructionPattern.getClientId());
         readyCommand.getReport().setInstructionTitle(readyCommand.getDataBase().getTitleRegex());
         return readyCommand;
     }
 
-    public ResultPattern execution(Command command) throws InvalidDataFromFileException {
-        return command.execute();
+    public void execution(Command command, ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
+        command.execute(sendToClient);
     }
 }

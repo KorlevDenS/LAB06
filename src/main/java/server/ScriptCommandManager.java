@@ -6,10 +6,11 @@ import server.commands.CommandObjects;
 import common.ResultPattern;
 import common.exceptions.InstructionFetchException;
 import common.exceptions.InvalidDataFromFileException;
-import common.CommandManagement;
+import server.interfaces.CommandManagement;
 import server.commands.ExecuteScript;
 import server.interfaces.Operand;
 
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 /**
@@ -17,13 +18,15 @@ import java.util.Scanner;
  * all the commands enumerated in {@link AvailableCommands}.
  * Object of this class performs main stages of execution of command.
  */
-public class ScriptCommandManager implements CommandManagement<AvailableCommands, ResultPattern, AvailableCommands> {
+public class ScriptCommandManager implements CommandManagement<AvailableCommands, AvailableCommands, ObjectOutputStream> {
 
     /**
      * Title of the current instruction.
      */
     private final String instructionTitle;
     private ExecuteScript.ExecutionStringScanner scriptScanner;
+    private ResultPattern commandResult;
+    private long clientId;
 
     /**
      * Constructs {@code ScriptCommandManager} object.
@@ -47,18 +50,28 @@ public class ScriptCommandManager implements CommandManagement<AvailableCommands
     public String operandFetch() {
         Scanner scanner = new Scanner(instructionTitle);
         scanner.next();
-        return scanner.next();
+        return scanner.nextLine().trim();
     }
 
-    public ResultPattern execution(AvailableCommands command) throws InvalidDataFromFileException {
+    public void execution(AvailableCommands command, ObjectOutputStream sentToClient) throws InvalidDataFromFileException {
         String commandName = command.toString();
         CommandObjects currentCommandObj = CommandObjects.valueOf(commandName);
         Command currentCommand = currentCommandObj.getCommand();
+        currentCommand.setClientId(clientId);
         currentCommand.turnOnScriptMode();
         currentCommand.setScriptScanner(scriptScanner);
         if (currentCommand instanceof Operand)
             ((Operand) currentCommand).installOperand(operandFetch());
-        return currentCommand.execute();
+        currentCommand.execute(sentToClient);
+        this.commandResult = currentCommand.getReport();
+    }
+
+    public ResultPattern getCommandResult() {
+        return this.commandResult;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
 }

@@ -1,11 +1,15 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.basic.MusicBand;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
 
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,7 +55,7 @@ public class GroupCountingByFrontMan extends Command {
         bandsWithFrontMan = map.get(false);
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
         if (!ServerStatusRegister.appleMusic.isEmpty()) {
             groupByFrontMan();
@@ -61,7 +65,10 @@ public class GroupCountingByFrontMan extends Command {
             report.getReports().add("Групп с фронтменом: 0; Групп без фронтмена: 0.");
             report.getReports().add("В коллекции ещё нет элементов.");
         }
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 
 }

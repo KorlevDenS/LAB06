@@ -1,4 +1,6 @@
 info
+register 111 111111
+info
 show
 clear
 save

@@ -1,5 +1,8 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.basic.MusicBand;
 import common.AvailableCommands;
@@ -8,6 +11,8 @@ import common.exceptions.IncorrectDataForObjectException;
 import common.exceptions.InvalidDataFromFileException;
 import server.interfaces.Operand;
 import server.interfaces.RemovingIf;
+
+import java.io.ObjectOutputStream;
 
 /**
  * Class {@code Update} is used for creating command "update" object,
@@ -54,9 +59,10 @@ public class Update extends Add implements Operand, RemovingIf {
     }
 
     @Override
-    public ResultPattern execute() throws InvalidDataFromFileException {
+    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
-        installOperand(dataBase.getOperand());
+        if (!isReadingTheScript())
+            installOperand(dataBase.getOperand());
         loadElement();
         newBand.setId(idToUpdateBy);
         analyseAndRemove();
@@ -64,7 +70,10 @@ public class Update extends Add implements Operand, RemovingIf {
             addElement();
             report.getReports().add("Элемент с ID = " + idToUpdateBy + " успешно обновлён.");
         } else report.getReports().add("Элемента с таким ID в не было найдено в коллекции.");
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 
 }

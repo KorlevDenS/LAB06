@@ -1,55 +1,38 @@
-import server.ScriptCommandManager;
-import server.ServerStatusRegister;
+import common.basic.Coordinates;
 import common.basic.MusicBand;
-import server.JaxbManager;
-import common.exceptions.InvalidDataFromFileException;
+import common.basic.MusicGenre;
+import common.basic.Person;
+import server.DataBaseManager;
+import server.PasswordEncryptor;
 
-import javax.xml.bind.JAXBException;
-import java.io.File;
-import java.util.Date;
-import java.util.HashSet;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.ZonedDateTime;
 import java.util.Scanner;
-
-import static server.JaxbManager.*;
 
 public class Main {
 
     static Scanner commandScanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws InvalidDataFromFileException {
-        ServerStatusRegister.appleMusic = new HashSet<>();
-        ServerStatusRegister.current = new Date();
-        //try {
-        //    ServerStatusRegister.currentXml = new File(System.getenv("COLLECTION_FILE"));
-        //} catch (NullPointerException e) {
-        //    System.out.println("Необходимая переменная окружения не задана. \n" +
-        //            "Задайте переменную COLLECTION_FILE при помощи команды export c необходимым файлом xml.");
-        //    System.exit(0);
-        //}
-        ServerStatusRegister.currentXml = new File("src/main/resources/MusicBandCollections.xml");
-        try {
-            JaxbManager manager = new JaxbManager();
-           //manager.readXml();
-           //manager.validateXmlData();
-        } catch (JAXBException e) {
-            System.out.println("Не удалось загрузить коллекцию из файла, нарушен формат XML.");
-        }
-        for (MusicBand band : ServerStatusRegister.appleMusic) {
-            ServerStatusRegister.uniqueIdList.add(band.getId());
-            if ((band.getFrontMan() != null)&&(band.getFrontMan().getPassportID() != null))
-                ServerStatusRegister.passports.add(band.getFrontMan().getPassportID());
-        }
+    public static final String DB_URL = "jdbc:h2:C:\\Users\\mvideo\\Desktop\\ProgLab07\\db\\stockExchange";
+    public static final String DB_Driver = "org.h2.Driver";
 
-        //idValidation();
-        //passwordValidation();
-        scanCommand();
+    public static void main(String[] args) throws NoSuchAlgorithmException, SQLException, IOException {
+
+        MusicBand band = new MusicBand("group1", new Coordinates(12, 12), 122, MusicGenre.BRIT_POP, null);
+
+        DataBaseManager manager = new DataBaseManager();
+        Connection conn = manager.getConnection();
+        Statement stat = conn.createStatement();
+        stat.executeUpdate(manager.musicBandToSQLString(band, 144));
+        stat.close();
+        conn.close();
+
+
     }
 
-    public static void scanCommand() throws InvalidDataFromFileException {
-        String line = commandScanner.nextLine();
-        ScriptCommandManager manager = new ScriptCommandManager(line);
-        manager.execution(manager.instructionFetch());
-        if (line.equals("exit")) return;
-        scanCommand();
-    }
 }

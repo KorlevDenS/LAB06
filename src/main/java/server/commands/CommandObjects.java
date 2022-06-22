@@ -1,6 +1,5 @@
 package server.commands;
 
-import server.ScriptCommandManager;
 import common.AvailableCommands;
 import server.interfaces.Described;
 
@@ -9,8 +8,7 @@ import server.interfaces.Described;
  * corresponding their data from {@link AvailableCommands} enum.
  * Every constant has the identical name as in relevant {@link AvailableCommands} object.
  * {@code CommandObjects} uses {@link AvailableCommands} to create
- * {@code Command} objects. These {@code Command} objects are used
- * in {@link ScriptCommandManager#execution(AvailableCommands)}.
+ * {@code Command} objects.
  * It is necessary to include here a new constant, linked to relevant
  * {@link AvailableCommands} object, when adding a new instruction to execute to this program.
  */
@@ -31,7 +29,8 @@ public enum CommandObjects implements Described {
     UPDATE(new Update(AvailableCommands.UPDATE)),
     SAVE(new Save(AvailableCommands.SAVE)),
     EXECUTE_SCRIPT(new ExecuteScript(AvailableCommands.EXECUTE_SCRIPT)),
-    EXIT(new Exit(AvailableCommands.EXIT));
+    EXIT(new Exit(AvailableCommands.EXIT)),
+    REGISTER(new Register(AvailableCommands.REGISTER));
 
     private final Command command;
 

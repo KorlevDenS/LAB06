@@ -2,7 +2,12 @@ package server.commands;
 
 import common.AvailableCommands;
 import common.ResultPattern;
+import common.TransportedData;
 import common.exceptions.IncorrectDataForObjectException;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
+
+import java.io.ObjectOutputStream;
 
 /**
  * Class {@code Save} is used for creating command "save" objects,
@@ -24,14 +29,17 @@ public class Save extends Command {
     /**
      * Saves current collection to current xml file.
      */
-    private void saveCollection(){
+    private void saveCollection() {
     }
 
-    public ResultPattern execute() {
+    public void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
-            saveCollection();
-            report.getReports().add("Текущая версия коллекции успешно сохранена в файл.");
-        return report;
+        saveCollection();
+        report.getReports().add("Текущая версия коллекции успешно сохранена в файл.");
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 
 }

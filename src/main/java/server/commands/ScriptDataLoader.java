@@ -173,14 +173,6 @@ public class ScriptDataLoader {
         return new Person(frontManName, frontManHeight, frontManWeight, frontManBirthday, frontManPassportId);
     }
 
-    private Long generateId() {
-        long i = (long) (Math.random() * 100000 + 1);
-        while (ServerStatusRegister.uniqueIdList.contains(i)) {
-            i = (long) (Math.random() * 100000 + 1);
-        }
-        return i;
-    }
-
     /**
      * Loads a new valid {@link MusicBand} object form script
      * using data loading methods.
@@ -199,9 +191,7 @@ public class ScriptDataLoader {
         numberOfParticipants = loadNumberOfParticipants(scriptScanner);
         musicGenre = loadBandMusicGenre(scriptScanner);
         frontMan = loadFrontManFromData(true, scriptScanner);
-            MusicBand band = new MusicBand(nameOfBand, bandCoordinates, numberOfParticipants,
-                    musicGenre, frontMan);
-            band.setId(generateId());
-            return band;
+        return new MusicBand(nameOfBand, bandCoordinates, numberOfParticipants,
+                musicGenre, frontMan);
     }
 }

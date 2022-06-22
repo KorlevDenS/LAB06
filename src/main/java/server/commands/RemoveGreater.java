@@ -1,5 +1,8 @@
 package server.commands;
 
+import common.TransportedData;
+import server.ResponseHandler;
+import server.ServerDataInstaller;
 import server.ServerStatusRegister;
 import common.basic.MusicBand;
 import common.AvailableCommands;
@@ -8,6 +11,7 @@ import common.exceptions.IncorrectDataForObjectException;
 import common.exceptions.InvalidDataFromFileException;
 import server.interfaces.RemovingIf;
 
+import java.io.ObjectOutputStream;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,12 +44,11 @@ public class RemoveGreater extends Add implements RemovingIf {
         bandsToRemove = ServerStatusRegister.appleMusic.stream()
                 .filter(s -> newBand.compareTo(s) < 0).collect(Collectors.toSet());
         bandsToRemove.forEach(band -> ServerStatusRegister.passports.remove(band.getFrontMan().getPassportID()));
-        bandsToRemove.forEach(band -> ServerStatusRegister.uniqueIdList.remove(band.getId()));
         bandsToRemove.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
 
     }
 
-    public ResultPattern execute() throws InvalidDataFromFileException {
+    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         loadElement();
         analyseAndRemove();
@@ -53,7 +56,10 @@ public class RemoveGreater extends Add implements RemovingIf {
             report.getReports().add("Было успешно удалено " + bandsToRemove.size() + " элементов.");
         else report.getReports().add("Ни один из элементов не превышает данный. Ничего не было удалено.");
         bandsToRemove.clear();
-        return report;
+
+        TransportedData newData = ServerDataInstaller.installIntoTransported();
+        if (!isReadingTheScript())
+            new ResponseHandler(sendToClient, newData, report).start();
     }
 
 }
