@@ -32,7 +32,7 @@ public class Save extends Command {
     private void saveCollection() {
     }
 
-    public void execute(ObjectOutputStream sendToClient) {
+    public synchronized void execute(ObjectOutputStream sendToClient) {
         report = new ResultPattern();
         saveCollection();
         report.getReports().add("Текущая версия коллекции успешно сохранена в файл.");

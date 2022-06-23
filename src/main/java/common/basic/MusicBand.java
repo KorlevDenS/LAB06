@@ -14,6 +14,8 @@ import java.util.Optional;
 public class MusicBand implements Comparable<MusicBand>, Serializable {
 
 
+    private long clientId;
+
     /**
      * Unique id of {@code MusicBand} object. The field shouldn't be {@code null}
      * and should be more than 0. Its value is generated automatically
@@ -216,6 +218,14 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
      */
     public void setGenre(MusicGenre genre) {
         this.genre = genre;
+    }
+
+    public void setClientId(long id) {
+        this.clientId = id;
+    }
+
+    public long getClientId() {
+        return this.clientId;
     }
 
     /**

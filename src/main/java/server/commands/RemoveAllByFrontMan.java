@@ -1,10 +1,9 @@
 package server.commands;
 
 import common.TransportedData;
+import server.DataBaseManager;
 import server.ResponseHandler;
 import server.ServerDataInstaller;
-import server.ServerStatusRegister;
-import common.basic.MusicBand;
 import common.basic.Person;
 import common.AvailableCommands;
 import common.ResultPattern;
@@ -12,10 +11,11 @@ import common.exceptions.IncorrectDataForObjectException;
 import common.exceptions.InvalidDataFromFileException;
 import server.interfaces.RemovingIf;
 
+import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * Class RemoveAllByFrontMan is used for creating command "remove_all_by_front_man" object,
@@ -29,10 +29,6 @@ public class RemoveAllByFrontMan extends Command implements RemovingIf {
      * with the same one.
      */
     private Person frontManToRemoveBy;
-    /**
-     * The {@code ArrayList} with bands to remove.
-     */
-    private Set<MusicBand> bandsToRemove;
 
     /**
      * Constructs new RemoveAllByFrontMan object.
@@ -59,24 +55,55 @@ public class RemoveAllByFrontMan extends Command implements RemovingIf {
         } else frontManToRemoveBy = dataBase.getFrontMan();
     }
 
-    public void analyseAndRemove() {
-        bandsToRemove = ServerStatusRegister.appleMusic.stream()
-                .filter(s -> Objects.equals(s.getFrontMan(), frontManToRemoveBy)).collect(Collectors.toSet());
-        bandsToRemove.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
-        bandsToRemove.forEach(band -> ServerStatusRegister.passports.remove(band.getFrontMan().getPassportID()));
+    public void analyseAndRemove() throws InvalidDataFromFileException {
+        int deleteCount;
+        try {
+            DataBaseManager manager = new DataBaseManager();
+            Connection conn = manager.getConnection();
+            if (frontManToRemoveBy == null) {
+                PreparedStatement stat = conn.prepareStatement("DELETE FROM music_bands WHERE user_id = ? " +
+                        "AND frontman_name IS NULL");
+                stat.setLong(1, getClientId());
+                stat.executeUpdate();
+                stat.close();
+                conn.close();
+                manager.sqlCollectionToMemory();
+                report.getReports().add("Были удалены все ваши группы без фронтмена.");
+                return;
+            }
+            if (frontManToRemoveBy.getPassportID() != null) {
+                PreparedStatement stat = conn.prepareStatement("DELETE FROM music_bands WHERE user_id = ? " +
+                        "AND passport_id = ?");
+                stat.setLong(1, getClientId());
+                stat.setString(2, frontManToRemoveBy.getPassportID());
+                deleteCount = stat.executeUpdate();
+                stat.close();
+            } else {
+                PreparedStatement stat = conn.prepareStatement("DELETE FROM music_bands WHERE user_id = ? " +
+                        "AND passport_id IS NULL");
+                stat.setLong(1, getClientId());
+                deleteCount = stat.executeUpdate();
+                stat.close();
+            }
+            conn.close();
+            manager.sqlCollectionToMemory();
+            if (deleteCount == 0) {
+                report.getReports().add("Ни в одной вашей группе в коллекции не нашлось такого фронтмена. Ничего не было удалено.");
+            } else {
+                report.getReports().add("Была успешно удалена группа с фронтменом имеющим номер паспорта: "
+                        + frontManToRemoveBy.getPassportID());
+            }
+        } catch (SQLException | IOException e) {
+            if (isReadingTheScript())
+                throw new InvalidDataFromFileException("Ошибка удаления из базы данных: " + e.getMessage());
+            else report.getReports().add("Ошибка удаления из базы данных: " + e.getMessage());
+        }
     }
 
-    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
+    public synchronized void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         loadFrontManFromData();
         analyseAndRemove();
-        if (!bandsToRemove.isEmpty()) {
-            if (frontManToRemoveBy == null)
-                report.getReports().add("Удалению подверглись группы без фронтмена.");
-            report.getReports().add("Было успешно удалено " + bandsToRemove.size() + " элементов.");
-        } else
-            report.getReports().add("Ни в одной группе в коллекции не нашлось такого фронтмена. Ничего не было удалено.");
-
         TransportedData newData = ServerDataInstaller.installIntoTransported();
         if (!isReadingTheScript())
             new ResponseHandler(sendToClient, newData, report).start();

@@ -19,8 +19,6 @@ import java.util.Collections;
  */
 public class AddIfMax extends Add {
 
-    private boolean isAdded;
-
     /**
      * Constructs new AddIfMax object.
      *
@@ -39,36 +37,25 @@ public class AddIfMax extends Add {
      * all elements in the collection or if the collection {@code isEmpty()}.
      */
     @Override
-    public void addElement() {
+    public void addElement() throws InvalidDataFromFileException {
         if (ServerStatusRegister.appleMusic.isEmpty()) {
-            ServerStatusRegister.appleMusic.add(newBand);
-            if (newBand.getFrontMan() != null)
-                ServerStatusRegister.passports.add(newBand.getFrontMan().getPassportID());
-            isAdded = true;
+            super.addElement();
+            report.getReports().add("Новый элемент оказался больше всех имеющихся в коллекции.");
         } else {
             if (newBand.compareTo(Collections.max(ServerStatusRegister.appleMusic)) > 0) {
-                ServerStatusRegister.appleMusic.add(newBand);
-                if (newBand.getFrontMan() != null)
-                    ServerStatusRegister.passports.add(newBand.getFrontMan().getPassportID());
-                isAdded = true;
+                super.addElement();
+                report.getReports().add("Новый элемент оказался больше всех имеющихся в коллекции.");
             } else {
-                isAdded = false;
+                report.getReports().add("В коллекции есть элементы больше данного.");
+                report.getReports().add("Элемент в неё не добавлен.");
             }
         }
     }
 
-    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
+    public synchronized void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         loadElement();
         addElement();
-        if (isAdded) {
-            report.getReports().add("Новый элемент оказался больше всех имеющихся в коллекции.");
-            report.getReports().add("Он успешно добавлен в неё.");
-        } else {
-            report.getReports().add("В коллекции есть элементы больше данного.");
-            report.getReports().add("Элемент в неё не добавлен.");
-        }
-
         TransportedData newData = ServerDataInstaller.installIntoTransported();
         if (!isReadingTheScript())
             new ResponseHandler(sendToClient, newData, report).start();

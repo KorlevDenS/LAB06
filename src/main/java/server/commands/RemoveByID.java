@@ -1,17 +1,21 @@
 package server.commands;
 
 import common.TransportedData;
+import common.exceptions.InvalidDataFromFileException;
+import server.DataBaseManager;
 import server.ResponseHandler;
 import server.ServerDataInstaller;
-import server.ServerStatusRegister;
-import common.basic.MusicBand;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
 import server.interfaces.Operand;
 import server.interfaces.RemovingIf;
 
+import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * Class {@code RemoveById} is used for creating command "remove_by_id" object,
@@ -39,23 +43,33 @@ public class RemoveByID extends Command implements Operand, RemovingIf {
             throw new IncorrectDataForObjectException("Class RemoveById cannot perform this task");
     }
 
-    public void analyseAndRemove() {
-        MusicBand bandToRemove = ServerStatusRegister.appleMusic.stream()
-                .filter(s -> s.getId().equals(idToRemoveBy)).findFirst().orElse(null);
-        if (bandToRemove != null) {
-            if (bandToRemove.getFrontMan() != null)
-                ServerStatusRegister.passports.remove(bandToRemove.getFrontMan().getPassportID());
-            ServerStatusRegister.appleMusic.remove(bandToRemove);
-            report.getReports().add("Элемент с ID = " + idToRemoveBy + " успешно удалён.");
-        } else report.getReports().add("Элемента с таким ID в не было найдено в коллекции.");
+    public void analyseAndRemove() throws InvalidDataFromFileException {
+        try {
+            DataBaseManager manager = new DataBaseManager();
+            Connection conn = manager.getConnection();
+            PreparedStatement stat = conn.prepareStatement("DELETE FROM music_bands WHERE user_id = ? " +
+                    "AND band_id = ?");
+            stat.setLong(1, getClientId());
+            stat.setLong(2, idToRemoveBy);
+            int deleteCount = stat.executeUpdate();
+            stat.close();
+            conn.close();
+            manager.sqlCollectionToMemory();
+            if (deleteCount > 0)
+                report.getReports().add("Из коллекции был удален ваш элемент под номером " + idToRemoveBy);
+            else report.getReports().add("Элемента с таким ID в не было найдено среди ваших в коллекции.");
+        } catch (SQLException | IOException e) {
+            if (isReadingTheScript())
+                throw new InvalidDataFromFileException("Ошибка удаления из базы данных: " + e.getMessage());
+            else report.getReports().add("Ошибка удаления из базы данных: " + e.getMessage());
+        }
     }
 
-    public void execute(ObjectOutputStream sendToClient) {
+    public synchronized void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         if (!isReadingTheScript())
             installOperand(dataBase.getOperand());
         analyseAndRemove();
-
         TransportedData newData = ServerDataInstaller.installIntoTransported();
         if (!isReadingTheScript())
             new ResponseHandler(sendToClient, newData, report).start();

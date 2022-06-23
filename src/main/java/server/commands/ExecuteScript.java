@@ -96,7 +96,7 @@ public class ExecuteScript extends Command {
         }
     }
 
-    public void execute(ObjectOutputStream sendToClient) {
+    public synchronized void execute(ObjectOutputStream sendToClient) {
         turnOnScriptMode();
         report = new ResultPattern();
         this.mistakesInfo = dataBase.getMistakesInfo();

@@ -26,8 +26,6 @@ public class Show extends Command {
      */
     public Show(AvailableCommands command) {
         super(command);
-        if (command != AvailableCommands.SHOW)
-            throw new IncorrectDataForObjectException("Class Show cannot perform this task");
     }
 
     public void execute(ObjectOutputStream sendToClient) {

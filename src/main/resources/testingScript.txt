@@ -1,6 +1,4 @@
 info
-register 111 111111
-info
 show
 clear
 save
@@ -8,13 +6,13 @@ add
 Group1
 234
 200
-12
+120
 BRIT_POP
 да
 Billy
 186
 90
-QW1234556h
+QW1234556hhhhhhhh
 1999 12 2 3 4 5 10
 execute_script src/main/java/file44444.txt
 add
@@ -27,7 +25,7 @@ BRIT_POP
 Bob
 195
 94
-DR12311111f
+DR12311111frigji
 1980 12 2 3 4 5 10
 add_if_max
 Group1
@@ -51,31 +49,31 @@ BRIT_POP
 Billy
 186
 90
-QW1234556hPP45
+QW1234556hPP45gge
 1999 12 2 3 4 5 10
 add_if_min
 Group1
 234
 200
-3
+1
 BRIT_POP
 да
 Billy
 186
 90
-QW1234556h123563
+QW1234556h1235633rw4r
 1999 12 2 3 4 5 10
 add_if_max
 Group1
 234
 200
-25
+2500
 BRIT_POP
 да
 Billy
 186
 90
-QW12345567854
+QW12345567854fd4rff
 
 show
 info
@@ -91,7 +89,7 @@ BRIT_POP
 Billy
 186
 90
-QW1234556h543
+QW1234556h543rng
 1999 12 2 3 4 5 10
 show
 remove_all_by_front_man

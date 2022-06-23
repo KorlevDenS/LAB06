@@ -15,7 +15,7 @@ import java.net.SocketException;
 
 public class ClientThreadHandler extends Thread {
 
-    private Socket incoming;
+    private final Socket incoming;
     private long clientID;
     private boolean isRegistered = false;
 
@@ -33,7 +33,8 @@ public class ClientThreadHandler extends Thread {
                     CompleteMessage receivedMessage = (CompleteMessage) getFromClient.readObject();
                     InstructionPattern instructionPattern = receivedMessage.getInstructionPattern();
 
-                    if (instructionPattern.getInstructionType().equals(CommandObjects.REGISTER.toString())) {
+                    if (instructionPattern.getInstructionType().equals(CommandObjects.REGISTER.toString()) ||
+                            instructionPattern.getInstructionType().equals(CommandObjects.LOGIN.toString())) {
                         ServerCommandManager commandManager = new ServerCommandManager(instructionPattern);
                         Command register = commandManager.instructionFetch();
                         register.execute(sendToClient);

@@ -1,6 +1,7 @@
 package server.commands;
 
 import common.TransportedData;
+import common.basic.MusicBand;
 import common.exceptions.IncorrectDataForObjectException;
 import server.ResponseHandler;
 import server.ServerDataInstaller;
@@ -22,6 +23,8 @@ public class Info extends Command {
      * Type of collection received by {@code getClass().getName()}
      */
     private String typeOfCollection;
+
+    private long amountOfOwners;
 
     /**
      * Current amount of elements in {@code HashSet}
@@ -57,6 +60,7 @@ public class Info extends Command {
      * Analysing and filling current data about {@code HashSet}.
      */
     private void knowInformation() {
+        amountOfOwners = ServerStatusRegister.appleMusic.stream().map(MusicBand::getClientId).distinct().count();
         typeOfCollection = ServerStatusRegister.appleMusic.getClass().getName();
         amountOfElements = ServerStatusRegister.appleMusic.size();
         if (!ServerStatusRegister.appleMusic.isEmpty()) {
@@ -72,6 +76,7 @@ public class Info extends Command {
         report.getReports().add("Информация о созданной коллекции:");
         report.getReports().add("Коллекция представляет собой " + typeOfCollection);
         report.getReports().add("Текущее количество элементов: " + amountOfElements);
+        report.getReports().add("Текущее количество владельцев элементов: " + amountOfOwners);
         if (ServerStatusRegister.appleMusic.isEmpty()) {
             report.getReports().add("Минимального элемента ещё нет, коллекция пуста.");
             report.getReports().add("Максимального элемента ёщё нет, коллекция пуста.");

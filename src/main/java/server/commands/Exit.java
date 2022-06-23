@@ -39,7 +39,6 @@ public class Exit extends Command {
         report.setTimeToExit(true);
         ScriptCommandManager manager = new ScriptCommandManager("save", scriptScanner);
         manager.execution(manager.instructionFetch(), sendToClient);
-        //report.getReports().addAll(savePattern.getReports());
 
         TransportedData newData = ServerDataInstaller.installIntoTransported();
         if (!isReadingTheScript())

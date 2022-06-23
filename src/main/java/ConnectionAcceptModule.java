@@ -1,16 +1,22 @@
+import common.exceptions.InvalidDataFromFileException;
 import server.ClientThreadHandler;
+import server.DataBaseManager;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 
 
 public class ConnectionAcceptModule {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException, InvalidDataFromFileException {
 
         //тут загрузка коллекции из бд
+        DataBaseManager manager = new DataBaseManager();
+        manager.sqlCollectionToMemory();
+
         try (ServerSocket server = new ServerSocket(6789)) {
             System.out.print("Сервер начал слушать клиентов: " + "Порт " + server.getLocalPort() +
                     " / Адрес " + InetAddress.getLocalHost() + ".\nОжидаем подключения клиентов");

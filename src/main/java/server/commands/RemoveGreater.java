@@ -1,19 +1,20 @@
 package server.commands;
 
 import common.TransportedData;
+import server.DataBaseManager;
 import server.ResponseHandler;
 import server.ServerDataInstaller;
-import server.ServerStatusRegister;
-import common.basic.MusicBand;
 import common.AvailableCommands;
 import common.ResultPattern;
 import common.exceptions.IncorrectDataForObjectException;
 import common.exceptions.InvalidDataFromFileException;
 import server.interfaces.RemovingIf;
 
+import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * Class {@code RemoveGreater} is used for creating command "remove_greater" object,
@@ -21,11 +22,6 @@ import java.util.stream.Collectors;
  * that are greater than inputted one.
  */
 public class RemoveGreater extends Add implements RemovingIf {
-
-    /**
-     * The {@code ArrayList} with bands to remove.
-     */
-    private Set<MusicBand> bandsToRemove;
 
     /**
      * Constructs new RemoveGreater object.
@@ -40,23 +36,32 @@ public class RemoveGreater extends Add implements RemovingIf {
             throw new IncorrectDataForObjectException("Class RemoveGreater cannot perform this task");
     }
 
-    public void analyseAndRemove() {
-        bandsToRemove = ServerStatusRegister.appleMusic.stream()
-                .filter(s -> newBand.compareTo(s) < 0).collect(Collectors.toSet());
-        bandsToRemove.forEach(band -> ServerStatusRegister.passports.remove(band.getFrontMan().getPassportID()));
-        bandsToRemove.forEach(band -> ServerStatusRegister.appleMusic.remove(band));
-
+    public void analyseAndRemove() throws InvalidDataFromFileException {
+        try {
+            DataBaseManager manager = new DataBaseManager();
+            Connection conn = manager.getConnection();
+            PreparedStatement stat = conn.prepareStatement("DELETE FROM music_bands WHERE user_id = ? " +
+                    "AND number_of_participants > ?");
+            stat.setLong(1, getClientId());
+            stat.setLong(2, newBand.getNumberOfParticipants());
+            int deleteCount = stat.executeUpdate();
+            stat.close();
+            conn.close();
+            manager.sqlCollectionToMemory();
+            if (deleteCount > 0)
+                report.getReports().add("Из коллекции было удалено " + deleteCount + " ваших элементов");
+            else report.getReports().add("Ни один из ваших элементов не превышает данный. Ничего не было удалено.");
+        } catch (SQLException | IOException e) {
+            if (isReadingTheScript())
+                throw new InvalidDataFromFileException("Ошибка удаления из базы данных: " + e.getMessage());
+            else report.getReports().add("Ошибка удаления из базы данных: " + e.getMessage());
+        }
     }
 
-    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
+    public synchronized void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         loadElement();
         analyseAndRemove();
-        if (!bandsToRemove.isEmpty())
-            report.getReports().add("Было успешно удалено " + bandsToRemove.size() + " элементов.");
-        else report.getReports().add("Ни один из элементов не превышает данный. Ничего не было удалено.");
-        bandsToRemove.clear();
-
         TransportedData newData = ServerDataInstaller.installIntoTransported();
         if (!isReadingTheScript())
             new ResponseHandler(sendToClient, newData, report).start();

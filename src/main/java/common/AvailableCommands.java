@@ -33,7 +33,9 @@ public enum AvailableCommands {
             "по значению поля frontMan, вывести количество элементов в каждой группе"),
     PRINT_UNIQUE_NUMBER_OF_PARTICIPANTS("print_unique_number_of_participants", "", "вывести уникальные " +
             "значения поля numberOfParticipants всех элементов в коллекции"),
-    REGISTER("register [^\\s]+\\s[^\\s]+", "", "зарегистрироваться на сервере");
+    REGISTER("register [^\\s]+\\s[^\\s]+", "", "зарегистрироваться на сервере"),
+    SHOW_MINE("show_mine", "", "вывести список элементов конкретного пользователя"),
+    LOGIN("login [^\\s]+\\s[^\\s]+", "", "войти в свой аккаунт.");
 
     private final String title;
     private final String description;

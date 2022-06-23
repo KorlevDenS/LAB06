@@ -131,6 +131,8 @@ public class Person implements Serializable {
      * @param birth to set field {@link Person#birthday}.
      */
     public void setBirthday(String birth) {
+        if ((birth == null) || (birth.equals("null"))) this.birthday = null;
+        else
         this.birthday = ZonedDateTime.parse(birth);
     }
 

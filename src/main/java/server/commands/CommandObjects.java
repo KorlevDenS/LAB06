@@ -30,7 +30,9 @@ public enum CommandObjects implements Described {
     SAVE(new Save(AvailableCommands.SAVE)),
     EXECUTE_SCRIPT(new ExecuteScript(AvailableCommands.EXECUTE_SCRIPT)),
     EXIT(new Exit(AvailableCommands.EXIT)),
-    REGISTER(new Register(AvailableCommands.REGISTER));
+    REGISTER(new Register(AvailableCommands.REGISTER)),
+    SHOW_MINE(new ShowMine(AvailableCommands.SHOW_MINE)),
+    LOGIN(new Login(AvailableCommands.LOGIN));
 
     private final Command command;
 

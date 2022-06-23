@@ -7,10 +7,7 @@ import server.PasswordEncryptor;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.ZonedDateTime;
 import java.util.Scanner;
 
@@ -27,8 +24,8 @@ public class Main {
 
         DataBaseManager manager = new DataBaseManager();
         Connection conn = manager.getConnection();
-        Statement stat = conn.createStatement();
-        stat.executeUpdate(manager.musicBandToSQLString(band, 144));
+        PreparedStatement stat = manager.musicBandToSQLString(conn, band, 144);
+        stat.executeUpdate();
         stat.close();
         conn.close();
 

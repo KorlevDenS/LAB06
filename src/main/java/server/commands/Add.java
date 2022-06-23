@@ -5,7 +5,6 @@ import server.DataBaseManager;
 import server.ResponseHandler;
 import server.ServerDataInstaller;
 import server.interfaces.Adding;
-import server.ServerStatusRegister;
 import common.basic.MusicBand;
 import common.AvailableCommands;
 import common.ResultPattern;
@@ -14,6 +13,7 @@ import common.exceptions.InvalidDataFromFileException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -47,25 +47,20 @@ public class Add extends Command implements Adding {
         try {
             DataBaseManager manager = new DataBaseManager();
             Connection conn = manager.getConnection();
-
-
-
+            PreparedStatement stat = manager.musicBandToSQLString(conn, newBand, getClientId());
+            stat.executeUpdate();
+            stat.close();
+            conn.close();
+            manager.sqlCollectionToMemory();
+            report.getReports().add("Новый элемент успешно добавлен в коллекцию.");
         } catch (SQLException | IOException e) {
             if (isReadingTheScript())
-                throw new InvalidDataFromFileException("Ошибка добавления в базу данных.");
-            else report.getReports().add("шибка добавления в базу данных.");
+                throw new InvalidDataFromFileException("Ошибка добавления в базу данных: " + e.getMessage());
+            else report.getReports().add("Ошибка добавления в базу данных: " + e.getMessage());
         }
-
-
-
-        ServerStatusRegister.appleMusic.add(newBand);
-        if (newBand.getFrontMan() != null)
-            ServerStatusRegister.passports.add(newBand.getFrontMan().getPassportID());
-        report.getReports().add("Новый элемент успешно добавлен в коллекцию.");
-
     }
 
-    public void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
+    public synchronized void execute(ObjectOutputStream sendToClient) throws InvalidDataFromFileException {
         report = new ResultPattern();
         loadElement();
         addElement();
